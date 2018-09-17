@@ -53,7 +53,7 @@ class SortIteratorTest extends TestCase
         $this->assertEquals($this->sorted, array_values($result));
         $this->assertNotEquals($values, array_values($result));
 
-        $this->assertNotSame($inner, $iterator->getInnerIterator());
+        $this->assertSame($inner, $iterator->getInnerIterator());
         $this->assertInstanceOf(\ArrayIterator::class, $iterator->getInnerIterator());
 
         $this->assertEquals($values, iterator_to_array($inner), "Original iterator should not be changed");
@@ -100,9 +100,7 @@ class SortIteratorTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals($this->sorted, array_values($result));
-
-        $this->assertNotSame($generator, $iterator->getInnerIterator());
-        $this->assertInstanceOf(\ArrayIterator::class, $iterator->getInnerIterator());
+        $this->assertSame($generator, $iterator->getInnerIterator());
     }
 
     public function testIterateCallback()

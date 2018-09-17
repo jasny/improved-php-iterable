@@ -10,9 +10,14 @@ namespace Jasny\Iterator;
 class SortIterator implements \OuterIterator
 {
     /**
-     * @var \Iterator|\ArrayIterator
+     * @var \Iterator
      */
     protected $iterator;
+
+    /**
+     * @var \ArrayIterator
+     */
+    protected $sortedIterator;
 
     /**
      * @var callable
@@ -29,34 +34,9 @@ class SortIterator implements \OuterIterator
     public function __construct(\Iterator $iterator, callable $compare = null)
     {
         $this->compare = $compare;
-
-        if ($iterator instanceof \ArrayIterator) {
-            $this->iterator = clone $iterator;
-            $this->sort();
-        } else {
-            $this->iterator = $iterator;
-        }
+        $this->iterator = $iterator;
     }
 
-    /**
-     * Sort the values of the iterator.
-     * Requires traversing through the iterator, turning it into an array.
-     *
-     * @return void
-     */
-    protected function sort(): void
-    {
-        if (!$this->iterator instanceof \ArrayIterator) {
-            $elements = iterator_to_array($this->iterator);
-            $this->iterator = new \ArrayIterator($elements);
-        }
-
-        if (isset($this->compare)) {
-            $this->iterator->uasort($this->compare);
-        } else {
-            $this->iterator->asort();
-        }
-    }
 
     /**
      * Return the current element
@@ -65,7 +45,7 @@ class SortIterator implements \OuterIterator
      */
     public function current()
     {
-        return $this->getInnerIterator()->current();
+        return $this->getSortedIterator()->current();
     }
 
     /**
@@ -75,7 +55,7 @@ class SortIterator implements \OuterIterator
      */
     public function next(): void
     {
-        $this->getInnerIterator()->next();
+        $this->getSortedIterator()->next();
     }
 
     /**
@@ -85,7 +65,7 @@ class SortIterator implements \OuterIterator
      */
     public function key()
     {
-        return $this->getInnerIterator()->key();
+        return $this->getSortedIterator()->key();
     }
 
     /**
@@ -95,7 +75,7 @@ class SortIterator implements \OuterIterator
      */
     public function valid(): bool
     {
-        return $this->getInnerIterator()->valid();
+        return $this->getSortedIterator()->valid();
     }
 
     /**
@@ -105,7 +85,57 @@ class SortIterator implements \OuterIterator
      */
     public function rewind(): void
     {
-        $this->getInnerIterator()->rewind();
+        $this->getSortedIterator()->rewind();
+    }
+
+
+    /**
+     * Convert the inner iterator to an ArrayIterator.
+     *
+     * @return \ArrayIterator
+     */
+    protected function createArrayIterator(): \ArrayIterator
+    {
+        if ($this->iterator instanceof \ArrayIterator) {
+            return clone $this->iterator;
+        }
+
+        $array = method_exists($this->iterator, 'toArray')
+            ? $this->iterator->toArray()
+            : iterator_to_array($this->iterator);
+
+        return new \ArrayIterator($array);
+    }
+
+    /**
+     * Sort the values of the iterator.
+     * Requires traversing through the iterator, turning it into an array.
+     *
+     * @return void
+     */
+    protected function initSortedIterator(): void
+    {
+        $this->sortedIterator = $this->createArrayIterator();
+
+        if (isset($this->compare)) {
+            $this->sortedIterator->uasort($this->compare);
+        } else {
+            $this->sortedIterator->asort();
+        }
+    }
+
+    /**
+     * Get the iterator with sorted values
+     *
+     * @return \ArrayIterator
+     */
+    protected function getSortedIterator(): \ArrayIterator
+    {
+        if (!isset($this->sortedIterator)) {
+            $this->initSortedIterator();
+        }
+
+        return $this->sortedIterator;
     }
 
 
@@ -116,10 +146,6 @@ class SortIterator implements \OuterIterator
      */
     public function getInnerIterator(): \Iterator
     {
-        if (!$this->iterator instanceof \ArrayIterator) {
-            $this->sort();
-        }
-
         return $this->iterator;
     }
 }
