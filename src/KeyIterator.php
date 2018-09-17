@@ -16,7 +16,9 @@ class KeyIterator extends \IteratorIterator
     protected $counter = 0;
 
     /**
-     * {@inheritdoc}
+     * Forward to the next element.
+     *
+     * @return void
      */
     public function next()
     {
@@ -26,15 +28,19 @@ class KeyIterator extends \IteratorIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Get the key of the current element.
+     *
+     * @return int
      */
-    public function key()
+    public function key(): int
     {
         return $this->counter;
     }
 
     /**
-     * {@inheritdoc}
+     * Get the current element
+     *
+     * @return mixed
      */
     public function current()
     {
@@ -42,7 +48,9 @@ class KeyIterator extends \IteratorIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Rewind to the first element.
+     *
+     * @return void
      */
     public function rewind()
     {

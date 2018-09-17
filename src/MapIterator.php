@@ -28,7 +28,9 @@ class MapIterator extends \IteratorIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Get the current element
+     *
+     * @return mixed
      */
     public function current()
     {

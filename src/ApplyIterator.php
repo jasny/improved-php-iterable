@@ -28,7 +28,9 @@ class ApplyIterator extends \IteratorIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Get the current value
+     *
+     * @return mixed
      */
     public function current()
     {

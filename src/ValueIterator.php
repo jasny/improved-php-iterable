@@ -16,9 +16,11 @@ class ValueIterator extends \IteratorIterator
     protected $counter = 0;
 
     /**
-     * {@inheritdoc}
+     * Forward to the next element.
+     *
+     * @return void
      */
-    public function next()
+    public function next(): void
     {
         $this->counter++;
 
@@ -26,17 +28,21 @@ class ValueIterator extends \IteratorIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Get the key of the current element.
+     *
+     * @return int
      */
-    public function key()
+    public function key(): int
     {
         return $this->counter;
     }
 
     /**
-     * {@inheritdoc}
+     * Rewind to the first element.
+     *
+     * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->counter = 0;
 

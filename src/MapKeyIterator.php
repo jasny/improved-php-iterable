@@ -28,7 +28,9 @@ class MapKeyIterator extends \IteratorIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Get the key of the current element.
+     *
+     * @return mixed
      */
     public function key()
     {

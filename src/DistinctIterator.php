@@ -44,9 +44,11 @@ class DistinctIterator extends \FilterIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Check whether the current element of the iterator is acceptable.
+     *
+     * @return bool
      */
-    public function accept()
+    public function accept(): bool
     {
         $entry = call_user_func($this->serialize, parent::current(), parent::key());
 
@@ -58,9 +60,9 @@ class DistinctIterator extends \FilterIterator
     }
 
     /**
-     * {@inheritdoc}
+     * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->counter = 0;
         $this->map = [];

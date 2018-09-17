@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Jasny\Iterator;
 
-use SebastianBergmann\CodeCoverage\Node\Iterator;
-
 /**
  * Walk through all sub-iterables (array, Iterator or IteratorAggregate) and concatenate them.
  */
@@ -58,16 +56,16 @@ class FlattenIterator implements \OuterIterator
             return new \ArrayIterator($entries);
         }
 
-        if ($entries instanceof \Iterator) {
-            return $entries;
-        }
-
         if ($entries instanceof \IteratorAggregate) {
-            return $entries->getIterator();
+            $entries = $entries->getIterator();
         }
 
-        $type = (is_object($entries) ? get_class($entries) . ' ' : '') . gettype($entries);
-        throw new \UnexpectedValueException("Expected an array, Iterator or IteratorAggregate, got $type");
+        if (!$entries instanceof \Iterator) {
+            $type = (is_object($entries) ? get_class($entries) . ' ' : '') . gettype($entries);
+            throw new \UnexpectedValueException("Expected an array, Iterator or IteratorAggregate, got $type");
+        }
+
+        return $entries;
     }
 
     /**
