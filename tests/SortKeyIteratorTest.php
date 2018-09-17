@@ -2,13 +2,13 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\SortIterator;
+use Jasny\Iterator\SortKeyIterator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\SortIterator
+ * @covers \Jasny\Iterator\SortKeyIterator
  */
-class SortIteratorTest extends TestCase
+class SortKeyIteratorTest extends TestCase
 {
     protected $sorted = [
         "Alpha",
@@ -41,17 +41,18 @@ class SortIteratorTest extends TestCase
 
     public function testIterate()
     {
-        $values = $this->sorted;
-        shuffle($values);
+        $keys = $this->sorted;
+        shuffle($keys);
 
+        $values = array_fill_keys($keys, null);
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortIterator($inner);
+        $iterator = new SortKeyIterator($inner);
 
         $result = iterator_to_array($iterator);
 
-        $this->assertEquals($this->sorted, array_values($result));
-        $this->assertNotEquals($values, array_values($result));
+        $this->assertEquals($this->sorted, array_keys($result));
+        $this->assertNotEquals($keys, array_keys($result));
 
         $this->assertNotSame($inner, $iterator->getInnerIterator());
         $this->assertInstanceOf(\ArrayIterator::class, $iterator->getInnerIterator());
@@ -62,22 +63,22 @@ class SortIteratorTest extends TestCase
     public function testIterateKey()
     {
         $values = [
-            'one' => 'India',
-            'two' => 'Zulu',
-            'three' => 'Papa',
-            'four' => 'Bravo'
+            'India' => 'one',
+            'Zulu' => 'two',
+            'Papa' => 'three',
+            'Bravo' => 'four'
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortIterator($inner);
+        $iterator = new SortKeyIterator($inner);
 
         $result = iterator_to_array($iterator);
 
         $expected = [
-            'four' => 'Bravo',
-            'one' => 'India',
-            'three' => 'Papa',
-            'two' => 'Zulu'
+            'Bravo' => 'four',
+            'India' => 'one',
+            'Papa' => 'three',
+            'Zulu' => 'two'
         ];
 
         $this->assertEquals($expected, $result);
@@ -85,21 +86,21 @@ class SortIteratorTest extends TestCase
 
     public function testIterateGenerator()
     {
-        $values = $this->sorted;
-        shuffle($values);
+        $keys = $this->sorted;
+        shuffle($keys);
 
-        $loop = function($values) {
-            foreach ($values as $value) {
-                yield $value;
+        $loop = function($keys) {
+            foreach ($keys as $key) {
+                yield $key => null;
             }
         };
 
-        $generator = $loop($values);
-        $iterator = new SortIterator($generator);
+        $generator = $loop($keys);
+        $iterator = new SortKeyIterator($generator);
 
         $result = iterator_to_array($iterator);
 
-        $this->assertEquals($this->sorted, array_values($result));
+        $this->assertEquals($this->sorted, array_keys($result));
 
         $this->assertNotSame($generator, $iterator->getInnerIterator());
         $this->assertInstanceOf(\ArrayIterator::class, $iterator->getInnerIterator());
@@ -111,21 +112,21 @@ class SortIteratorTest extends TestCase
             return (strlen($a) <=> strlen($b)) ?: $a <=> $b;
         };
 
-        $inner = new \ArrayIterator($this->sorted);
+        $inner = new \ArrayIterator(array_fill_keys($this->sorted, null));
 
-        $iterator = new SortIterator($inner, $compare);
+        $iterator = new SortKeyIterator($inner, $compare);
 
         $result = iterator_to_array($iterator);
 
-        $expected = $this->sorted;
-        usort($expected, $compare);
+        $expected = array_fill_keys($this->sorted, null);
+        uksort($expected, $compare);
 
-        $this->assertEquals($expected, array_values($result));
+        $this->assertEquals($expected, $result);
     }
     
     public function testIterateEmpty()
     {
-        $iterator = new SortIterator(new \EmptyIterator());
+        $iterator = new SortKeyIterator(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 
