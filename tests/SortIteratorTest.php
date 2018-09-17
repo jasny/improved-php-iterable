@@ -56,7 +56,7 @@ class SortIteratorTest extends TestCase
         $this->assertSame($inner, $iterator->getInnerIterator());
     }
 
-    public function testSortedKey()
+    public function testIterateKey()
     {
         $values = [
             'one' => 'India',
@@ -80,7 +80,7 @@ class SortIteratorTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testSortGenerator()
+    public function testIterateGenerator()
     {
         $values = $this->sorted;
         shuffle($values);
@@ -102,7 +102,7 @@ class SortIteratorTest extends TestCase
         $this->assertInstanceOf(\ArrayIterator::class, $iterator->getInnerIterator());
     }
 
-    public function testSortCallback()
+    public function testIterateCallback()
     {
         $compare = function($a, $b) {
             return (strlen($a) <=> strlen($b)) ?: $a <=> $b;
@@ -119,5 +119,14 @@ class SortIteratorTest extends TestCase
         usort($expected, $compare);
 
         $this->assertEquals($expected, array_values($result));
+    }
+    
+    public function testIterateEmpty()
+    {
+        $iterator = new SortIterator(new \EmptyIterator());
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals([], $result);
     }
 }
