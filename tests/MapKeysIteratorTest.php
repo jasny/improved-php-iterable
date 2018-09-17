@@ -2,29 +2,29 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\MapIterator;
+use Jasny\Iterator\MapKeysIterator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\MapIterator
+ * @covers \Jasny\Iterator\MapKeysIterator
  */
-class MapIteratorTest extends TestCase
+class MapKeysIteratorTest extends TestCase
 {
     public function testIterate()
     {
         $inner = new \ArrayIterator(range(1, 4));
 
-        $iterator = new MapIterator($inner, function($value) {
-            return str_repeat('*', $value);
+        $iterator = new MapKeysIterator($inner, function($key) {
+            return str_repeat('*', $key);
         });
 
         $result = iterator_to_array($iterator);
 
         $expected = [
-            '*',
-            '**',
-            '***',
-            '****'
+            '' => 1,
+            '*' => 2,
+            '**' => 3,
+            '***' => 4
         ];
 
         $this->assertSame($expected, $result);
@@ -34,16 +34,16 @@ class MapIteratorTest extends TestCase
     {
         $inner = new \ArrayIterator(['one' => 'foo', 'two' => 'bar', 'three' => 'qux']);
 
-        $iterator = new MapIterator($inner, function($value, $key) {
+        $iterator = new MapKeysIterator($inner, function($key, $value) {
             return "$key-$value";
         });
 
         $result = iterator_to_array($iterator);
 
         $expected = [
-            'one' => 'one-foo',
-            'two' => 'two-bar',
-            'three' => 'three-qux'
+            'one-foo' => 'foo',
+            'two-bar' => 'bar',
+            'three-qux' => 'qux'
         ];
 
         $this->assertSame($expected, $result);
@@ -51,7 +51,7 @@ class MapIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new MapIterator(new \EmptyIterator(), function() {});
+        $iterator = new MapKeysIterator(new \EmptyIterator(), function() {});
 
         $result = iterator_to_array($iterator);
 
