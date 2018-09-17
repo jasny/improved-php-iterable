@@ -2,13 +2,13 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\ValuesIterator;
+use Jasny\Iterator\ValueIterator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\ValuesIterator
+ * @covers \Jasny\Iterator\ValueIterator
  */
-class ValuesIteratorTest extends TestCase
+class ValueIteratorTest extends TestCase
 {
     public function testIterate()
     {
@@ -16,7 +16,7 @@ class ValuesIteratorTest extends TestCase
             'six' => 'seis'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new ValuesIterator($inner);
+        $iterator = new ValueIterator($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -25,7 +25,7 @@ class ValuesIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new ValuesIterator(new \EmptyIterator());
+        $iterator = new ValueIterator(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

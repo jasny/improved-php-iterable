@@ -8,7 +8,7 @@ namespace Jasny\Iterator;
  * Drop the keys, only keep the values.
  * @see array_values
  */
-class ValuesIterator extends \IteratorIterator
+class ValueIterator extends \IteratorIterator
 {
     /**
      * @var int

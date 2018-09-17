@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 use SebastianBergmann\CodeCoverage\Node\Iterator;
 
 /**
- * Take all sub-array elements and concatenate it recursively.
+ * Walk through all sub-iterables (array, Iterator or IteratorAggregate) and concatenate them.
  */
 class FlattenIterator implements \OuterIterator
 {

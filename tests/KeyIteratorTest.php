@@ -2,13 +2,13 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\KeysIterator;
+use Jasny\Iterator\KeyIterator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\KeysIterator
+ * @covers \Jasny\Iterator\KeyIterator
  */
-class KeysIteratorTest extends TestCase
+class KeyIteratorTest extends TestCase
 {
     public function testIterate()
     {
@@ -16,7 +16,7 @@ class KeysIteratorTest extends TestCase
             'six' => 'seis'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new KeysIterator($inner);
+        $iterator = new KeyIterator($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -25,7 +25,7 @@ class KeysIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new KeysIterator(new \EmptyIterator());
+        $iterator = new KeyIterator(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

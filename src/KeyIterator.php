@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Jasny\Iterator;
 
 /**
- * Drop the values, only keep the keys.
+ * Use the keys as values.
  * @see array_keys
  */
-class KeysIterator extends \IteratorIterator
+class KeyIterator extends \IteratorIterator
 {
     /**
      * @var int

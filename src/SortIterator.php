@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Jasny\Iterator;
 
+/**
+ * Sort all elements of an iterator.
+ */
 class SortIterator implements \OuterIterator
 {
     /**
@@ -25,11 +28,13 @@ class SortIterator implements \OuterIterator
      */
     public function __construct(\Iterator $iterator, callable $compare = null)
     {
-        $this->iterator = $iterator;
         $this->compare = $compare;
 
         if ($iterator instanceof \ArrayIterator) {
+            $this->iterator = clone $iterator;
             $this->sort();
+        } else {
+            $this->iterator = $iterator;
         }
     }
 

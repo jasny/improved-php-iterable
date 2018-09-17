@@ -48,7 +48,7 @@ class DistinctIterator extends \FilterIterator
      */
     public function accept()
     {
-        $entry = call_user_func($this->serialize, parent::current());
+        $entry = call_user_func($this->serialize, parent::current(), parent::key());
 
         if (!is_string($entry) && $this->useFastMap) {
             $this->disableFastMap();

@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Map all keys of an Iterator.
  */
-class MapKeysIterator extends \IteratorIterator
+class MapKeyIterator extends \IteratorIterator
 {
     /**
      * @var callable
