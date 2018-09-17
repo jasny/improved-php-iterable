@@ -20,7 +20,7 @@ Usage
 * [MapIterator](#mapiterator)
 * [MapKeyIterator](#mapkeyiterator)
 * [ApplyIterator](#applyiterator)
-* [DistinctIterator](#distinctiterator)
+* [UniqueIterator](#uniqueiterator)
 * [SortIterator](#sortiterator)
 * [SortKeyIterator](#sortkeyiterator)
 * [FlattenIterator](#flatteniterator)
@@ -77,14 +77,14 @@ $iterator = new ApplyIterator($persons, function(Person $person, $role) {
 });
 ```
 
-### DistinctIterator
+### UniqueIterator
 
 Filter to get only unique items. The keys are preserved, skipping duplicate values.
 
 ```php
 $values = new \ArrayIterator(['foo', 'bar', 'qux', 'foo', 'zoo']);
 
-$iterator = new DistinctIterator($values);
+$iterator = new UniqueIterator($values);
 ```
 
 You can pass a callback, which should return a value. Filtering on distinct values will be based on that value.
@@ -96,7 +96,7 @@ $persons = new \ArrayIterator([
     'lawyer' => new Person("Pamela", 23)
 ]);
 
-$iterator = new DistinctIterator($persons, function(Person $person) {
+$iterator = new UniqueIterator($persons, function(Person $person) {
     return $person->age;
 });
 ```
@@ -110,7 +110,7 @@ $persons = new \ArrayIterator([
     'lawyer' => new Person("Pamela", 23)
 ]);
 
-$iterator = new DistinctIterator($persons, function(Person $person) {
+$iterator = new UniqueIterator($persons, function(Person $person) {
     return hash('sha256', serialize($person));
 });
 ```
@@ -119,7 +119,7 @@ The keys of an iterator don't have to be unique. This is unlike an associated ar
 callback to get distinct keys.
 
 ```php
-$iterator = new DistinctIterator($someGenerator, function($value, $key) {
+$iterator = new UniqueIterator($someGenerator, function($value, $key) {
     return $key;
 });
 ```

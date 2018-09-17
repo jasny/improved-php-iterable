@@ -2,20 +2,20 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\DistinctIterator;
+use Jasny\Iterator\UniqueIterator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\DistinctIterator
+ * @covers \Jasny\Iterator\UniqueIterator
  */
-class DistinctIteratorTest extends TestCase
+class UniqueIteratorTest extends TestCase
 {
     public function testIterate()
     {
         $values = ['foo', 'bar', 'qux', 'foo', 'zoo', 'foo', 'bar'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new DistinctIterator($inner);
+        $iterator = new UniqueIterator($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -30,7 +30,7 @@ class DistinctIteratorTest extends TestCase
 
         $inner = new \ArrayIterator([$first, $second, $first, $third, $first, $second]);
 
-        $iterator = new DistinctIterator($inner);
+        $iterator = new UniqueIterator($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -43,7 +43,7 @@ class DistinctIteratorTest extends TestCase
 
         $inner = new \ArrayIterator($values);
 
-        $iterator = new DistinctIterator($inner, function($value) {
+        $iterator = new UniqueIterator($inner, function($value) {
             return substr($value, 0, 3);
         });
 
@@ -54,7 +54,7 @@ class DistinctIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new DistinctIterator(new \EmptyIterator());
+        $iterator = new UniqueIterator(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Filter to get only unique items.
  */
-class DistinctIterator extends \FilterIterator
+class UniqueIterator extends \FilterIterator
 {
     /**
      * @var callable
