@@ -53,8 +53,8 @@ $persons = new \ArrayIterator([
     'lawyer' => new Person("Pamela", 23)
 ]);
 
-$iterator = new MapIterator($persons, function(Person $person, $role) {
-    return sprintf("%s = %s", $role, $person->name);
+$iterator = new MapIterator($persons, function(Person $value, string $key): string {
+    return sprintf("%s = %s", $key, $value->name);
 });
 ```
 
@@ -69,12 +69,12 @@ $persons = new \ArrayIterator([
     'lawyer' => new Person("Pamela", 23)
 ]);
 
-$iterator = new MapKeyIterator($persons, function($role, $person) {
-    return sprintf("%s (%s)", $person->name, $role);
+$iterator = new MapKeyIterator($persons, function(string $key, Person $value): string {
+    return sprintf("%s (%s)", $value->name, $key);
 });
 ```
 
-_Note: The callback function switches value and key arguments, so the first argument is the key._
+_Caveat: The callback function switches value and key arguments, so the first argument is the key._
 
 ### ApplyIterator
 
@@ -87,8 +87,8 @@ $persons = new \ArrayIterator([
     'lawyer' => new Person("Pamela", 23)
 ]);
 
-$iterator = new ApplyIterator($persons, function(Person $person, $role) {
-    $value->role = $role;
+$iterator = new ApplyIterator($persons, function(Person $value, string $key): void {
+    $value->role = $key;
 });
 ```
 
@@ -111,8 +111,8 @@ $persons = new \ArrayIterator([
     'lawyer' => new Person("Pamela", 23)
 ]);
 
-$iterator = new UniqueIterator($persons, function(Person $person) {
-    return $person->age;
+$iterator = new UniqueIterator($persons, function(Person $value): int {
+    return $value->age;
 });
 ```
 
@@ -125,8 +125,8 @@ $persons = new \ArrayIterator([
     'lawyer' => new Person("Pamela", 23)
 ]);
 
-$iterator = new UniqueIterator($persons, function(Person $person) {
-    return hash('sha256', serialize($person));
+$iterator = new UniqueIterator($persons, function(Person $value): string {
+    return hash('sha256', serialize($value));
 });
 ```
 
@@ -149,12 +149,12 @@ $values = new \ArrayIterator(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "A
 $iterator = new SortIteratorAggregate($values);
 ```
 
-Instead of using the default `asort()`, a callback may be passed as user defined comparison function.
+Instead of using the default sorting, a callback may be passed as user defined comparison function.
 
 ```php
 $values = new \ArrayIterator(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"]);
 
-$iterator = new SortIteratorAggregate($values, function($a, $b) {
+$iterator = new SortIteratorAggregate($values, function($a, $b): int {
     return strlen($a) <=> strlen($b);
 });
 ```
@@ -180,7 +180,7 @@ $values = new \ArrayIterator([
 $iterator = new SortKeyIteratorAggregate($values);
 ```
 
-Similar to `SortIteratorAggregate`, a callback may be passed. 
+Similar to `SortIteratorAggregate`, a callback may be passed as user defined comparison function. 
 
 _This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
 for sorting._
@@ -199,7 +199,7 @@ $objects = new \ArrayIterator([
     (object)['type' => 'two']
 ]);
 
-$iterator = new GroupIteratorAggregate($objects, function(\stdClass $object) {
+$iterator = new GroupIteratorAggregate($objects, function(\stdClass $object): string {
     return $object->type;
 });
 ```
@@ -216,7 +216,7 @@ $values = new \ArrayIterator([
     'beast' => 'six'
 ]);
 
-$iterator = new GroupIteratorAggregate($values, function($value, $key) {
+$iterator = new GroupIteratorAggregate($values, function(string $value, string $key): string {
     return substr($key, 0, 1);
 });
 ```
