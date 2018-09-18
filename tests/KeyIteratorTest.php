@@ -12,8 +12,7 @@ class KeyIteratorTest extends TestCase
 {
     public function testIterate()
     {
-        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco',
-            'six' => 'seis'];
+        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
         $inner = new \ArrayIterator($values);
 
         $iterator = new KeyIterator($inner);

@@ -26,6 +26,7 @@ Usage
 * [FlattenIterator](#flatteniterator)
 * [ValueIterator](#valueiterator)
 * [KeyIterator](#keyiterator)
+* [CombineIterator](#combineiterator)
 
 ### MapIterator
 
@@ -231,5 +232,30 @@ Use the keys as values. The keys become an incremental number. This is comparabl
 ```php
 $values = new \ArrayIterator(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro']);
 
-$spanish = new KeyIterator($values);
+$english = new KeyIterator($values);
 ```
+
+### CombineIterator
+
+Iterator through keys and values.
+
+```php
+$english = new \ArrayIterator(['one', 'two', 'three', 'four']);
+$spanish = new \ArrayIterator(['uno', 'dos', 'tres', 'cuatro']);
+
+$iterator = new CombineIterator($english, $spanish);
+```
+
+The key may be any type and doesn't need to be unique.
+
+```php
+$keys = new \ArrayIterator([null, new \stdClass(), 'foo', ['hello', 'world'], 5.2, 'foo']);
+$values = new \ArrayIterator(['one', 'two', 'three', 'four', 'five', 'six']);
+
+$iterator = new CombineIterator($keys, $values);
+```
+
+The number of elements yielded from the iterator only depends on the number of keys. If there are more keys than
+values, the value defaults to `null`. If there are more values than keys, the additional values are not returned.
+
+
