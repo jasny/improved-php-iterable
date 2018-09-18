@@ -17,6 +17,21 @@ Installation
 Usage
 --- 
 
+**Array**
+* [ArrayAggregator](#arrayaggregator)
+* [CountAggregator](#countaggregator)
+
+**Reduce**
+* [ReduceAggregator](#reduceaggregator)
+* [SumAggregator](#sumaggregator)
+* [AverageAggregator](#averageaggregator)
+
+**Find**
+* [FirstAggregator](#firstaggregator)
+* [MinAggregator](#minaggregator)
+* [MaxAggregator](#minaggregator)
+
+
 ### ArrayAggregator
 
 Aggregator that accumulates the input elements into a new array.
@@ -35,6 +50,22 @@ $aggregate = CountAggregator(\ArrayIterator([2, 8, 4, 12]));
 $count = $aggregate(); // 4
 ```
 
+### ReduceAggregator
+
+Reduce all elements to a single value using a callback.
+
+```php
+$aggregate = ReduceAggregator(
+    \ArrayIterator([2, 3, 4]),
+    function(int $product, int $value): int {
+        return $product * $value;
+    },
+    1
+);
+
+$value = $aggregate(); // 24
+```
+
 ### SumAggregator
 
 Aggregator that produces the sum of a numbers. If no elements are present, the result is 0.
@@ -51,6 +82,40 @@ Aggregator that produces the arithmetic mean. If no elements are present, the re
 ```php
 $aggregate = AverageAggregator(\ArrayIterator([2, 8, 4, 12]));
 $average = $aggregate(); // 6.5
+```
+
+### FirstAggregator
+
+Get the first element.
+
+```php
+$aggregate = FirstAggregator(\ArrayIterator(["one", "two", "three"]));
+$value = $aggregate(); // "one"
+```
+
+Alternatively, pass a callable and get the first element that matches a condition will be returned.
+Returns null if no element is found.
+
+```php
+$aggregate = FirstAggregator(
+    \ArrayIterator(["one", "two", "three"]),
+    function(string $value): bool {
+        return substr($value, 0, 1) === 't';
+    }
+);
+$value = $aggregate(); // "two"
+```
+
+It's possible to use the key in this callable.
+
+```php
+$aggregate = FirstAggregator(
+    \ArrayIterator(["one" => "uno", "two" => "dos", "three" => "tres"]),
+    function(string $value, string $key): bool {
+        return substr($key, 0, 1) === 't';
+    }
+);
+$value = $aggregate(); // "dos"
 ```
 
 ### MinAggregator
@@ -106,38 +171,4 @@ This is comparable to [join](https://php.net/join) on normal arrays.
 ```php
 $aggregate = ConcatAggregator(\ArrayIterator(["hello", "sweet", "world"]), " - ");
 $sentence = $aggregate(); // "hello - sweet - world"
-```
-
-### FirstAggregator
-
-Get the first element.
-
-```php
-$aggregate = FirstAggregator(\ArrayIterator(["one", "two", "three"]));
-$value = $aggregate(); // "one"
-```
-
-Alternatively, pass a callable and the first element that matches a condition will be returned.
-Returns null if no element is found.
-
-```php
-$aggregate = FirstAggregator(
-    \ArrayIterator(["one", "two", "three"]),
-    function(string $value): bool {
-        return substr($value, 0, 1) === 't';
-    }
-);
-$value = $aggregate(); // "two"
-```
-
-It's possible to use the key in this callable.
-
-```php
-$aggregate = FirstAggregator(
-    \ArrayIterator(["one" => "uno", "two" => "dos", "three" => "tres"]),
-    function(string $value, string $key): bool {
-        return substr($key, 0, 1) === 't';
-    }
-);
-$value = $aggregate(); // "dos"
 ```

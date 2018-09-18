@@ -21,7 +21,7 @@ class FirstAggregator extends AbstractAggregator
      * @param \Traversable $iterator
      * @param callable $matcher
      */
-    public function __construct(\Traversable $iterator, callable $matcher = null)
+    public function __construct(\Traversable $iterator, ?callable $matcher = null)
     {
         parent::__construct($iterator);
 
