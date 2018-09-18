@@ -2,11 +2,11 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\SortKeyIterator;
+use Jasny\Iterator\SortKeyIteratorAggregate;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\SortKeyIterator
+ * @covers \Jasny\Iterator\SortKeyIteratorAggregate
  */
 class SortKeyIteratorTest extends TestCase
 {
@@ -47,7 +47,7 @@ class SortKeyIteratorTest extends TestCase
         $values = array_fill_keys($keys, null);
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortKeyIterator($inner);
+        $iterator = new SortKeyIteratorAggregate($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -70,7 +70,7 @@ class SortKeyIteratorTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortKeyIterator($inner);
+        $iterator = new SortKeyIteratorAggregate($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -96,7 +96,7 @@ class SortKeyIteratorTest extends TestCase
         };
 
         $generator = $loop($keys);
-        $iterator = new SortKeyIterator($generator);
+        $iterator = new SortKeyIteratorAggregate($generator);
 
         $result = iterator_to_array($iterator);
 
@@ -114,7 +114,7 @@ class SortKeyIteratorTest extends TestCase
 
         $inner = new \ArrayIterator(array_fill_keys($this->sorted, null));
 
-        $iterator = new SortKeyIterator($inner, $compare);
+        $iterator = new SortKeyIteratorAggregate($inner, $compare);
 
         $result = iterator_to_array($iterator);
 
@@ -126,7 +126,7 @@ class SortKeyIteratorTest extends TestCase
     
     public function testIterateEmpty()
     {
-        $iterator = new SortKeyIterator(new \EmptyIterator());
+        $iterator = new SortKeyIteratorAggregate(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

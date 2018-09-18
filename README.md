@@ -21,8 +21,8 @@ Usage
 * [MapKeyIterator](#mapkeyiterator)
 * [ApplyIterator](#applyiterator)
 * [UniqueIterator](#uniqueiterator)
-* [SortIterator](#sortiterator)
-* [SortKeyIterator](#sortkeyiterator)
+* [SortIteratorAggregateAggregate](#sortiteratoraggregate)
+* [SortKeyIteratorAggregate](#sortkeyiteratoraggregate)
 * [FlattenIterator](#flatteniterator)
 * [ValueIterator](#valueiterator)
 * [KeyIterator](#keyiterator)
@@ -124,14 +124,14 @@ $iterator = new UniqueIterator($someGenerator, function($value, $key) {
 });
 ```
 
-### SortIterator
+### SortIteratorAggregate
 
 Sort all elements of an iterator.
 
 ```php
 $values = new \ArrayIterator(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"]);
 
-$iterator = new SortIterator($values);
+$iterator = new SortIteratorAggregate($values);
 ```
 
 Instead of using the default `asort()`, a callback may be passed as user defined comparison function.
@@ -139,18 +139,18 @@ Instead of using the default `asort()`, a callback may be passed as user defined
 ```php
 $values = new \ArrayIterator(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"]);
 
-$iterator = new SortIterator($values, function($a, $b) {
+$iterator = new SortIteratorAggregate($values, function($a, $b) {
     return strlen($a) <=> strlen($b);
 });
 ```
 
 The keys are preserved.
 
-_Unlike other iterators, the `SortIterator` may require traversing through all elements an putting them in an
-`ArrayIterator` for sorting._
+_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
+for sorting._
 
 
-### SortKeyIterator
+### SortKeyIteratorAggregate
 
 Sort all elements of an iterator based on the key.
 
@@ -162,10 +162,13 @@ $values = new \ArrayIterator([
     "Alpha" => "one"
 ]);
 
-$iterator = new SortKeyIterator($values);
+$iterator = new SortKeyIteratorAggregate($values);
 ```
 
-Similar to `SortIterator`, a callback may be passed. 
+Similar to `SortIteratorAggregate`, a callback may be passed. 
+
+_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
+for sorting._
 
 ### FlattenIterator
 

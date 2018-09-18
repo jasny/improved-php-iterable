@@ -2,13 +2,13 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\SortIterator;
+use Jasny\Iterator\SortIteratorAggregate;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\SortIterator
+ * @covers \Jasny\Iterator\SortIteratorAggregate
  */
-class SortIteratorTest extends TestCase
+class SortIteratorAggregateTest extends TestCase
 {
     protected $sorted = [
         "Alpha",
@@ -46,15 +46,12 @@ class SortIteratorTest extends TestCase
 
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortIterator($inner);
+        $iterator = new SortIteratorAggregate($inner);
 
         $result = iterator_to_array($iterator);
 
         $this->assertEquals($this->sorted, array_values($result));
         $this->assertNotEquals($values, array_values($result));
-
-        $this->assertSame($inner, $iterator->getInnerIterator());
-        $this->assertInstanceOf(\ArrayIterator::class, $iterator->getInnerIterator());
 
         $this->assertEquals($values, iterator_to_array($inner), "Original iterator should not be changed");
     }
@@ -69,7 +66,7 @@ class SortIteratorTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortIterator($inner);
+        $iterator = new SortIteratorAggregate($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -95,12 +92,24 @@ class SortIteratorTest extends TestCase
         };
 
         $generator = $loop($values);
-        $iterator = new SortIterator($generator);
+        $iterator = new SortIteratorAggregate($generator);
 
         $result = iterator_to_array($iterator);
 
         $this->assertEquals($this->sorted, array_values($result));
-        $this->assertSame($generator, $iterator->getInnerIterator());
+    }
+
+    public function testIterateArrayable()
+    {
+        $values = $this->sorted;
+        shuffle($values);
+
+        $inner = \SplFixedArray::fromArray($values);
+        $iterator = new SortIteratorAggregate($inner);
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals($this->sorted, array_values($result));
     }
 
     public function testIterateCallback()
@@ -111,7 +120,7 @@ class SortIteratorTest extends TestCase
 
         $inner = new \ArrayIterator($this->sorted);
 
-        $iterator = new SortIterator($inner, $compare);
+        $iterator = new SortIteratorAggregate($inner, $compare);
 
         $result = iterator_to_array($iterator);
 
@@ -123,7 +132,7 @@ class SortIteratorTest extends TestCase
     
     public function testIterateEmpty()
     {
-        $iterator = new SortIterator(new \EmptyIterator());
+        $iterator = new SortIteratorAggregate(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

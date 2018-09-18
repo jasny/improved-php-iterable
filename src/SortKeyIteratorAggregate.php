@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Sort all elements of an iterator based on the key.
  */
-class SortKeyIterator implements \OuterIterator
+class SortKeyIteratorAggregate implements \OuterIterator
 {
     /**
      * @var \Iterator|\ArrayIterator
