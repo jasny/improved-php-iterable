@@ -52,8 +52,8 @@ class SortIteratorAggregateTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals($this->sorted, array_values($result));
-        $this->assertNotEquals($values, array_values($result));
 
+        $this->assertNotEquals($values, array_values($result));
         $this->assertEquals($values, iterator_to_array($inner), "Original iterator should not be changed");
     }
 
@@ -106,6 +106,20 @@ class SortIteratorAggregateTest extends TestCase
         shuffle($values);
 
         $inner = \SplFixedArray::fromArray($values);
+        $iterator = new SortIteratorAggregate($inner);
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals($this->sorted, array_values($result));
+    }
+
+    public function testIterateArrayObject()
+    {
+        $values = $this->sorted;
+        shuffle($values);
+
+        $inner = new \ArrayObject($values);
+
         $iterator = new SortIteratorAggregate($inner);
 
         $result = iterator_to_array($iterator);

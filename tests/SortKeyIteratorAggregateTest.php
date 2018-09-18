@@ -111,6 +111,22 @@ class SortKeyIteratorAggregateTest extends TestCase
         $this->assertEquals(range(0, 9), array_keys($result));
     }
 
+    public function testIterateArrayObject()
+    {
+        $keys = $this->sorted;
+        shuffle($keys);
+
+        $values = array_fill_keys($keys, null);
+        $inner = new \ArrayObject($values);
+
+        $iterator = new SortKeyIteratorAggregate($inner);
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals($this->sorted, array_keys($result));
+        $this->assertNotEquals($keys, array_keys($result));
+    }
+
     public function testIterateCallback()
     {
         $compare = function($a, $b) {

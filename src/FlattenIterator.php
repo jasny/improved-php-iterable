@@ -9,6 +9,8 @@ namespace Jasny\Iterator;
  */
 class FlattenIterator implements \OuterIterator
 {
+    use TraversableIteratorTrait;
+
     /**
      * @var \Iterator  Top iterator
      */
@@ -33,12 +35,12 @@ class FlattenIterator implements \OuterIterator
     /**
      * Class constructor.
      *
-     * @param \Iterator $iterator
-     * @param bool      $preserveKeys
+     * @param \Traversable $iterator
+     * @param bool         $preserveKeys
      */
-    public function __construct(\Iterator $iterator, bool $preserveKeys = false)
+    public function __construct(\Traversable $iterator, bool $preserveKeys = false)
     {
-        $this->iterator = $iterator;
+        $this->iterator = $this->traverableToIterator($iterator);
         $this->preserveKeys = $preserveKeys;
 
         $this->prepareNext();

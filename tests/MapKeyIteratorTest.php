@@ -49,6 +49,26 @@ class MapKeyIteratorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testIterateArrayObject()
+    {
+        $inner = new \ArrayObject(range(1, 4));
+
+        $iterator = new MapKeyIterator($inner, function($key) {
+            return str_repeat('*', $key);
+        });
+
+        $result = iterator_to_array($iterator);
+
+        $expected = [
+            '' => 1,
+            '*' => 2,
+            '**' => 3,
+            '***' => 4
+        ];
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testIterateEmpty()
     {
         $iterator = new MapKeyIterator(new \EmptyIterator(), function() {});

@@ -6,6 +6,7 @@ use Jasny\Iterator\FlattenIterator;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @covers \Jasny\Iterator\TraversableIteratorTrait
  * @covers \Jasny\Iterator\FlattenIterator
  */
 class FlattenIteratorTest extends TestCase
@@ -25,7 +26,6 @@ class FlattenIteratorTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $expected = ['one', 'two', 'three', 'four', 'five', 'six'];
-
         $this->assertEquals($expected, $result);
     }
 
@@ -45,7 +45,6 @@ class FlattenIteratorTest extends TestCase
 
         $expected = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco',
             'six' => 'seis'];
-
         $this->assertEquals($expected, $result);
     }
 
@@ -90,6 +89,24 @@ class FlattenIteratorTest extends TestCase
         foreach ($iterator as $value);
 
         $this->assertNull($iterator->key());
+    }
+
+    public function testIterateArrayObject()
+    {
+        $values = [
+            ['one', 'two'],
+            ['three', 'four', 'five'],
+            [],
+            ['six']
+        ];
+        $inner = new \ArrayObject($values);
+
+        $iterator = new FlattenIterator($inner);
+
+        $result = iterator_to_array($iterator);
+
+        $expected = ['one', 'two', 'three', 'four', 'five', 'six'];
+        $this->assertEquals($expected, $result);
     }
 
     /**

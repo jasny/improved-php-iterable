@@ -49,6 +49,26 @@ class MapIteratorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testIterateArrayObject()
+    {
+        $inner = new \ArrayObject(range(1, 4));
+
+        $iterator = new MapIterator($inner, function($value) {
+            return str_repeat('*', $value);
+        });
+
+        $result = iterator_to_array($iterator);
+
+        $expected = [
+            '*',
+            '**',
+            '***',
+            '****'
+        ];
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testIterateEmpty()
     {
         $iterator = new MapIterator(new \EmptyIterator(), function() {});

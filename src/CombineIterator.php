@@ -9,6 +9,8 @@ namespace Jasny\Iterator;
  */
 class CombineIterator extends \IteratorIterator
 {
+    use TraversableIteratorTrait;
+
     /**
      * @var \Iterator
      */
@@ -17,14 +19,14 @@ class CombineIterator extends \IteratorIterator
     /**
      * Class constructor.
      *
-     * @param \Iterator    $keys
+     * @param \Traversable $keys
      * @param \Traversable $values
      */
-    public function __construct(\Iterator $keys, \Traversable $values)
+    public function __construct(\Traversable $keys, \Traversable $values)
     {
         parent::__construct($values);
 
-        $this->keys = $keys;
+        $this->keys = $this->traverableToIterator($keys);
     }
 
     /**

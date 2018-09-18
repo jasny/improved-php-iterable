@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jasny\Iterator\CombineIterator
+ * @covers \Jasny\Iterator\TraversableIteratorTrait
  */
 class CombineIteratorTest extends TestCase
 {
@@ -112,6 +113,20 @@ class CombineIteratorTest extends TestCase
 
         $expected = ['foo' => 'one', 'bar' => 'two', 'qux' => 'three', 'zoo' => null, 'wut' => null];
         $this->assertSame($expected, $result);
+    }
+
+    public function testIterateArrayObject()
+    {
+        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
+
+        $keysInner = new \ArrayObject(array_keys($values));
+        $valuesInner = new \ArrayObject(array_values($values));
+
+        $iterator = new CombineIterator($keysInner, $valuesInner);
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertSame($values, $result);
     }
 
     public function testIterateEmpty()

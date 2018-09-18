@@ -115,6 +115,30 @@ class GroupIteratorAggregateTest extends TestCase
 
         $this->assertSame($expected, $result);
     }
+
+    public function testIterateArrayObject()
+    {
+        $objects = [
+            (object)['type' => 'one'],
+            (object)['type' => 'two'],
+            (object)['type' => 'one']
+        ];
+        $inner = new \ArrayObject($objects);
+
+        $iterator = new GroupIteratorAggregate($inner, function(\stdClass $object) {
+            return $object->type;
+        });
+
+        $result = iterator_to_array($iterator);
+
+        $expected = [
+            'one' => [$objects[0], $objects[2]],
+            'two' => [$objects[1]]
+        ];
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testIterateEmpty()
     {
         $iterator = new GroupIteratorAggregate(new \EmptyIterator(), function() {});

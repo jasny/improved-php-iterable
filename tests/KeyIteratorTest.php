@@ -22,6 +22,17 @@ class KeyIteratorTest extends TestCase
         $this->assertEquals(array_keys($values), $result);
     }
 
+    public function testIterateArrayOjbect()
+    {
+        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
+        $inner = new \ArrayObject($values);
+
+        $iterator = new KeyIterator($inner);
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals(array_keys($values), $result);
+    }
     public function testIterateEmpty()
     {
         $iterator = new KeyIterator(new \EmptyIterator());

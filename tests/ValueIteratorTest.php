@@ -22,6 +22,18 @@ class ValueIteratorTest extends TestCase
         $this->assertEquals(array_values($values), $result);
     }
 
+    public function testIterateArrayObject()
+    {
+        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
+        $inner = new \ArrayObject($values);
+
+        $iterator = new ValueIterator($inner);
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals(array_values($values), $result);
+    }
+
     public function testIterateEmpty()
     {
         $iterator = new ValueIterator(new \EmptyIterator());

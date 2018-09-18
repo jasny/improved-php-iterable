@@ -17,10 +17,10 @@ class MapIterator extends \IteratorIterator
     /**
      * Constructor.
      *
-     * @param \Iterator $iterator
-     * @param callable  $callable
+     * @param \Traversable $iterator
+     * @param callable     $callable
      */
-    public function __construct(\Iterator $iterator, callable $callable)
+    public function __construct(\Traversable $iterator, callable $callable)
     {
         parent::__construct($iterator);
 

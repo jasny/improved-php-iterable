@@ -9,6 +9,8 @@ namespace Jasny\Iterator;
  */
 class UniqueIterator extends \FilterIterator
 {
+    use TraversableIteratorTrait;
+
     /**
      * @var callable
      */
@@ -33,12 +35,12 @@ class UniqueIterator extends \FilterIterator
     /**
      * Constructor.
      *
-     * @param \Iterator $iterator
-     * @param callable  $serialize  Callable function to serialize the value
+     * @param \Traversable $iterator
+     * @param callable     $serialize  Callable function to serialize the value
      */
-    public function __construct(\Iterator $iterator, callable $serialize = null)
+    public function __construct(\Traversable $iterator, callable $serialize = null)
     {
-        parent::__construct($iterator);
+        parent::__construct($this->traverableToIterator($iterator));
 
         $this->serialize = $serialize ?? [$this, 'nop'];
     }

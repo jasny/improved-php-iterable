@@ -10,7 +10,7 @@ namespace Jasny\Iterator;
 class GroupIteratorAggregate implements \IteratorAggregate
 {
     /**
-     * @var \Iterator
+     * @var \Traversable
      */
     protected $iterator;
 
@@ -23,10 +23,10 @@ class GroupIteratorAggregate implements \IteratorAggregate
     /**
      * AbstractIterator constructor.
      *
-     * @param \Iterator $iterator
-     * @param callable  $grouping
+     * @param \Traversable $iterator
+     * @param callable     $grouping
      */
-    public function __construct(\Iterator $iterator, callable $grouping)
+    public function __construct(\Traversable $iterator, callable $grouping)
     {
         $this->iterator = $iterator;
         $this->grouping = $grouping;

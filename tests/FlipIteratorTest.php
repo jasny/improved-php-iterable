@@ -60,6 +60,18 @@ class FlipIteratorTest extends TestCase
         $this->assertSame(array_keys($values), $resultValues);
     }
 
+    public function testIterateArrayObject()
+    {
+        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
+        $inner = new \ArrayObject($values);
+
+        $iterator = new FlipIterator($inner);
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals(array_flip($values), $result);
+    }
+
     public function testIterateEmpty()
     {
         $iterator = new FlipIterator(new \EmptyIterator());
