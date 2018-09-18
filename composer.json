@@ -1,6 +1,6 @@
 {
     "name": "jasny/aggregator",
-    "description": "",
+    "description": "Traverse over elements, aggregating values, returning a single value",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -15,7 +15,8 @@
         "source": "https://github.com/jasny/aggregator"
     },
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.1.0",
+        "jasny/php-functions": "^4.0"
     },
     "require-dev": {
         "jasny/php-code-quality": "^2.3"
@@ -35,9 +36,6 @@
             "phpunit",
             "phpstan analyse",
             "phpcs -p src"
-        ],
-        "post-create-project-cmd": [
-            "bash init.sh && rm init.sh"
         ]
     },
     "config": {
