@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \Jasny\Iterator\SortKeyIteratorAggregate
  */
-class SortKeyIteratorTest extends TestCase
+class SortKeyIteratorAggregateTest extends TestCase
 {
     protected $sorted = [
         "Alpha",
@@ -54,9 +54,6 @@ class SortKeyIteratorTest extends TestCase
         $this->assertEquals($this->sorted, array_keys($result));
         $this->assertNotEquals($keys, array_keys($result));
 
-        $this->assertNotSame($inner, $iterator->getInnerIterator());
-        $this->assertInstanceOf(\ArrayIterator::class, $iterator->getInnerIterator());
-
         $this->assertEquals($values, iterator_to_array($inner), "Original iterator should not be changed");
     }
 
@@ -101,9 +98,16 @@ class SortKeyIteratorTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals($this->sorted, array_keys($result));
+    }
 
-        $this->assertNotSame($generator, $iterator->getInnerIterator());
-        $this->assertInstanceOf(\ArrayIterator::class, $iterator->getInnerIterator());
+    public function testIterateArrayable()
+    {
+        $inner = \SplFixedArray::fromArray(array_fill(0, 10, null));
+        $iterator = new SortKeyIteratorAggregate($inner);
+
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals(range(0, 9), array_keys($result));
     }
 
     public function testIterateCallback()

@@ -7,10 +7,10 @@ namespace Jasny\Iterator;
 /**
  * Sort all elements of an iterator based on the key.
  */
-class SortKeyIteratorAggregate implements \OuterIterator
+class SortKeyIteratorAggregate implements \IteratorAggregate
 {
     /**
-     * @var \Iterator|\ArrayIterator
+     * @var \Iterator
      */
     protected $iterator;
 
@@ -29,97 +29,43 @@ class SortKeyIteratorAggregate implements \OuterIterator
     public function __construct(\Iterator $iterator, callable $compare = null)
     {
         $this->compare = $compare;
-
-        if ($iterator instanceof \ArrayIterator) {
-            $this->iterator = clone $iterator;
-            $this->sort();
-        } else {
-            $this->iterator = $iterator;
-        }
+        $this->iterator = $iterator;
     }
 
+
     /**
-     * Sort the values of the iterator.
-     * Requires traversing through the iterator, turning it into an array.
+     * Convert the inner iterator to an ArrayIterator.
      *
-     * @return void
+     * @return \ArrayIterator
      */
-    protected function sort(): void
+    protected function createArrayIterator(): \ArrayIterator
     {
-        if (!$this->iterator instanceof \ArrayIterator) {
-            $elements = iterator_to_array($this->iterator);
-            $this->iterator = new \ArrayIterator($elements);
+        if ($this->iterator instanceof \ArrayIterator) {
+            return clone $this->iterator;
         }
 
-        if (isset($this->compare)) {
-            $this->iterator->uksort($this->compare);
-        } else {
-            $this->iterator->ksort();
-        }
+        $array = method_exists($this->iterator, 'toArray')
+            ? $this->iterator->toArray()
+            : iterator_to_array($this->iterator);
+
+        return new \ArrayIterator($array);
     }
 
     /**
-     * Return the current element
-     *
-     * @return mixed
-     */
-    public function current()
-    {
-        return $this->getInnerIterator()->current();
-    }
-
-    /**
-     * Move forward to next element
-     *
-     * @return void
-     */
-    public function next(): void
-    {
-        $this->getInnerIterator()->next();
-    }
-
-    /**
-     * Return the key of the current element
-     *
-     * @return mixed
-     */
-    public function key()
-    {
-        return $this->getInnerIterator()->key();
-    }
-
-    /**
-     * Checks if current position is valid
-     *
-     * @return bool
-     */
-    public function valid(): bool
-    {
-        return $this->getInnerIterator()->valid();
-    }
-
-    /**
-     * Rewind the Iterator to the first element
-     *
-     * @return void
-     */
-    public function rewind(): void
-    {
-        $this->getInnerIterator()->rewind();
-    }
-
-
-    /**
-     * Returns the inner iterator.
+     * Get the iterator with sorted values
      *
      * @return \Iterator
      */
-    public function getInnerIterator(): \Iterator
+    public function getIterator(): \Iterator
     {
-        if (!$this->iterator instanceof \ArrayIterator) {
-            $this->sort();
+        $sortedIterator = $this->createArrayIterator();
+
+        if (isset($this->compare)) {
+            $sortedIterator->uksort($this->compare);
+        } else {
+            $sortedIterator->ksort();
         }
 
-        return $this->iterator;
+        return $sortedIterator;
     }
 }

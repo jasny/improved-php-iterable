@@ -185,6 +185,45 @@ Similar to `SortIteratorAggregate`, a callback may be passed.
 _This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
 for sorting._
 
+### GroupIteratorAggregate
+
+Group elements of an iterator.
+
+```php
+$objects = new \ArrayIterator([
+    (object)['type' => 'one'],
+    (object)['type' => 'two'],
+    (object)['type' => 'one'],
+    (object)['type' => 'three'],
+    (object)['type' => 'one'],
+    (object)['type' => 'two']
+]);
+
+$iterator = new GroupIteratorAggregate($objects, function(\stdClass $object) {
+    return $object->type;
+});
+```
+
+Alternatively, it's possible to group based on the key.
+
+```php
+$values = new \ArrayIterator([
+    'alpha' => 'one',
+    'bat' => 'two',
+    'apple' => 'three',
+    'cat' => 'four',
+    'air' => 'five',
+    'beast' => 'six'
+]);
+
+$iterator = new GroupIteratorAggregate($values, function($value, $key) {
+    return substr($key, 0, 1);
+});
+```
+
+_This is an `IteratorAggregate`. It requires traversing through all elements an putting them in a `CombineIterator` for
+grouping._
+
 ### FlattenIterator
 
 Walk through all sub-iterables and concatenate them.

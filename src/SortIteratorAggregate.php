@@ -54,9 +54,9 @@ class SortIteratorAggregate implements \IteratorAggregate
     /**
      * Get the iterator with sorted values
      *
-     * @return \ArrayIterator
+     * @return \Iterator
      */
-    public function getIterator(): \ArrayIterator
+    public function getIterator(): \Iterator
     {
         $sortedIterator = $this->createArrayIterator();
 
