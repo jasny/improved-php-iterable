@@ -17,13 +17,14 @@ trait TraversableIteratorTrait
      */
     public function traverableToIterator(\Traversable $traversable): \Iterator
     {
-        switch (true) {
-            case $traversable instanceof \Iterator:
-                return $traversable;
-            case $traversable instanceof \IteratorAggregate:
-                return $traversable->getIterator();
-            default:
-                return new \IteratorIterator($traversable);
+        if ($traversable instanceof \IteratorAggregate) {
+            $traversable = $traversable->getIterator();
         }
+
+        if (!$traversable instanceof \Iterator) {
+            $traversable = new \IteratorIterator($traversable); // @codeCoverageIgnore
+        }
+
+        return $traversable;
     }
 }
