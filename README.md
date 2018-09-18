@@ -17,16 +17,30 @@ Installation
 Usage
 ---
 
+**Callback**
+
 * [MapIterator](#mapiterator)
 * [MapKeyIterator](#mapkeyiterator)
 * [ApplyIterator](#applyiterator)
 * [UniqueIterator](#uniqueiterator)
-* [SortIteratorAggregateAggregate](#sortiteratoraggregate)
+
+**Sorting**
+
+* [SortIteratorAggregate](#sortiteratoraggregate)
 * [SortKeyIteratorAggregate](#sortkeyiteratoraggregate)
+
+**Projection**
+
 * [FlattenIterator](#flatteniterator)
+* [GroupIteratorAggregate](#groupiteratoraggregate)
+
+**Key/value**
+
 * [ValueIterator](#valueiterator)
 * [KeyIterator](#keyiterator)
 * [CombineIterator](#combineiterator)
+* [FlipIterator](#flipiterator)
+
 
 ### MapIterator
 
@@ -258,4 +272,14 @@ $iterator = new CombineIterator($keys, $values);
 The number of elements yielded from the iterator only depends on the number of keys. If there are more keys than
 values, the value defaults to `null`. If there are more values than keys, the additional values are not returned.
 
+### FlipIterator
 
+Use values as keys and visa versa.
+
+```php
+$values = new \ArrayIterator(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro']);
+
+$iterator = new FlipIterator($values);
+```
+
+Both the value and key may be any type and don't need to be unique.
