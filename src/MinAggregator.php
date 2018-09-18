@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasny\Aggregator;
 
 /**
- * Aggregator that produces the minimal/maximal element according to a given comparator.
+ * Aggregator that produces the minimal element according to a given comparator.
  */
 class MinAggregator extends AbstractAggregator
 {

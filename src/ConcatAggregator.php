@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Jasny\Aggregator;
 
 /**
- * Returns a Aggregator that concatenates the input elements,
- * separated by the specified delimiter, in encounter order.
+ * Concatenates the input elements, separated by the specified delimiter, in encounter order.
  */
 class ConcatAggregator extends AbstractAggregator
 {

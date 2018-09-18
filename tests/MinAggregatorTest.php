@@ -16,12 +16,12 @@ class MinAggregatorTest extends TestCase
         $values = [99, 24, 122];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new MinAggregator($iterator);
+        $aggregator = new MinAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(24, $result);
-        $this->assertSame($iterator, $collector->getIterator());
+        $this->assertSame($iterator, $aggregator->getIterator());
     }
 
     public function testAggregateNegative()
@@ -29,12 +29,12 @@ class MinAggregatorTest extends TestCase
         $values = [99, 24, -7, -337, 122];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new MinAggregator($iterator);
+        $aggregator = new MinAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(-337, $result);
-        $this->assertSame($iterator, $collector->getIterator());
+        $this->assertSame($iterator, $aggregator->getIterator());
     }
 
     public function testAggregateFloat()
@@ -42,9 +42,9 @@ class MinAggregatorTest extends TestCase
         $values = [9.9, 99.1, 7.5, 8.0];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new MinAggregator($iterator);
+        $aggregator = new MinAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(7.5, $result);
     }
@@ -54,9 +54,9 @@ class MinAggregatorTest extends TestCase
         $values = ["Charlie", "Bravo", "Alpha", "Foxtrot", "Delta"];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new MinAggregator($iterator);
+        $aggregator = new MinAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals("Alpha", $result);
     }
@@ -73,20 +73,20 @@ class MinAggregatorTest extends TestCase
         ];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new MinAggregator($iterator, function(\stdClass $a, \stdClass $b) {
+        $aggregator = new MinAggregator($iterator, function(\stdClass $a, \stdClass $b) {
             return $a->name <=> $b->name;
         });
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertSame($values[2], $result);
     }
 
     public function testAggregateEmpty()
     {
-        $collector = new MinAggregator(new \EmptyIterator());
+        $aggregator = new MinAggregator(new \EmptyIterator());
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertNull($result);
     }

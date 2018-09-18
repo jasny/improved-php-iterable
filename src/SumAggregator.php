@@ -23,8 +23,12 @@ class SumAggregator extends AbstractAggregator
         $sum = 0;
 
         foreach ($this->iterator as $item) {
-            expect_type($item, ['int', 'float'], \UnexpectedValueException::class,
-                "All elements should be an int or float, %s given");
+            expect_type(
+                $item,
+                ['int', 'float'],
+                \UnexpectedValueException::class,
+                "All elements should be an int or float, %s given"
+            );
 
             $sum += $item;
         }

@@ -16,12 +16,12 @@ class ConcatAggregatorTest extends TestCase
         $values = ['a', 'b', 'c', 'd'];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new ConcatAggregator($iterator);
+        $aggregator = new ConcatAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals('abcd', $result);
-        $this->assertSame($iterator, $collector->getIterator());
+        $this->assertSame($iterator, $aggregator->getIterator());
     }
 
     public function testAggregateMixed()
@@ -36,9 +36,9 @@ class ConcatAggregatorTest extends TestCase
         $values = [1, 'ring', 2, $bind];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new ConcatAggregator($iterator);
+        $aggregator = new ConcatAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals('1ring2bind', $result);
     }
@@ -48,18 +48,18 @@ class ConcatAggregatorTest extends TestCase
         $values = ['one', 'ring', 'to', 'bind'];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new ConcatAggregator($iterator, '<->');
+        $aggregator = new ConcatAggregator($iterator, '<->');
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals('one<->ring<->to<->bind', $result);
     }
 
     public function testAggregateEmpty()
     {
-        $collector = new ConcatAggregator(new \EmptyIterator());
+        $aggregator = new ConcatAggregator(new \EmptyIterator());
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals('', $result);
     }
@@ -73,8 +73,8 @@ class ConcatAggregatorTest extends TestCase
         $values = ['one', new \stdClass()];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new ConcatAggregator($iterator);
+        $aggregator = new ConcatAggregator($iterator);
 
-        $collector();
+        $aggregator();
     }
 }

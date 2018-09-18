@@ -16,12 +16,12 @@ class SumAggregatorTest extends TestCase
         $values = [10, 99, 24, 122];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new SumAggregator($iterator);
+        $aggregator = new SumAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(255, $result);
-        $this->assertSame($iterator, $collector->getIterator());
+        $this->assertSame($iterator, $aggregator->getIterator());
     }
 
     public function testAggregateFloat()
@@ -29,18 +29,18 @@ class SumAggregatorTest extends TestCase
         $values = [7.5, 99.1, 8];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new SumAggregator($iterator);
+        $aggregator = new SumAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(114.6, $result);
     }
 
     public function testAggregateEmpty()
     {
-        $collector = new SumAggregator(new \EmptyIterator());
+        $aggregator = new SumAggregator(new \EmptyIterator());
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(0, $result);
     }
@@ -54,8 +54,8 @@ class SumAggregatorTest extends TestCase
         $values = ['hello', 'world'];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new SumAggregator($iterator);
+        $aggregator = new SumAggregator($iterator);
 
-        $collector();
+        $aggregator();
     }
 }

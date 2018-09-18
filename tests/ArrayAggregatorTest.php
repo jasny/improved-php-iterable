@@ -16,12 +16,12 @@ class ArrayAggregatorTest extends TestCase
         $values = ['one', 'two', 'three'];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new ArrayAggregator($iterator);
+        $aggregator = new ArrayAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals($values, $result);
-        $this->assertSame($iterator, $collector->getIterator());
+        $this->assertSame($iterator, $aggregator->getIterator());
     }
 
     public function testAggregateArrayable()
@@ -29,9 +29,9 @@ class ArrayAggregatorTest extends TestCase
         $values = ['one', 'two', 'three'];
         $array = \SplFixedArray::fromArray($values);
 
-        $collector = new ArrayAggregator($array);
+        $aggregator = new ArrayAggregator($array);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals($values, $result);
     }
@@ -47,18 +47,18 @@ class ArrayAggregatorTest extends TestCase
         };
         $generator = $fn($values);
 
-        $collector = new ArrayAggregator($generator);
+        $aggregator = new ArrayAggregator($generator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals($values, $result);
     }
 
     public function testAggregateEmpty()
     {
-        $collector = new ArrayAggregator(new \EmptyIterator());
+        $aggregator = new ArrayAggregator(new \EmptyIterator());
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals([], $result);
     }

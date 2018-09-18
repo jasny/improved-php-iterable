@@ -16,12 +16,12 @@ class AverageAggregatorTest extends TestCase
         $values = [10, 99, 24, 122];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new AverageAggregator($iterator);
+        $aggregator = new AverageAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(63.75, $result);
-        $this->assertSame($iterator, $collector->getIterator());
+        $this->assertSame($iterator, $aggregator->getIterator());
     }
 
     public function testAggregateFloat()
@@ -29,18 +29,18 @@ class AverageAggregatorTest extends TestCase
         $values = [7.5, 99.1, 8];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new AverageAggregator($iterator);
+        $aggregator = new AverageAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(38.2, $result);
     }
 
     public function testAggregateEmpty()
     {
-        $collector = new AverageAggregator(new \EmptyIterator());
+        $aggregator = new AverageAggregator(new \EmptyIterator());
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertNan($result);
     }
@@ -54,8 +54,8 @@ class AverageAggregatorTest extends TestCase
         $values = ['hello', 'world'];
         $iterator = new \ArrayIterator($values);
 
-        $collector = new AverageAggregator($iterator);
+        $aggregator = new AverageAggregator($iterator);
 
-        $collector();
+        $aggregator();
     }
 }

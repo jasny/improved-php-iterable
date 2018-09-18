@@ -16,19 +16,19 @@ class CountAggregatorTest extends TestCase
         $values = array_fill(2, 6, null);
         $iterator = new \ArrayIterator($values);
 
-        $collector = new CountAggregator($iterator);
+        $aggregator = new CountAggregator($iterator);
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(6, $result);
-        $this->assertSame($iterator, $collector->getIterator());
+        $this->assertSame($iterator, $aggregator->getIterator());
     }
 
     public function testAggregateEmpty()
     {
-        $collector = new CountAggregator(new \EmptyIterator());
+        $aggregator = new CountAggregator(new \EmptyIterator());
 
-        $result = $collector();
+        $result = $aggregator();
 
         $this->assertEquals(0, $result);
     }
