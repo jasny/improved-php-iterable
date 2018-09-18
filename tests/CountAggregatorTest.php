@@ -11,7 +11,7 @@ use Jasny\Aggregator\CountAggregator;
  */
 class CountAggregatorTest extends TestCase
 {
-    public function testAggregateInt()
+    public function testAggregate()
     {
         $values = array_fill(2, 6, null);
         $iterator = new \ArrayIterator($values);

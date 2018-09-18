@@ -22,7 +22,7 @@ Usage
 Aggregator that accumulates the input elements into a new array.
 
 ```php
-$aggregate = ArrayAggregator(\ArrayIterator([2, 8, 4, 12]);
+$aggregate = ArrayAggregator(\ArrayIterator([2, 8, 4, 12]));
 $array = $aggregate();
 ```
 
@@ -31,7 +31,7 @@ $array = $aggregate();
 Aggregator that produces a count.
 
 ```php
-$aggregate = CountAggregator(\ArrayIterator([2, 8, 4, 12]);
+$aggregate = CountAggregator(\ArrayIterator([2, 8, 4, 12]));
 $count = $aggregate(); // 4
 ```
 
@@ -40,7 +40,7 @@ $count = $aggregate(); // 4
 Aggregator that produces the sum of a numbers. If no elements are present, the result is 0.
  
 ```php
-$aggregate = AverageAggregator(\ArrayIterator([2, 8, 4, 12]);
+$aggregate = AverageAggregator(\ArrayIterator([2, 8, 4, 12]));
 $average = $aggregate(); // 26
 ```
 
@@ -49,7 +49,7 @@ $average = $aggregate(); // 26
 Aggregator that produces the arithmetic mean. If no elements are present, the result is `NAN`.
 
 ```php
-$aggregate = AverageAggregator(\ArrayIterator([2, 8, 4, 12]);
+$aggregate = AverageAggregator(\ArrayIterator([2, 8, 4, 12]));
 $average = $aggregate(); // 6.5
 ```
 
@@ -58,7 +58,7 @@ $average = $aggregate(); // 6.5
 Aggregator that produces the minimal element according to a given comparator.
 
 ```php
-$aggregate = MinAggregator(\ArrayIterator([99.7, 24, -7.2, -337, 122.0]);
+$aggregate = MinAggregator(\ArrayIterator([99.7, 24, -7.2, -337, 122.0]));
 $min = $aggregate(); // -337
 ```
 
@@ -80,7 +80,7 @@ $min = $aggregate(); // -7.2
 Aggregator that produces the maximal element according to a given comparator.
 
 ```php
-$aggregate = MaxAggregator(\ArrayIterator([99.7, 24, -7.2, -337, 122.0]);
+$aggregate = MaxAggregator(\ArrayIterator([99.7, 24, -7.2, -337, 122.0]));
 $max = $aggregate(); // 122.0
 ```
 
@@ -104,6 +104,40 @@ Concatenates the input elements, separated by the specified delimiter, in encoun
 This is comparable to [join](https://php.net/join) on normal arrays. 
 
 ```php
-$aggregate = ConcatAggregator(\ArrayIterator(["hello", "sweet", "world"], " - ");
+$aggregate = ConcatAggregator(\ArrayIterator(["hello", "sweet", "world"]), " - ");
 $sentence = $aggregate(); // "hello - sweet - world"
+```
+
+### FirstAggregator
+
+Get the first element.
+
+```php
+$aggregate = FirstAggregator(\ArrayIterator(["one", "two", "three"]));
+$value = $aggregate(); // "one"
+```
+
+Alternatively, pass a callable and the first element that matches a condition will be returned.
+Returns null if no element is found.
+
+```php
+$aggregate = FirstAggregator(
+    \ArrayIterator(["one", "two", "three"]),
+    function(string $value): bool {
+        return substr($value, 0, 1) === 't';
+    }
+);
+$value = $aggregate(); // "two"
+```
+
+It's possible to use the key in this callable.
+
+```php
+$aggregate = FirstAggregator(
+    \ArrayIterator(["one" => "uno", "two" => "dos", "three" => "tres"]),
+    function(string $value, string $key): bool {
+        return substr($key, 0, 1) === 't';
+    }
+);
+$value = $aggregate(); // "dos"
 ```
