@@ -25,6 +25,7 @@ Usage
 * [ReduceAggregator](#reduceaggregator)
 * [SumAggregator](#sumaggregator)
 * [AverageAggregator](#averageaggregator)
+* [ConcatAggregator](#concataggregator)
 
 **Find**
 * [FirstAggregator](#firstaggregator)
@@ -82,6 +83,17 @@ Aggregator that produces the arithmetic mean. If no elements are present, the re
 ```php
 $aggregate = AverageAggregator(\ArrayIterator([2, 8, 4, 12]));
 $average = $aggregate(); // 6.5
+```
+
+### ConcatAggregator
+
+Concatenates the input elements, separated by the specified delimiter, in encounter order.
+
+This is comparable to [join](https://php.net/join) on normal arrays. 
+
+```php
+$aggregate = ConcatAggregator(\ArrayIterator(["hello", "sweet", "world"]), " - ");
+$sentence = $aggregate(); // "hello - sweet - world"
 ```
 
 ### FirstAggregator
@@ -160,15 +172,4 @@ $aggregate = MaxAggregator(
 );
 
 $max = $aggregate(); // -337
-```
-
-### ConcatAggregator
-
-Concatenates the input elements, separated by the specified delimiter, in encounter order.
-
-This is comparable to [join](https://php.net/join) on normal arrays. 
-
-```php
-$aggregate = ConcatAggregator(\ArrayIterator(["hello", "sweet", "world"]), " - ");
-$sentence = $aggregate(); // "hello - sweet - world"
 ```
