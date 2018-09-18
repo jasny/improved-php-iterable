@@ -6,6 +6,7 @@ use Jasny\Iterator\SortIteratorAggregate;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @covers \Jasny\Iterator\ArrayIteratorAggregateTrait
  * @covers \Jasny\Iterator\SortIteratorAggregate
  */
 class SortIteratorAggregateTest extends TestCase

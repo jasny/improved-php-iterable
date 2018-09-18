@@ -164,7 +164,6 @@ The keys are preserved.
 _This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
 for sorting._
 
-
 ### SortKeyIteratorAggregate
 
 Sort all elements of an iterator based on the key.
@@ -181,6 +180,21 @@ $iterator = new SortKeyIteratorAggregate($values);
 ```
 
 Similar to `SortIteratorAggregate`, a callback may be passed as user defined comparison function. 
+
+_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
+for sorting._
+
+### ReverseIteratorAggregate
+
+Reverse order of elements of an iterator.
+
+```php
+$values = new \ArrayIterator(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"]);
+
+$iterator = new ReverseIteratorAggregate($values);
+```
+
+The keys are preserved.
 
 _This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
 for sorting._

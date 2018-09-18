@@ -9,10 +9,7 @@ namespace Jasny\Iterator;
  */
 class SortIteratorAggregate implements \IteratorAggregate
 {
-    /**
-     * @var \Iterator
-     */
-    protected $iterator;
+    use ArrayIteratorAggregateTrait;
 
     /**
      * @var callable
@@ -23,32 +20,13 @@ class SortIteratorAggregate implements \IteratorAggregate
     /**
      * AbstractIterator constructor.
      *
-     * @param \Iterator $iterator
-     * @param callable  $compare
+     * @param \Traversable $iterator
+     * @param callable     $compare
      */
-    public function __construct(\Iterator $iterator, callable $compare = null)
+    public function __construct(\Traversable $iterator, callable $compare = null)
     {
         $this->compare = $compare;
         $this->iterator = $iterator;
-    }
-
-
-    /**
-     * Convert the inner iterator to an ArrayIterator.
-     *
-     * @return \ArrayIterator
-     */
-    protected function createArrayIterator(): \ArrayIterator
-    {
-        if ($this->iterator instanceof \ArrayIterator) {
-            return clone $this->iterator;
-        }
-
-        $array = method_exists($this->iterator, 'toArray')
-            ? $this->iterator->toArray()
-            : iterator_to_array($this->iterator);
-
-        return new \ArrayIterator($array);
     }
 
     /**
