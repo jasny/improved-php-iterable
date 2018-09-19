@@ -54,20 +54,16 @@ class FlattenIterator implements \OuterIterator
      */
     protected function createEntriesIterator($entries): \Iterator
     {
-        if (is_array($entries)) {
-            return new \ArrayIterator($entries);
+        switch (true) {
+            case is_array($entries):
+                return new \ArrayIterator($entries);
+            case $entries instanceof \Iterator:
+                return $entries;
+            case $entries instanceof \IteratorAggregate:
+                return $entries->getIterator();
+            default:
+                return new \ArrayIterator([$this->iterator->key() => $entries]);
         }
-
-        if ($entries instanceof \IteratorAggregate) {
-            $entries = $entries->getIterator();
-        }
-
-        if (!$entries instanceof \Iterator) {
-            $type = (is_object($entries) ? get_class($entries) . ' ' : '') . gettype($entries);
-            throw new \UnexpectedValueException("Expected an array, Iterator or IteratorAggregate, got $type");
-        }
-
-        return $entries;
     }
 
     /**

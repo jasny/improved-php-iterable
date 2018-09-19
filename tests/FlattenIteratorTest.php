@@ -17,7 +17,8 @@ class FlattenIteratorTest extends TestCase
             ['one', 'two'],
             ['three', 'four', 'five'],
             [],
-            ['six']
+            'six',
+            ['seven']
         ];
         $inner = new \ArrayIterator($values);
 
@@ -25,7 +26,7 @@ class FlattenIteratorTest extends TestCase
 
         $result = iterator_to_array($iterator);
 
-        $expected = ['one', 'two', 'three', 'four', 'five', 'six'];
+        $expected = ['one', 'two', 'three', 'four', 'five', 'six', 'seven'];
         $this->assertEquals($expected, $result);
     }
 
@@ -35,7 +36,8 @@ class FlattenIteratorTest extends TestCase
             ['one' => 'uno', 'two' => 'dos'],
             ['three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
             [],
-            ['six' => 'seis']
+            'six' => 'seis',
+            ['seven' => 'sept']
         ];
         $inner = new \ArrayIterator($values);
 
@@ -44,7 +46,26 @@ class FlattenIteratorTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $expected = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco',
-            'six' => 'seis'];
+            'six' => 'seis', 'seven' => 'sept'];
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testIterateNoKey()
+    {
+        $values = [
+            ['one' => 'uno', 'two' => 'dos'],
+            ['three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
+            [],
+            'six' => 'seis',
+            ['seven' => 'sept']
+        ];
+        $inner = new \ArrayIterator($values);
+
+        $iterator = new FlattenIterator($inner, false);
+
+        $result = iterator_to_array($iterator);
+
+        $expected = ['uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'sept'];
         $this->assertEquals($expected, $result);
     }
 
@@ -54,7 +75,8 @@ class FlattenIteratorTest extends TestCase
             new \ArrayIterator(['one', 'two']),
             new \ArrayObject(['three', 'four', 'five']),
             new \EmptyIterator(),
-            ['six']
+            'six',
+            ['seven']
         ];
         $inner = new \ArrayIterator($values);
 
@@ -62,7 +84,7 @@ class FlattenIteratorTest extends TestCase
 
         $result = iterator_to_array($iterator);
 
-        $expected = ['one', 'two', 'three', 'four', 'five', 'six'];
+        $expected = ['one', 'two', 'three', 'four', 'five', 'six', 'seven'];
 
         $this->assertEquals($expected, $result);
     }
@@ -79,8 +101,8 @@ class FlattenIteratorTest extends TestCase
     public function testKeyNull()
     {
         $values = [
-            ['one', 'two'],
-            ['three', 'four', 'five']
+            ['one'],
+            ['two']
         ];
         $inner = new \ArrayIterator($values);
 
@@ -97,7 +119,8 @@ class FlattenIteratorTest extends TestCase
             ['one', 'two'],
             ['three', 'four', 'five'],
             [],
-            ['six']
+            'six',
+            ['seven']
         ];
         $inner = new \ArrayObject($values);
 
@@ -105,22 +128,8 @@ class FlattenIteratorTest extends TestCase
 
         $result = iterator_to_array($iterator);
 
-        $expected = ['one', 'two', 'three', 'four', 'five', 'six'];
+        $expected = ['one', 'two', 'three', 'four', 'five', 'six', 'seven'];
         $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected an array, Iterator or IteratorAggregate, got string
-     */
-    public function testUnexpectedValue()
-    {
-        $values = ['foo-bar'];
-        $inner = new \ArrayIterator($values);
-
-        $iterator = new FlattenIterator($inner);
-
-        iterator_to_array($iterator);
     }
 
     public function testGetInnerIterator()
