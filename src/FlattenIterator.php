@@ -62,7 +62,9 @@ class FlattenIterator implements \OuterIterator
             case $entries instanceof \IteratorAggregate:
                 return $entries->getIterator();
             default:
-                return new \ArrayIterator([$this->iterator->key() => $entries]);
+                return $this->preserveKeys
+                    ? new \ArrayIterator([$this->iterator->key() => $entries])
+                    : new \ArrayIterator([$entries]);
         }
     }
 

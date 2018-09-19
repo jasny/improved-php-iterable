@@ -31,8 +31,9 @@ Usage
 
 **Projection**
 
-* [FlattenIterator](#flatteniterator)
 * [GroupIteratorAggregate](#groupiteratoraggregate)
+* [FlattenIterator](#flatteniterator)
+* [ProjectionIterator](#projectioniterator)
 
 **Key/value**
 
@@ -253,14 +254,15 @@ $values = new \ArrayIterator([
 $iterator = new FlattenIterator($values);
 ```
 
-The entries may be an array, Iterator or IteratorAggregate.
+The entries may be an array, Iterator or IteratorAggregate. Other entries will not be flattened.
 
 ```php
 $values = new \ArrayIterator([
     new \ArrayIterator(['one', 'two']),
     new \ArrayObject(['three', 'four', 'five']),
     new \EmptyIterator(),
-    ['six']
+    ['six'],
+    'seven'
 ]);
 
 $iterator = new FlattenIterator($values);
@@ -279,6 +281,43 @@ $values = new \ArrayIterator([
 
 $iterator = new FlattenIterator($values, true);
 ```
+
+### ProjectionIterator
+Project each element of an iterator to an associated (or numeric) array. Each element should be an array or object.
+
+For the projection, a mapping `[new key => old key]` must be supplied.
+
+```php
+$values = new \ArrayIterator([
+    ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
+    ['one' => 'yi', 'two' => 'er', 'three' => 'san', 'four' => 'si', 'five' => 'wu'],
+    ['one' => 'één', 'two' => 'twee', 'three' => 'drie', 'four' => 'vier', 'five' => 'vijf']
+]);
+
+$mapping = ['I' => 'one', 'II' => 'two', 'II' => 'three', 'IV' => 'four'];
+
+$iterator = new ProjectionIterator($values, $mapping);
+```
+
+If an element doesn't have a specified key, the value will be `null`.
+
+The order of keys of the projected array is always the same as the order of the mapping.
+
+The mapping may also be a numeric array.
+
+```php
+$values = new \ArrayIterator([
+    ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
+    (object)['three' => 'san', 'two' => 'er', 'five' => 'wu', 'four' => 'si'],
+    new \ArrayObject(['two' => 'twee', 'four' => 'vier'])
+]);
+
+$mapping = ['one', 'three, 'four'];
+
+$iterator = new ProjectionIterator($values, $mapping);
+```
+
+Scalar elements and `DateTime` object are ignored.
 
 ### ValueIterator
 
