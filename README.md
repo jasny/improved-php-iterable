@@ -14,7 +14,7 @@ Installation
 
     composer require jasny/iterator
 
-Usage
+Iterators
 ---
 
 **Callback**
@@ -22,6 +22,8 @@ Usage
 * [MapIterator](#mapiterator)
 * [MapKeyIterator](#mapkeyiterator)
 * [ApplyIterator](#applyiterator)
+
+**Filter**
 * [UniqueIterator](#uniqueiterator)
 
 **Sorting**
@@ -42,6 +44,12 @@ Usage
 * [CombineIterator](#combineiterator)
 * [FlipIterator](#flipiterator)
 
+**Assertion**
+
+* [AssertTypeIterator](#asserttypeiterator)
+
+Callback Iterators
+---
 
 ### MapIterator
 
@@ -93,6 +101,9 @@ $iterator = new ApplyIterator($persons, function(Person $value, string $key): vo
 });
 ```
 
+Filter Iterators
+---
+
 ### UniqueIterator
 
 Filter to get only unique items. The keys are preserved, skipping duplicate values.
@@ -139,6 +150,9 @@ $iterator = new UniqueIterator($someGenerator, function($value, $key) {
     return $key;
 });
 ```
+
+Sorting Iterators
+---
 
 ### SortIteratorAggregate
 
@@ -199,6 +213,9 @@ The keys are preserved.
 
 _This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
 for sorting._
+
+Projection Iterators
+---
 
 ### GroupIteratorAggregate
 
@@ -319,6 +336,9 @@ $iterator = new ProjectionIterator($values, $mapping);
 
 Scalar elements and `DateTime` object are ignored.
 
+Key/value Iterators
+---
+
 ### ValueIterator
 
 Keep the values, drop the keys. The keys become an incremental number. This is comparable to
@@ -375,3 +395,26 @@ $iterator = new FlipIterator($values);
 ```
 
 Both the value and key may be any type and don't need to be unique.
+
+Assertion Iterators
+---
+
+### AssertTypeIterator
+
+Assert the type of each element of the array using [`expect_type`](https://github.com/jasny/php-functions#expect_type)
+from jasny/php-functions.
+
+As type you can specify any internal type, including `callable` and `scalar`, or a class name.
+
+Multiple types can be specified. The value needs to be one of these types. 
+
+```php
+$values = new \ArrayIterator(['one' => 'uno', 'two' => 2, 'three' => new \stdClass(), 'four' => 'cautro']);
+
+$iterator = new AssertTypeIterator($values, ['string', 'int'], \UnexpectedValueException::class);
+```
+
+A `Throwable` class name may be specified as third argument. The iterator throws an `UnexpectedValueException` by
+default.
+
+A message may be specified as fourth argument, where `%s` will be replaced by the element type.

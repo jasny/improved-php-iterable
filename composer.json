@@ -15,7 +15,8 @@
         "source": "https://github.com/jasny/iterator"
     },
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.1.0",
+        "jasny/php-functions": "^4.0"
     },
     "require-dev": {
         "jasny/php-code-quality": "^2.3"
