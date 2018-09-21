@@ -20,7 +20,7 @@ class ConcatAggregator extends AbstractAggregator
      * @param \Traversable $iterator
      * @param string       $glue
      */
-    public function __construct(\Traversable $iterator, string $glue = "")
+    public function __construct(\Traversable $iterator, string $glue = '')
     {
         parent::__construct($iterator);
 

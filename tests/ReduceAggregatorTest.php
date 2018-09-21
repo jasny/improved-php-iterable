@@ -36,13 +36,4 @@ class ReduceAggregatorTest extends TestCase
 
         $this->assertEquals(1, $result);
     }
-
-
-    /**
-     * @expectedException \BadMethodCallException
-     */
-    public function testAggregateNoCallback()
-    {
-        new ReduceAggregator(new \EmptyIterator());
-    }
 }

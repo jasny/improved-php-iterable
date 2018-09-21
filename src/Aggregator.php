@@ -10,13 +10,6 @@ namespace Jasny\Aggregator;
 interface Aggregator
 {
     /**
-     * Aggregator constructor.
-     *
-     * @param \Traversable $iterator
-     */
-    public function __construct(\Traversable $iterator);
-
-    /**
      * Get the iterator.
      *
      * @return \Traversable

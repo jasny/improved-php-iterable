@@ -27,12 +27,8 @@ class ReduceAggregator extends AbstractAggregator
      * @param callable     $callback
      * @param mixed        $initial
      */
-    public function __construct(\Traversable $iterator, callable $callback = null, $initial = null)
+    public function __construct(\Traversable $iterator, callable $callback, $initial = null)
     {
-        if (!isset($callback)) {
-            throw new \BadMethodCallException("No callback specified");
-        }
-
         parent::__construct($iterator);
 
         $this->callback = $callback;

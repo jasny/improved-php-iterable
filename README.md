@@ -42,7 +42,7 @@ $aggregate = ArrayAggregator(\ArrayIterator([2, 8, 4, 12]));
 $array = $aggregate();
 ```
 
-### CountAggregator
+### CountAggregator`
 
 Aggregator that produces a count.
 
