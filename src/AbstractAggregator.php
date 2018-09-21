@@ -7,7 +7,7 @@ namespace Jasny\Aggregator;
 /**
  * Aggregator that accumulates the input elements into a new array
  */
-abstract class AbstractAggregator implements Aggregator
+abstract class AbstractAggregator implements AggregatorInterface
 {
     /**
      * @var \Traversable

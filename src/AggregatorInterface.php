@@ -7,7 +7,7 @@ namespace Jasny\Aggregator;
 /**
  * Aggregate input elements, resulting in an accumulated value.
  */
-interface Aggregator
+interface AggregatorInterface
 {
     /**
      * Get the iterator.
