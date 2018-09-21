@@ -64,8 +64,8 @@ each `Iterator`. It uses
 **Finding**
 * [`first()`](#first)
 * [`find(callable $predicate)`](#find)
-* [`min([callable $predicate])`](#min)
-* [`max([callable $predicate])`](#max)
+* [`min([callable $comparator])`](#min)
+* [`max([callable $comparator])`](#max)
 
 **Aggregation**
 * [`count(): int`](#count)
