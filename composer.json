@@ -1,6 +1,6 @@
 {
-    "name": "jasny/iterator-pipeline",
-    "description": "",
+    "name": "jasny/pipeline-iterator",
+    "description": "Support functional-style operations, such as map-reduce transformations, on interators",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -8,26 +8,30 @@
             "name": "Arnold Daniels",
             "email": "arnold@jasny.net",
             "homepage": "http://www.jasny.net"
+        },
+        {
+            "name": "Fabio B. Silva",
+            "email": "fabio.bat.silva@gmail.com"
         }
     ],
     "support": {
-        "issues": "https://github.com/jasny/iterator-pipeline/issues",
-        "source": "https://github.com/jasny/iterator-pipeline"
+        "issues": "https://github.com/jasny/pipeline-iterator/issues",
+        "source": "https://github.com/jasny/pipeline-iterator"
     },
     "require": {
         "php": ">=7.1.0"
     },
     "require-dev": {
-        "jasny/php-code-quality": "^2.3"
+        "jasny/php-code-quality": "~2.3"
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\IteratorPipeline\\": "src/"
+            "Jasny\\PipelineIterator\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jasny\\IteratorPipeline\\Tests\\": "tests/"
+            "Jasny\\PipelineIterator\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -35,9 +39,6 @@
             "phpunit",
             "phpstan analyse",
             "phpcs -p src"
-        ],
-        "post-create-project-cmd": [
-            "bash init.sh && rm init.sh"
         ]
     },
     "config": {
