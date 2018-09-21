@@ -1,6 +1,6 @@
 {
     "name": "jasny/iterator",
-    "description": "",
+    "description": "A set of useful iterators (including map/reduce iterators)",
     "license": "MIT",
     "type": "library",
     "authors": [
