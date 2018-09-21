@@ -26,11 +26,12 @@ each `Iterator`. It uses
 #### Chainable methods
 
 **Mapping**
-* [`map(callable $callback)`](#map)
-* [`mapKeys(callable $callback)`](#mapkeys)
-* [`apply(callable $callback)`](#apply)
+* [`map(callable $mapper)`](#map)
+* [`mapKeys(callable $mapper)`](#mapkeys)
+* [`apply(callable $action)`](#apply)
+* `forEach(callable $action)` - _alias of `apply()`_
 * [`then(callable $callback)`](#then)
-* [`group(callable $callback)`](#group)
+* [`group(callable $grouper)`](#group)
 * [`flatten()`](#flatten)
 * [`project(array $mapping)`](#project)
 * [`values()`](#values)
@@ -39,19 +40,19 @@ each `Iterator`. It uses
 * [`flip()`](#flip)
 
 **Filtering**
-* [`filter(callable $callback)`](#filter)
+* [`filter(callable $predicate)`](#filter)
 * [`cleanup()`](#cleanup)
-* [`unique([callable $callback])`](#unique)
+* [`unique([callable $grouper])`](#unique)
 * [`uniqueKeys()`](#uniquekeys)
 * [`limit(int size)`](#limit)
 * [`slice(int offset[, int size])`](#slice)
 * [`infinete()`](#infinete)
-* [`assert(callable callback, string message)`](#assert)
+* [`assert(callable $assertion, string message)`](#assert)
 * [`assertType(string|array type[, string message])`](#expecttype)
 
 **Sorting**
-* [`sort([callable $compare])`](#sort)
-* [`ksort([callable $compare])`](#ksort)
+* [`sort([callable $comparator])`](#sort)
+* [`ksort([callable $comparator])`](#ksort)
 * [`reverse()`](#reverse)
 
 #### Other methods
@@ -62,13 +63,13 @@ each `Iterator`. It uses
 
 **Finding**
 * [`first()`](#first)
-* [`find(callable $callback)`](#find)
-* [`min([callable $compare])`](#min)
-* [`max([callable $compare])`](#max)
+* [`find(callable $predicate)`](#find)
+* [`min([callable $predicate])`](#min)
+* [`max([callable $predicate])`](#max)
 
 **Aggregation**
 * [`count(): int`](#count)
-* [`reduce(callable $callback)`](#reduce)
+* [`reduce(callable $accumulator[, mixed $initial])`](#reduce)
 * [`sum(): int|float`](#sum)
 * [`average(): int|float`](#average)
 * [`concat(string $glue): string`](#concat)
@@ -603,13 +604,13 @@ Creates an [`AssertTypeIterator`](https://github.com/jasny/iterator#asserttypeit
 
 Sorting requires traversing through the iterator to index all elements.
 
-### sorted
+### sort
 
 Create an iterator with sorted elements.
 
 ```php
 Pipeline::pipe(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
-    ->sorted();
+    ->sort();
     
 // ["Alpha", "Beta", "Charlie", "Delta", "Echo", "Foxtrot"]
 ```
@@ -618,7 +619,7 @@ Instead of using the default sorting, a callback may be passed as user defined c
 
 ```php
 Pipeline::pipe(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
-    ->sorted(function($a, $b): int {
+    ->sort(function($a, $b): int {
         return strlen($a) <=> strlen($b) ?: $a <=> $b;
     });
     
@@ -629,13 +630,13 @@ The callback must return < 0 if str1 is less than str2; > 0 if str1 is greater t
 
 Uses [`SortIteratorAggregate`](https://github.com/jasny/iterator#sortiteratoraggregate)
 
-### sortedByKeys
+### ksort
 
 Create an iterator with sorted elements by key.
 
 ```php
 Pipeline::pipe(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
-    ->sortedByKeys();
+    ->ksort();
     
 // ["Alpha" => "one", "Bravo" => "two", "Charlie" => "three", "Delta" => "four"]
 ```
@@ -644,7 +645,7 @@ A callback may be passed as user defined comparison function.
 
 ```php
 Pipeline::pipe(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
-    ->sortedByKeys(function($a, $b): int {
+    ->ksort(function($a, $b): int {
         return strlen($a) <=> strlen($b) ?: $a <=> $b;
     });
 

@@ -19,7 +19,10 @@
         "source": "https://github.com/jasny/pipeline-iterator"
     },
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.1.0",
+        "jasny/aggregator": "dev-master",
+        "jasny/iterator": "dev-master",
+        "jasny/iterator-stream": "dev-master"
     },
     "require-dev": {
         "jasny/php-code-quality": "~2.3"
