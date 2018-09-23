@@ -2,14 +2,14 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\CombineIterator;
+use Jasny\Iterator\CombineOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\CombineIterator
+ * @covers \Jasny\Iterator\CombineOperation
  * @covers \Jasny\Iterator\TraversableIteratorTrait
  */
-class CombineIteratorTest extends TestCase
+class CombineOperationTest extends TestCase
 {
     public function testIterate()
     {
@@ -18,7 +18,7 @@ class CombineIteratorTest extends TestCase
         $keysInner = new \ArrayIterator(array_keys($values));
         $valuesInner = new \ArrayIterator(array_values($values));
 
-        $iterator = new CombineIterator($keysInner, $valuesInner);
+        $iterator = new CombineOperation($keysInner, $valuesInner);
 
         $result = iterator_to_array($iterator);
 
@@ -32,7 +32,7 @@ class CombineIteratorTest extends TestCase
         $keysInner = new \ArrayIterator(array_keys($values));
         $valuesInner = new \ArrayIterator($values);
 
-        $iterator = new CombineIterator($keysInner, $valuesInner);
+        $iterator = new CombineOperation($keysInner, $valuesInner);
 
         $result = iterator_to_array($iterator);
 
@@ -47,7 +47,7 @@ class CombineIteratorTest extends TestCase
         $keysInner = new \ArrayIterator($keys);
         $valuesInner = new \ArrayIterator($values);
 
-        $iterator = new CombineIterator($keysInner, $valuesInner);
+        $iterator = new CombineOperation($keysInner, $valuesInner);
 
         $resultKeys = [];
         $resultValues = [];
@@ -69,7 +69,7 @@ class CombineIteratorTest extends TestCase
         $keysInner = new \ArrayIterator($keys);
         $valuesInner = new \ArrayIterator($values);
 
-        $iterator = new CombineIterator($keysInner, $valuesInner);
+        $iterator = new CombineOperation($keysInner, $valuesInner);
 
         $resultKeys = [];
         $resultValues = [];
@@ -91,7 +91,7 @@ class CombineIteratorTest extends TestCase
         $keysInner = new \ArrayIterator($keys);
         $valuesInner = new \ArrayIterator($values);
 
-        $iterator = new CombineIterator($keysInner, $valuesInner);
+        $iterator = new CombineOperation($keysInner, $valuesInner);
 
         $result = iterator_to_array($iterator);
 
@@ -107,7 +107,7 @@ class CombineIteratorTest extends TestCase
         $keysInner = new \ArrayIterator($keys);
         $valuesInner = new \ArrayIterator($values);
 
-        $iterator = new CombineIterator($keysInner, $valuesInner);
+        $iterator = new CombineOperation($keysInner, $valuesInner);
 
         $result = iterator_to_array($iterator);
 
@@ -122,7 +122,7 @@ class CombineIteratorTest extends TestCase
         $keysInner = new \ArrayObject(array_keys($values));
         $valuesInner = new \ArrayObject(array_values($values));
 
-        $iterator = new CombineIterator($keysInner, $valuesInner);
+        $iterator = new CombineOperation($keysInner, $valuesInner);
 
         $result = iterator_to_array($iterator);
 
@@ -131,7 +131,7 @@ class CombineIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new CombineIterator(new \EmptyIterator(), new \EmptyIterator());
+        $iterator = new CombineOperation(new \EmptyIterator(), new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

@@ -2,21 +2,21 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\UniqueIterator;
+use Jasny\Iterator\UniqueOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jasny\Iterator\TraversableIteratorTrait
- * @covers \Jasny\Iterator\UniqueIterator
+ * @covers \Jasny\Iterator\UniqueOperation
  */
-class UniqueIteratorTest extends TestCase
+class UniqueOperationTest extends TestCase
 {
     public function testIterate()
     {
         $values = ['foo', 'bar', 'qux', 'foo', 'zoo', 'foo', 'bar'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new UniqueIterator($inner);
+        $iterator = new UniqueOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -31,7 +31,7 @@ class UniqueIteratorTest extends TestCase
 
         $inner = new \ArrayIterator([$first, $second, $first, $third, $first, $second]);
 
-        $iterator = new UniqueIterator($inner);
+        $iterator = new UniqueOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -44,7 +44,7 @@ class UniqueIteratorTest extends TestCase
 
         $inner = new \ArrayIterator($values);
 
-        $iterator = new UniqueIterator($inner, function($value) {
+        $iterator = new UniqueOperation($inner, function($value) {
             return substr($value, 0, 3);
         });
 
@@ -58,7 +58,7 @@ class UniqueIteratorTest extends TestCase
         $values = ['foo', 'bar', 'qux', 'foo', 'zoo', 'foo', 'bar'];
         $inner = new \ArrayObject($values);
 
-        $iterator = new UniqueIterator($inner);
+        $iterator = new UniqueOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -67,7 +67,7 @@ class UniqueIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new UniqueIterator(new \EmptyIterator());
+        $iterator = new UniqueOperation(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

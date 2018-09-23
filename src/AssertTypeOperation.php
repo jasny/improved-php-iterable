@@ -9,7 +9,7 @@ use function Jasny\expect_type;
 /**
  * Assert the type of each element of an iterator.
  */
-class AssertTypeIterator extends \IteratorIterator
+class AssertTypeOperation extends \IteratorIterator
 {
     /**
      * @var string|string[]  Type(s)

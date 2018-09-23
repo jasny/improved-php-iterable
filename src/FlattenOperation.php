@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Walk through all sub-iterables (array, Iterator or IteratorAggregate) and concatenate them.
  */
-class FlattenIterator implements \OuterIterator
+class FlattenOperation implements \OuterIterator
 {
     use TraversableIteratorTrait;
 

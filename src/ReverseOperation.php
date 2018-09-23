@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Reverse order of elements of an iterator.
  */
-class ReverseIteratorAggregate implements \IteratorAggregate
+class ReverseOperation implements \IteratorAggregate
 {
     use ArrayIteratorAggregateTrait;
 

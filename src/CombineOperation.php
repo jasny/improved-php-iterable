@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Iterator through keys and values, where key may be any type.
  */
-class CombineIterator extends \IteratorIterator
+class CombineOperation extends \IteratorIterator
 {
     use TraversableIteratorTrait;
 

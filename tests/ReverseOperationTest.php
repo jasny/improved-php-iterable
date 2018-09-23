@@ -2,21 +2,21 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\ReverseIteratorAggregate;
+use Jasny\Iterator\ReverseOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jasny\Iterator\ArrayIteratorAggregateTrait
- * @covers \Jasny\Iterator\ReverseIteratorAggregate
+ * @covers \Jasny\Iterator\ReverseOperation
  */
-class ReverseIteratorAggregateTest extends TestCase
+class ReverseOperationTest extends TestCase
 {
     public function testIterate()
     {
         $values = range(3, 12);
         $inner = new \ArrayIterator($values);
 
-        $iterator = new ReverseIteratorAggregate($inner);
+        $iterator = new ReverseOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -37,7 +37,7 @@ class ReverseIteratorAggregateTest extends TestCase
         };
 
         $generator = $loop($values);
-        $iterator = new ReverseIteratorAggregate($generator);
+        $iterator = new ReverseOperation($generator);
 
         $result = iterator_to_array($iterator);
 
@@ -50,7 +50,7 @@ class ReverseIteratorAggregateTest extends TestCase
         $values = range(3, 12);
 
         $inner = \SplFixedArray::fromArray($values);
-        $iterator = new ReverseIteratorAggregate($inner);
+        $iterator = new ReverseOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -63,7 +63,7 @@ class ReverseIteratorAggregateTest extends TestCase
         $values = range(3, 12);
 
         $inner = new \ArrayObject($values);
-        $iterator = new ReverseIteratorAggregate($inner);
+        $iterator = new ReverseOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -73,7 +73,7 @@ class ReverseIteratorAggregateTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new ReverseIteratorAggregate(new \EmptyIterator());
+        $iterator = new ReverseOperation(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

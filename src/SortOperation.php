@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Sort all elements of an iterator.
  */
-class SortIteratorAggregate implements \IteratorAggregate
+class SortOperation implements \IteratorAggregate
 {
     use ArrayIteratorAggregateTrait;
 

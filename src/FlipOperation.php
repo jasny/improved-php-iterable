@@ -8,7 +8,7 @@ namespace Jasny\Iterator;
  * Use values as keys and visa versa.
  * @see array_flip
  */
-class FlipIterator extends \IteratorIterator
+class FlipOperation extends \IteratorIterator
 {
     /**
      * Get the current element.

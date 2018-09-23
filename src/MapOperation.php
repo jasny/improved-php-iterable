@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Jasny\Iterator;
 
 /**
- * Map all keys of an Iterator.
+ * Map all elements of an Iterator.
  */
-class MapKeyIterator extends \IteratorIterator
+class MapOperation extends \IteratorIterator
 {
     /**
      * @var callable
@@ -28,12 +28,12 @@ class MapKeyIterator extends \IteratorIterator
     }
 
     /**
-     * Get the key of the current element.
+     * Get the current element
      *
      * @return mixed
      */
-    public function key()
+    public function current()
     {
-        return call_user_func($this->callable, parent::key(), parent::current());
+        return call_user_func($this->callable, parent::current(), parent::key());
     }
 }

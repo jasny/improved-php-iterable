@@ -2,14 +2,14 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\SortIteratorAggregate;
+use Jasny\Iterator\SortOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jasny\Iterator\ArrayIteratorAggregateTrait
- * @covers \Jasny\Iterator\SortIteratorAggregate
+ * @covers \Jasny\Iterator\SortOperation
  */
-class SortIteratorAggregateTest extends TestCase
+class SortOperationTest extends TestCase
 {
     protected $sorted = [
         "Alpha",
@@ -47,7 +47,7 @@ class SortIteratorAggregateTest extends TestCase
 
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortIteratorAggregate($inner);
+        $iterator = new SortOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -67,7 +67,7 @@ class SortIteratorAggregateTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortIteratorAggregate($inner);
+        $iterator = new SortOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -93,7 +93,7 @@ class SortIteratorAggregateTest extends TestCase
         };
 
         $generator = $loop($values);
-        $iterator = new SortIteratorAggregate($generator);
+        $iterator = new SortOperation($generator);
 
         $result = iterator_to_array($iterator);
 
@@ -106,7 +106,7 @@ class SortIteratorAggregateTest extends TestCase
         shuffle($values);
 
         $inner = \SplFixedArray::fromArray($values);
-        $iterator = new SortIteratorAggregate($inner);
+        $iterator = new SortOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -120,7 +120,7 @@ class SortIteratorAggregateTest extends TestCase
 
         $inner = new \ArrayObject($values);
 
-        $iterator = new SortIteratorAggregate($inner);
+        $iterator = new SortOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -135,7 +135,7 @@ class SortIteratorAggregateTest extends TestCase
 
         $inner = new \ArrayIterator($this->sorted);
 
-        $iterator = new SortIteratorAggregate($inner, $compare);
+        $iterator = new SortOperation($inner, $compare);
 
         $result = iterator_to_array($iterator);
 
@@ -147,7 +147,7 @@ class SortIteratorAggregateTest extends TestCase
     
     public function testIterateEmpty()
     {
-        $iterator = new SortIteratorAggregate(new \EmptyIterator());
+        $iterator = new SortOperation(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

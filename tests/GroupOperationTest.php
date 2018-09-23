@@ -2,13 +2,13 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\GroupIteratorAggregate;
+use Jasny\Iterator\GroupOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\GroupIteratorAggregate
+ * @covers \Jasny\Iterator\GroupOperation
  */
-class GroupIteratorAggregateTest extends TestCase
+class GroupOperationTest extends TestCase
 {
     public function testIterate()
     {
@@ -22,7 +22,7 @@ class GroupIteratorAggregateTest extends TestCase
         ];
         $inner = new \ArrayIterator($objects);
 
-        $iterator = new GroupIteratorAggregate($inner, function(\stdClass $object) {
+        $iterator = new GroupOperation($inner, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -64,7 +64,7 @@ class GroupIteratorAggregateTest extends TestCase
         ];
         $inner = new \ArrayIterator($objects);
 
-        $iterator = new GroupIteratorAggregate($inner, function(\stdClass $object) {
+        $iterator = new GroupOperation($inner, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -101,7 +101,7 @@ class GroupIteratorAggregateTest extends TestCase
             'beast' => 'six'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new GroupIteratorAggregate($inner, function($value, $key) {
+        $iterator = new GroupOperation($inner, function($value, $key) {
             return substr($key, 0, 1);
         });
 
@@ -125,7 +125,7 @@ class GroupIteratorAggregateTest extends TestCase
         ];
         $inner = new \ArrayObject($objects);
 
-        $iterator = new GroupIteratorAggregate($inner, function(\stdClass $object) {
+        $iterator = new GroupOperation($inner, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -141,7 +141,7 @@ class GroupIteratorAggregateTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new GroupIteratorAggregate(new \EmptyIterator(), function() {});
+        $iterator = new GroupOperation(new \EmptyIterator(), function() {});
 
         $result = iterator_to_array($iterator);
 

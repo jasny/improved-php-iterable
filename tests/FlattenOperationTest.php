@@ -2,14 +2,14 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\FlattenIterator;
+use Jasny\Iterator\FlattenOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Jasny\Iterator\TraversableIteratorTrait
- * @covers \Jasny\Iterator\FlattenIterator
+ * @covers \Jasny\Iterator\FlattenOperation
  */
-class FlattenIteratorTest extends TestCase
+class FlattenOperationTest extends TestCase
 {
     public function testIterate()
     {
@@ -22,7 +22,7 @@ class FlattenIteratorTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new FlattenIterator($inner);
+        $iterator = new FlattenOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -41,7 +41,7 @@ class FlattenIteratorTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new FlattenIterator($inner, true);
+        $iterator = new FlattenOperation($inner, true);
 
         $result = iterator_to_array($iterator);
 
@@ -61,7 +61,7 @@ class FlattenIteratorTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new FlattenIterator($inner, false);
+        $iterator = new FlattenOperation($inner, false);
 
         $result = iterator_to_array($iterator);
 
@@ -80,7 +80,7 @@ class FlattenIteratorTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new FlattenIterator($inner);
+        $iterator = new FlattenOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -91,7 +91,7 @@ class FlattenIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new FlattenIterator(new \EmptyIterator());
+        $iterator = new FlattenOperation(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 
@@ -106,7 +106,7 @@ class FlattenIteratorTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new FlattenIterator($inner);
+        $iterator = new FlattenOperation($inner);
 
         foreach ($iterator as $value);
 
@@ -124,7 +124,7 @@ class FlattenIteratorTest extends TestCase
         ];
         $inner = new \ArrayObject($values);
 
-        $iterator = new FlattenIterator($inner);
+        $iterator = new FlattenOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -135,7 +135,7 @@ class FlattenIteratorTest extends TestCase
     public function testGetInnerIterator()
     {
         $inner = new \EmptyIterator();
-        $iterator = new FlattenIterator($inner);
+        $iterator = new FlattenOperation($inner);
 
         $this->assertSame($inner, $iterator->getInnerIterator());
     }

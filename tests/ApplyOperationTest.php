@@ -2,13 +2,13 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\ApplyIterator;
+use Jasny\Iterator\ApplyOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\ApplyIterator
+ * @covers \Jasny\Iterator\ApplyOperation
  */
-class ApplyIteratorTest extends TestCase
+class ApplyOperationTest extends TestCase
 {
     public function testIterate()
     {
@@ -20,7 +20,7 @@ class ApplyIteratorTest extends TestCase
 
         $inner = new \ArrayIterator($objects);
 
-        $iterator = new ApplyIterator($inner, function($value, $key) {
+        $iterator = new ApplyOperation($inner, function($value, $key) {
             $value->key = $key;
             return 10; // Should be ignored
         });
@@ -46,7 +46,7 @@ class ApplyIteratorTest extends TestCase
 
         $inner = new \ArrayObject($objects);
 
-        $iterator = new ApplyIterator($inner, function($value, $key) {
+        $iterator = new ApplyOperation($inner, function($value, $key) {
             $value->key = $key;
             return 10; // Should be ignored
         });
@@ -64,7 +64,7 @@ class ApplyIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new ApplyIterator(new \EmptyIterator(), function() {});
+        $iterator = new ApplyOperation(new \EmptyIterator(), function() {});
 
         $result = iterator_to_array($iterator);
 

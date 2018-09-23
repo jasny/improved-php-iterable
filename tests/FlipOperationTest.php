@@ -2,20 +2,20 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\FlipIterator;
+use Jasny\Iterator\FlipOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\FlipIterator
+ * @covers \Jasny\Iterator\FlipOperation
  */
-class FlipIteratorTest extends TestCase
+class FlipOperationTest extends TestCase
 {
     public function testIterate()
     {
         $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new FlipIterator($inner);
+        $iterator = new FlipOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -27,7 +27,7 @@ class FlipIteratorTest extends TestCase
         $values = ['foo' => 'one', 'bar' => 'two', 'qux' => 'three', 'foo' => 'four'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new FlipIterator($inner);
+        $iterator = new FlipOperation($inner);
 
         $resultKeys = [];
         $resultValues = [];
@@ -46,7 +46,7 @@ class FlipIteratorTest extends TestCase
         $values = ['one' => null, 'two' => new \stdClass(), 'three' => ['hello', 'world'], 'four' => 5.2];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new FlipIterator($inner);
+        $iterator = new FlipOperation($inner);
 
         $resultKeys = [];
         $resultValues = [];
@@ -65,7 +65,7 @@ class FlipIteratorTest extends TestCase
         $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
         $inner = new \ArrayObject($values);
 
-        $iterator = new FlipIterator($inner);
+        $iterator = new FlipOperation($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -74,7 +74,7 @@ class FlipIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new FlipIterator(new \EmptyIterator());
+        $iterator = new FlipOperation(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

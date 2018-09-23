@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Apply a callback to each element.
  */
-class ApplyIterator extends \IteratorIterator
+class ApplyOperation extends \IteratorIterator
 {
     /**
      * @var callable

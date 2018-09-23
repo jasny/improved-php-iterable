@@ -2,13 +2,13 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\ProjectionIterator;
+use Jasny\Iterator\ProjectionOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\ProjectionIterator
+ * @covers \Jasny\Iterator\ProjectionOperation
  */
-class ProjectionIteratorTest extends TestCase
+class ProjectionOperationTest extends TestCase
 {
     public function fullProvider()
     {
@@ -46,7 +46,7 @@ class ProjectionIteratorTest extends TestCase
 
         $map = ['I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' => 'four', 'V' => 'five'];
 
-        $iterator = new ProjectionIterator($inner, $map);
+        $iterator = new ProjectionOperation($inner, $map);
 
         $result = iterator_to_array($iterator);
 
@@ -95,7 +95,7 @@ class ProjectionIteratorTest extends TestCase
 
         $map = ['one', 'three', 'four'];
 
-        $iterator = new ProjectionIterator($inner, $map);
+        $iterator = new ProjectionOperation($inner, $map);
 
         $result = iterator_to_array($iterator);
 
@@ -124,7 +124,7 @@ class ProjectionIteratorTest extends TestCase
 
         $map = ['one', 'three', 'four'];
 
-        $iterator = new ProjectionIterator($inner, $map);
+        $iterator = new ProjectionOperation($inner, $map);
 
         $result = iterator_to_array($iterator);
 
@@ -144,7 +144,7 @@ class ProjectionIteratorTest extends TestCase
     {
         $map = ['I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' => 'four', 'V' => 'five'];
 
-        $iterator = new ProjectionIterator(new \EmptyIterator(), $map);
+        $iterator = new ProjectionOperation(new \EmptyIterator(), $map);
 
         $result = iterator_to_array($iterator);
 

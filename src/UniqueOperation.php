@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Filter to get only unique items.
  */
-class UniqueIterator extends \FilterIterator
+class UniqueOperation extends \FilterIterator
 {
     use TraversableIteratorTrait;
 

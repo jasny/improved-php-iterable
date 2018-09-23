@@ -2,13 +2,13 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\AssertTypeIterator;
+use Jasny\Iterator\AssertTypeOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\AssertTypeIterator
+ * @covers \Jasny\Iterator\AssertTypeOperation
  */
-class AssertTypeIteratorTest extends TestCase
+class AssertTypeOperationTest extends TestCase
 {
     public function validProvider()
     {
@@ -28,7 +28,7 @@ class AssertTypeIteratorTest extends TestCase
     {
         $inner = new \ArrayIterator($values);
 
-        $iterator = new AssertTypeIterator($inner, $type);
+        $iterator = new AssertTypeOperation($inner, $type);
 
         $result = iterator_to_array($iterator);
 
@@ -44,7 +44,7 @@ class AssertTypeIteratorTest extends TestCase
         $values = [1, 'hello'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new AssertTypeIterator($inner, 'string');
+        $iterator = new AssertTypeOperation($inner, 'string');
 
         iterator_to_array($iterator);
     }
@@ -58,7 +58,7 @@ class AssertTypeIteratorTest extends TestCase
         $values = [1, 'hello'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new AssertTypeIterator($inner, 'integer');
+        $iterator = new AssertTypeOperation($inner, 'integer');
 
         iterator_to_array($iterator);
     }
@@ -73,14 +73,14 @@ class AssertTypeIteratorTest extends TestCase
         $inner = new \ArrayIterator($values);
 
         $message = "Expected element to be string, %s given";
-        $iterator = new AssertTypeIterator($inner, 'string', \TypeError::class, $message);
+        $iterator = new AssertTypeOperation($inner, 'string', \TypeError::class, $message);
 
         iterator_to_array($iterator);
     }
 
     public function testIterateEmpty()
     {
-        $iterator = new AssertTypeIterator(new \EmptyIterator(), 'int');
+        $iterator = new AssertTypeOperation(new \EmptyIterator(), 'int');
 
         $result = iterator_to_array($iterator);
 

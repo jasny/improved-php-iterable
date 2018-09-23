@@ -2,40 +2,41 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\KeyIterator;
+use Jasny\Iterator\ValueOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\KeyIterator
+ * @covers \Jasny\Iterator\ValueOperation
  */
-class KeyIteratorTest extends TestCase
+class ValueOperationTest extends TestCase
 {
     public function testIterate()
     {
         $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
         $inner = new \ArrayIterator($values);
 
-        $iterator = new KeyIterator($inner);
+        $iterator = new ValueOperation($inner);
 
         $result = iterator_to_array($iterator);
 
-        $this->assertEquals(array_keys($values), $result);
+        $this->assertEquals(array_values($values), $result);
     }
 
-    public function testIterateArrayOjbect()
+    public function testIterateArrayObject()
     {
         $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
         $inner = new \ArrayObject($values);
 
-        $iterator = new KeyIterator($inner);
+        $iterator = new ValueOperation($inner);
 
         $result = iterator_to_array($iterator);
 
-        $this->assertEquals(array_keys($values), $result);
+        $this->assertEquals(array_values($values), $result);
     }
+
     public function testIterateEmpty()
     {
-        $iterator = new KeyIterator(new \EmptyIterator());
+        $iterator = new ValueOperation(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

@@ -7,7 +7,7 @@ namespace Jasny\Iterator;
 /**
  * Group elements of an iterator.
  */
-class GroupIteratorAggregate implements \IteratorAggregate
+class GroupOperation implements \IteratorAggregate
 {
     /**
      * @var \Traversable
@@ -66,6 +66,6 @@ class GroupIteratorAggregate implements \IteratorAggregate
     {
         list($groups, $values) = $this->group();
 
-        return new CombineIterator(new \ArrayIterator($groups), new \ArrayIterator($values));
+        return new CombineOperation(new \ArrayIterator($groups), new \ArrayIterator($values));
     }
 }

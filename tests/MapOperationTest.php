@@ -2,19 +2,19 @@
 
 namespace Jasny\Iterator\Tests;
 
-use Jasny\Iterator\MapIterator;
+use Jasny\Iterator\MapOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\MapIterator
+ * @covers \Jasny\Iterator\MapOperation
  */
-class MapIteratorTest extends TestCase
+class MapOperationTest extends TestCase
 {
     public function testIterate()
     {
         $inner = new \ArrayIterator(range(1, 4));
 
-        $iterator = new MapIterator($inner, function($value) {
+        $iterator = new MapOperation($inner, function($value) {
             return str_repeat('*', $value);
         });
 
@@ -34,7 +34,7 @@ class MapIteratorTest extends TestCase
     {
         $inner = new \ArrayIterator(['one' => 'foo', 'two' => 'bar', 'three' => 'qux']);
 
-        $iterator = new MapIterator($inner, function($value, $key) {
+        $iterator = new MapOperation($inner, function($value, $key) {
             return "$key-$value";
         });
 
@@ -53,7 +53,7 @@ class MapIteratorTest extends TestCase
     {
         $inner = new \ArrayObject(range(1, 4));
 
-        $iterator = new MapIterator($inner, function($value) {
+        $iterator = new MapOperation($inner, function($value) {
             return str_repeat('*', $value);
         });
 
@@ -71,7 +71,7 @@ class MapIteratorTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new MapIterator(new \EmptyIterator(), function() {});
+        $iterator = new MapOperation(new \EmptyIterator(), function() {});
 
         $result = iterator_to_array($iterator);
 

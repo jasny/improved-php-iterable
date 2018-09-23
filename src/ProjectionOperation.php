@@ -8,7 +8,7 @@ namespace Jasny\Iterator;
  * Project each element of an iterator to an associated (or numeric) array.
  * Scalar elements are ignored.
  */
-class ProjectionIterator extends \IteratorIterator
+class ProjectionOperation extends \IteratorIterator
 {
     /**
      * @var array

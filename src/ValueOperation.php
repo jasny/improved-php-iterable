@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Jasny\Iterator;
 
 /**
- * Use the keys as values.
- * @see array_keys
+ * Drop the keys, only keep the values.
+ * @see array_values
  */
-class KeyIterator extends \IteratorIterator
+class ValueOperation extends \IteratorIterator
 {
     /**
      * @var int
@@ -20,7 +20,7 @@ class KeyIterator extends \IteratorIterator
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         $this->counter++;
 
@@ -38,21 +38,11 @@ class KeyIterator extends \IteratorIterator
     }
 
     /**
-     * Get the current element
-     *
-     * @return mixed
-     */
-    public function current()
-    {
-        return parent::key();
-    }
-
-    /**
      * Rewind to the first element.
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->counter = 0;
 
