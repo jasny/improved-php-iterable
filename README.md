@@ -1,4 +1,4 @@
-# Jasny Pipeline iterator
+# Jasny Iterator Pipeline
 
 [![Build Status](https://travis-ci.org/jasny/pipeline-iterator.svg?branch=master)](https://travis-ci.org/jasny/pipeline-iterator)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/pipeline-iterator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/pipeline-iterator/?branch=master)
@@ -13,13 +13,42 @@ The `Pipeline` is implements the [builder design pattern](https://sourcemaking.c
 each `Iterator`. It uses
 
 * [SPL iterators](http://php.net/manual/en/spl.iterators.php)
-* [Jasny iterators](https://github.com/jasny/iterator)
+* [Jasny iterator operation](https://github.com/jasny/iterator)
 * [Jasny aggregators](https://github.com/jasny/aggregators)
 * [Jasny iterator stream](https://github.com/jasny/iterator-stream)
 
 ## Installation
 
     composer require jasny/iterator-pipeline
+
+## Example
+
+Consider the following code.
+
+```php
+$values = new ArrayIterator($values);
+$filteredValues = new CallbackFilterIterator($values, function($value) {
+   return is_int($value) && $value > 10;
+});
+$firstValues = new LimitIterator($values, 0, 10);
+
+foreach ($firstValues as $value) {
+    echo $value, "\n";
+}
+```
+
+This can be rewritten as
+
+```php
+use Jasny\IteratorPipeline\Pipeline;
+
+Pipeline::pipe($values)
+    ->filter(function($value) {
+        return is_int($value) && $value < 10;
+    })
+    ->limit(10)
+    ->output();
+```
 
 ## Pipeline methods
 
@@ -29,7 +58,6 @@ each `Iterator`. It uses
 * [`map(callable $mapper)`](#map)
 * [`mapKeys(callable $mapper)`](#mapkeys)
 * [`apply(callable $action)`](#apply)
-* `forEach(callable $action)` - _alias of `apply()`_
 * [`then(callable $callback)`](#then)
 * [`group(callable $grouper)`](#group)
 * [`flatten()`](#flatten)
@@ -79,38 +107,7 @@ each `Iterator`. It uses
 * [`outputCsv([resource|string $stream[, array $headers, [...]]])`](#outputcsv)
 * [`outputJson([resource|string $stream[, int $options]])`](#outputjson)
 
-## Example
-
-Consider the following code.
-
-```php
-$values = new ArrayIterator($values);
-$filteredValues = new CallbackFilterIterator($values, function($value) {
-   return is_int($value) && $value > 10;
-});
-$firstValues = new LimitIterator($values, 0, 10);
-
-foreach ($firstValues as $value) {
-    echo $value, "\n";
-}
-```
-
-This can be rewritten as
-
-```php
-use Jasny\IteratorPipeline\Pipeline;
-
-Pipeline::pipe($values)
-    ->filter(function($value) {
-        return is_int($value) && $value < 10;
-    })
-    ->limit(10)
-    ->output();
-```
-
 ## Usage
-
-This library provides Utility methods for creating streams.
 
 `Jasny\IteratorPipeline\Pipeline` takes a `Traversable` as source argument.
 
