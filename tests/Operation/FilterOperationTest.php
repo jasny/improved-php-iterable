@@ -2,12 +2,12 @@
 
 namespace Jasny\Iterator\Tests\Operation;
 
-use Jasny\IteratorProjection\Operation\FilterOperation;
+use Jasny\IteratorPipeline\Operation\FilterOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\FilterOperation
- * @covers \Jasny\IteratorProjection\Operation\AbstractOperation
+ * @covers \Jasny\IteratorPipeline\Operation\FilterOperation
+ * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class FilterOperationTest extends TestCase
 {

@@ -2,12 +2,12 @@
 
 namespace Jasny\Iterator\Tests\Operation;
 
-use Jasny\IteratorProjection\Operation\CleanupOperation;
+use Jasny\IteratorPipeline\Operation\CleanupOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\CleanupOperation
- * @covers \Jasny\IteratorProjection\Operation\AbstractOperation
+ * @covers \Jasny\IteratorPipeline\Operation\CleanupOperation
+ * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class CleanupOperationTest extends TestCase
 {

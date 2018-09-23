@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorProjection\Projection;
+namespace Jasny\IteratorPipeline\Projection;
 
 use function Jasny\expect_type;
 
@@ -17,12 +17,12 @@ class SortProjection implements \IteratorAggregate
     protected $input;
 
     /**
-     * @var callable
+     * @var callable|null
      */
     protected $comparator;
 
     /**
-     * @var callable
+     * @var int
      */
     protected $flags;
 

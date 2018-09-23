@@ -1,12 +1,12 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Projection\GroupProjection;
+use Jasny\IteratorPipeline\Projection\GroupProjection;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Projection\GroupProjection
+ * @covers \Jasny\IteratorPipeline\Projection\GroupProjection
  */
 class GroupProjectionTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorProjection\Operation;
+namespace Jasny\IteratorPipeline\Operation;
 
 /**
  * Use values as keys and visa versa.

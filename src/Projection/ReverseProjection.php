@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorProjection\Projection;
+namespace Jasny\IteratorPipeline\Projection;
 
-use Jasny\IteratorProjection\Iterator\CombineIterator;
+use Jasny\IteratorPipeline\Iterator\CombineIterator;
 
 /**
  * Reverse order of elements of an iterator.

@@ -1,13 +1,13 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Operation\FlattenOperation;
+use Jasny\IteratorPipeline\Operation\FlattenOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\FlattenOperation
- * @covers \Jasny\IteratorProjection\Operation\AbstractOperation
+ * @covers \Jasny\IteratorPipeline\Operation\FlattenOperation
+ * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class FlattenOperationTest extends TestCase
 {

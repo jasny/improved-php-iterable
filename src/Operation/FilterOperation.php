@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorProjection\Operation;
+namespace Jasny\IteratorPipeline\Operation;
 
 /**
  * Filter elements using callback
@@ -37,7 +37,7 @@ class FilterOperation extends AbstractOperation
     protected function apply(): \Traversable
     {
         foreach ($this->input as $key => $value) {
-            if (call_user_func($this->predicate, $value, $key)) {
+            if ((bool)call_user_func($this->predicate, $value, $key)) {
                 yield $key => $value;
             }
         }

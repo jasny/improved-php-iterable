@@ -1,13 +1,13 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Operation\ExpectTypeOperation;
+use Jasny\IteratorPipeline\Operation\ExpectTypeOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\ExpectTypeOperation
- * @covers \Jasny\IteratorProjection\Operation\AbstractOperation
+ * @covers \Jasny\IteratorPipeline\Operation\ExpectTypeOperation
+ * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class ExpectTypeOperationTest extends TestCase
 {

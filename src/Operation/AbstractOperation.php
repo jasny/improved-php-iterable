@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorProjection\Operation;
+namespace Jasny\IteratorPipeline\Operation;
 
 /**
  * Base class for iterator operations.

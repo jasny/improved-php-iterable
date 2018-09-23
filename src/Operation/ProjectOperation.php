@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorProjection\Operation;
+namespace Jasny\IteratorPipeline\Operation;
 
 /**
  * Project each element of an iterator to an associated (or numeric) array.
@@ -80,5 +80,4 @@ class ProjectOperation extends AbstractOperation
             yield $key => $value;
         }
     }
-
 }

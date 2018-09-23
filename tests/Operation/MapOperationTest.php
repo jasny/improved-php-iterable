@@ -1,13 +1,13 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Operation\MapOperation;
+use Jasny\IteratorPipeline\Operation\MapOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\MapOperation
- * @covers \Jasny\IteratorProjection\Operation\AbstractOperation
+ * @covers \Jasny\IteratorPipeline\Operation\MapOperation
+ * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class MapOperationTest extends TestCase
 {

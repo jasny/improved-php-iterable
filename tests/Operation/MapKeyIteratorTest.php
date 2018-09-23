@@ -1,13 +1,13 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Operation\MapKeyOperation;
+use Jasny\IteratorPipeline\Operation\MapKeyOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\MapKeyOperation
- * @covers \Jasny\IteratorProjection\Operation\AbstractOperation
+ * @covers \Jasny\IteratorPipeline\Operation\MapKeyOperation
+ * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class MapKeyIteratorTest extends TestCase
 {

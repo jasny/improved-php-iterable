@@ -1,12 +1,12 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Projection\SortKeyProjection;
+use Jasny\IteratorPipeline\Projection\SortKeyProjection;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Projection\SortKeyProjection
+ * @covers \Jasny\IteratorPipeline\Projection\SortKeyProjection
  */
 class SortKeyProjectionTest extends TestCase
 {

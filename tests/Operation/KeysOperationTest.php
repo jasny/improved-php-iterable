@@ -1,13 +1,13 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Operation\KeysOperation;
+use Jasny\IteratorPipeline\Operation\KeysOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\KeysOperation
- * @covers \Jasny\IteratorProjection\Operation\AbstractOperation
+ * @covers \Jasny\IteratorPipeline\Operation\KeysOperation
+ * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class KeysOperationTest extends TestCase
 {

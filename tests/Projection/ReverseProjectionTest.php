@@ -1,12 +1,12 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Projection\ReverseProjection;
+use Jasny\IteratorPipeline\Projection\ReverseProjection;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Projection\ReverseProjection
+ * @covers \Jasny\IteratorPipeline\Projection\ReverseProjection
  */
 class ReverseProjectionTest extends TestCase
 {

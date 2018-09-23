@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorProjection\Operation;
+namespace Jasny\IteratorPipeline\Operation;
 
 /**
  * Map all elements of an Iterator.
@@ -18,7 +18,7 @@ class MapOperation extends AbstractOperation
      * Constructor.
      *
      * @param iterable $input
-     * @param callable $callable
+     * @param callable $callback
      */
     public function __construct(iterable $input, callable $callback)
     {

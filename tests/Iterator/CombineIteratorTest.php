@@ -1,12 +1,12 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests\Iterator;
+namespace Jasny\IteratorPipeline\Tests\Iterator;
 
-use Jasny\IteratorProjection\Iterator\CombineIterator;
+use Jasny\IteratorPipeline\Iterator\CombineIterator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Iterator\CombineIterator
+ * @covers \Jasny\IteratorPipeline\Iterator\CombineIterator
  */
 class CombineIteratorTest extends TestCase
 {

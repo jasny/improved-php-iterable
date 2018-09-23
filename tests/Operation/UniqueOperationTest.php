@@ -1,12 +1,12 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Operation\UniqueOperation;
+use Jasny\IteratorPipeline\Operation\UniqueOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\UniqueOperation
+ * @covers \Jasny\IteratorPipeline\Operation\UniqueOperation
  */
 class UniqueOperationTest extends TestCase
 {

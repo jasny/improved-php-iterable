@@ -1,13 +1,13 @@
 <?php
 
-namespace Jasny\IteratorProjection\Tests;
+namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorProjection\Operation\FlipOperation;
+use Jasny\IteratorPipeline\Operation\FlipOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorProjection\Operation\FlipOperation
- * @covers \Jasny\IteratorProjection\Operation\AbstractOperation
+ * @covers \Jasny\IteratorPipeline\Operation\FlipOperation
+ * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class FlipOperationTest extends TestCase
 {

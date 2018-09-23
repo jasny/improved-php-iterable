@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorProjection\Iterator;
+namespace Jasny\IteratorPipeline\Iterator;
 
 /**
  * Iterator through keys and values, where key may be any type.
@@ -34,7 +34,7 @@ class CombineIterator implements \Iterator
     /**
      * Turn any Traversable into an Iterator.
      *
-     * @param iterable $traversable
+     * @param iterable $iterable
      * @return \Iterator
      */
     public function iterableToIterator(iterable $iterable): \Iterator

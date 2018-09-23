@@ -1,6 +1,6 @@
 {
-    "name": "jasny/pipeline-iterator",
-    "description": "Support functional-style operations, such as map-reduce transformations, on interators",
+    "name": "jasny/iterator-pipeline",
+    "description": "Support functional-style operations, such as map-reduce transformations, on iterators",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -8,10 +8,6 @@
             "name": "Arnold Daniels",
             "email": "arnold@jasny.net",
             "homepage": "http://www.jasny.net"
-        },
-        {
-            "name": "Fabio B. Silva",
-            "email": "fabio.bat.silva@gmail.com"
         }
     ],
     "support": {
@@ -21,20 +17,20 @@
     "require": {
         "php": ">=7.1.0",
         "jasny/aggregator": "dev-master",
-        "jasny/iterator": "dev-master",
-        "jasny/iterator-stream": "dev-master"
+        "jasny/iterator-stream": "dev-master",
+        "jasny/php-functions": "^4.0"
     },
     "require-dev": {
         "jasny/php-code-quality": "~2.3"
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\PipelineIterator\\": "src/"
+            "Jasny\\IteratorPipeline\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jasny\\PipelineIterator\\Tests\\": "tests/"
+            "Jasny\\IteratorPipeline\\Tests\\": "tests/"
         }
     },
     "scripts": {
