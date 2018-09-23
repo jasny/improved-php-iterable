@@ -1,129 +1,129 @@
-Jasny Iterator
+Jasny Iterator Projection
 ===
 
-[![Build Status](https://travis-ci.org/jasny/iterator.svg?branch=master)](https://travis-ci.org/jasny/iterator)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/iterator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/jasny/iterator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator/?branch=master)
-[![Packagist Stable Version](https://img.shields.io/packagist/v/jasny/iterator.svg)](https://packagist.org/packages/jasny/iterator)
-[![Packagist License](https://img.shields.io/packagist/l/jasny/iterator.svg)](https://packagist.org/packages/jasny/iterator)
+[![Build Status](https://travis-ci.org/jasny/iterator-projection.svg?branch=master)](https://travis-ci.org/jasny/iterator-projection)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/iterator-projection/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator-projection/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/jasny/iterator-projection/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator-projection/?branch=master)
+[![Packagist Stable Version](https://img.shields.io/packagist/v/jasny/iterator-projection.svg)](https://packagist.org/packages/jasny/iterator-projection)
+[![Packagist License](https://img.shields.io/packagist/l/jasny/iterator-projection.svg)](https://packagist.org/packages/jasny/iterator-projection)
 
-A set of useful [iterators](http://php.net/manual/en/class.iterator.php) for PHP.
+Projection operations for [iterators](http://php.net/manual/en/class.iterator.php) (PHP).
 
 Installation
 ---
 
-    composer require jasny/iterator
+    composer require jasny/iterator-projection
 
-Iterators
+Operations
 ---
 
 **Callback**
 
-* [MapIterator](#mapiterator)
-* [MapKeyIterator](#mapkeyiterator)
-* [ApplyIterator](#applyiterator)
+* [MapOperation](#mapoperation)
+* [MapKeyOperation](#mapkeyoperation)
+* [ApplyOperation](#applyoperation)
 
 **Filter**
-* [UniqueIterator](#uniqueiterator)
+* [UniqueOperation](#uniqueoperation)
 
 **Sorting**
 
-* [SortIteratorAggregate](#sortiteratoraggregate)
-* [SortKeyIteratorAggregate](#sortkeyiteratoraggregate)
+* [SortOperation](#sortoperation)
+* [SortKeyOperation](#sortkeyoperation)
 
 **Projection**
 
-* [GroupIteratorAggregate](#groupiteratoraggregate)
-* [FlattenIterator](#flatteniterator)
-* [ProjectionIterator](#projectioniterator)
+* [GroupOperation](#groupoperation)
+* [FlattenOperation](#flattenoperation)
+* [ProjectionOperation](#projectionoperation)
 
 **Key/value**
 
-* [ValueIterator](#valueiterator)
-* [KeyIterator](#keyiterator)
-* [CombineIterator](#combineiterator)
-* [FlipIterator](#flipiterator)
+* [ValueOperation](#valueoperation)
+* [KeyOperation](#keyoperation)
+* [CombineOperation](#combineoperation)
+* [FlipOperation](#flipoperation)
 
-**Assertion**
+**Validation**
 
-* [AssertTypeIterator](#asserttypeiterator)
+* [ExpectTypeOperation](#expecttypeoperation)
 
-Callback Iterators
+Callback
 ---
 
-### MapIterator
+### MapOperation
 
-Map all elements of an Iterator. The keys remain unchanged.
+Map all elements of an array or iterator. The keys remain unchanged.
 
 ```php
-$persons = new \ArrayIterator([
+$persons = [
     'client' => new Person("Max", 18),
     'seller' => new Person("Peter", 23),
     'lawyer' => new Person("Pamela", 23)
-]);
+];
 
-$iterator = new MapIterator($persons, function(Person $value, string $key): string {
+$iterator = new MapOperation($persons, function(Person $value, string $key): string {
     return sprintf("%s = %s", $key, $value->name);
 });
 ```
 
-### MapKeyIterator
+### MapKeyOperation
 
 Map all keys elements of an Iterator. The values remain unchanged.
 
 ```php
-$persons = new \ArrayIterator([
+$persons = [
     'client' => new Person("Max", 18),
     'seller' => new Person("Peter", 23),
     'lawyer' => new Person("Pamela", 23)
-]);
+];
 
-$iterator = new MapKeyIterator($persons, function(string $key, Person $value): string {
+$iterator = new MapKeyOperation($persons, function(string $key, Person $value): string {
     return sprintf("%s (%s)", $value->name, $key);
 });
 ```
 
 _Caveat: The callback function switches value and key arguments, so the first argument is the key._
 
-### ApplyIterator
+### ApplyOperation
 
 Apply a callback to each element. This is a pass-through iterator, any value returned by the callback is ignored.
 
 ```php
-$persons = new \ArrayIterator([
+$persons = [
     'client' => new Person("Max", 18),
     'seller' => new Person("Peter", 23),
     'lawyer' => new Person("Pamela", 23)
-]);
+];
 
-$iterator = new ApplyIterator($persons, function(Person $value, string $key): void {
+$iterator = new ApplyOperation($persons, function(Person $value, string $key): void {
     $value->role = $key;
 });
 ```
 
-Filter Iterators
+Filter
 ---
 
-### UniqueIterator
+### UniqueOperation
 
 Filter to get only unique items. The keys are preserved, skipping duplicate values.
 
 ```php
-$values = new \ArrayIterator(['foo', 'bar', 'qux', 'foo', 'zoo']);
+$values = ['foo', 'bar', 'qux', 'foo', 'zoo'];
 
-$iterator = new UniqueIterator($values);
+$iterator = new UniqueOperation($values);
 ```
 
 You can pass a callback, which should return a value. Filtering on distinct values will be based on that value.
 
 ```php
-$persons = new \ArrayIterator([
+$persons = [
     'client' => new Person("Max", 18),
     'seller' => new Person("Peter", 23),
     'lawyer' => new Person("Pamela", 23)
-]);
+];
 
-$iterator = new UniqueIterator($persons, function(Person $value): int {
+$iterator = new UniqueOperation($persons, function(Person $value): int {
     return $value->age;
 });
 ```
@@ -131,13 +131,13 @@ $iterator = new UniqueIterator($persons, function(Person $value): int {
 All values are stored for reference. The callback function can also be used to serialize and hash the value.
 
 ```php
-$persons = new \ArrayIterator([
+$persons = [
     'client' => new Person("Max", 18),
     'seller' => new Person("Peter", 23),
     'lawyer' => new Person("Pamela", 23)
-]);
+];
 
-$iterator = new UniqueIterator($persons, function(Person $value): string {
+$iterator = new UniqueOperation($persons, function(Person $value): string {
     return hash('sha256', serialize($value));
 });
 ```
@@ -146,92 +146,92 @@ The keys of an iterator don't have to be unique. This is unlike an associated ar
 callback to get distinct keys.
 
 ```php
-$iterator = new UniqueIterator($someGenerator, function($value, $key) {
+$iterator = new UniqueOperation($someGenerator, function($value, $key) {
     return $key;
 });
 ```
 
-Sorting Iterators
+Sorting
 ---
 
-### SortIteratorAggregate
+### SortOperation
 
 Sort all elements of an iterator.
 
 ```php
-$values = new \ArrayIterator(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"]);
+$values = ["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"];
 
-$iterator = new SortIteratorAggregate($values);
+$iterator = new SortOperation($values);
 ```
 
 Instead of using the default sorting, a callback may be passed as user defined comparison function.
 
 ```php
-$values = new \ArrayIterator(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"]);
+$values = ["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"];
 
-$iterator = new SortIteratorAggregate($values, function($a, $b): int {
+$iterator = new SortOperation($values, function($a, $b): int {
     return strlen($a) <=> strlen($b);
 });
 ```
 
 The keys are preserved.
 
-_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
+_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayOperation`
 for sorting._
 
-### SortKeyIteratorAggregate
+### SortKeyOperation
 
 Sort all elements of an iterator based on the key.
 
 ```php
-$values = new \ArrayIterator([
+$values = [
     "Charlie" => "three",
     "Bravo" => "two",
     "Delta" => "four",
     "Alpha" => "one"
-]);
+];
 
-$iterator = new SortKeyIteratorAggregate($values);
+$iterator = new SortKeyOperation($values);
 ```
 
-Similar to `SortIteratorAggregate`, a callback may be passed as user defined comparison function. 
+Similar to `SortOperation`, a callback may be passed as user defined comparison function. 
 
-_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
+_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayOperation`
 for sorting._
 
-### ReverseIteratorAggregate
+### ReverseOperation
 
 Reverse order of elements of an iterator.
 
 ```php
-$values = new \ArrayIterator(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"]);
+$values = ["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"];
 
-$iterator = new ReverseIteratorAggregate($values);
+$iterator = new ReverseOperation($values);
 ```
 
 The keys are preserved.
 
-_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayIterator`
+_This is an `IteratorAggregate`. It may require traversing through all elements an putting them in an `ArrayOperation`
 for sorting._
 
-Projection Iterators
+Projection
 ---
 
-### GroupIteratorAggregate
+### GroupOperation
 
 Group elements of an iterator.
 
 ```php
-$objects = new \ArrayIterator([
+$objects = [
     (object)['type' => 'one'],
     (object)['type' => 'two'],
     (object)['type' => 'one'],
     (object)['type' => 'three'],
     (object)['type' => 'one'],
     (object)['type' => 'two']
-]);
+];
 
-$iterator = new GroupIteratorAggregate($objects, function(\stdClass $object): string {
+$iterator = new GroupOperation($objects, function(\stdClass $object): string {
     return $object->type;
 });
 ```
@@ -239,81 +239,81 @@ $iterator = new GroupIteratorAggregate($objects, function(\stdClass $object): st
 Alternatively, it's possible to group based on the key.
 
 ```php
-$values = new \ArrayIterator([
+$values = [
     'alpha' => 'one',
     'bat' => 'two',
     'apple' => 'three',
     'cat' => 'four',
     'air' => 'five',
     'beast' => 'six'
-]);
+];
 
-$iterator = new GroupIteratorAggregate($values, function(string $value, string $key): string {
+$iterator = new GroupOperation($values, function(string $value, string $key): string {
     return substr($key, 0, 1);
 });
 ```
 
-_This is an `IteratorAggregate`. It requires traversing through all elements an putting them in a `CombineIterator` for
+_This is an `IteratorAggregate`. It requires traversing through all elements an putting them in a `CombineOperation` for
 grouping._
 
-### FlattenIterator
+### FlattenOperation
 
 Walk through all sub-iterables and concatenate them.
 
 ```php
-$values = new \ArrayIterator([
+$values = [
     ['one', 'two'],
     ['three', 'four', 'five'],
     [],
     ['six']
-]);
+];
 
-$iterator = new FlattenIterator($values);
+$iterator = new FlattenOperation($values);
 ```
 
 The entries may be an array, Iterator or IteratorAggregate. Other entries will not be flattened.
 
 ```php
-$values = new \ArrayIterator([
-    new \ArrayIterator(['one', 'two']),
+$values = [
+    ['one', 'two']),
     new \ArrayObject(['three', 'four', 'five']),
-    new \EmptyIterator(),
+    new \EmptyOperation(),
     ['six'],
     'seven'
-]);
+];
 
-$iterator = new FlattenIterator($values);
+$iterator = new FlattenOperation($values);
 ```
 
 By default the keys are dropped, replaces by an incrementing counter (so as an numeric array). By passing `true` as
 second parameters, the keys are remained.
 
 ```php
-$values = new \ArrayIterator([
+$values = [
     ['one' => 'uno', 'two' => 'dos'],
     ['three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
     [],
     ['six' => 'seis']
-]);
+];
 
-$iterator = new FlattenIterator($values, true);
+$iterator = new FlattenOperation($values, true);
 ```
 
-### ProjectionIterator
+### ProjectionOperation
 Project each element of an iterator to an associated (or numeric) array. Each element should be an array or object.
 
 For the projection, a mapping `[new key => old key]` must be supplied.
 
 ```php
-$values = new \ArrayIterator([
+$values = [
     ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
     ['one' => 'yi', 'two' => 'er', 'three' => 'san', 'four' => 'si', 'five' => 'wu'],
     ['one' => 'één', 'two' => 'twee', 'three' => 'drie', 'four' => 'vier', 'five' => 'vijf']
-]);
+];
 
 $mapping = ['I' => 'one', 'II' => 'two', 'II' => 'three', 'IV' => 'four'];
 
-$iterator = new ProjectionIterator($values, $mapping);
+$iterator = new ProjectionOperation($values, $mapping);
 ```
 
 If an element doesn't have a specified key, the value will be `null`.
@@ -323,83 +323,83 @@ The order of keys of the projected array is always the same as the order of the 
 The mapping may also be a numeric array.
 
 ```php
-$values = new \ArrayIterator([
+$values = [
     ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
     (object)['three' => 'san', 'two' => 'er', 'five' => 'wu', 'four' => 'si'],
     new \ArrayObject(['two' => 'twee', 'four' => 'vier'])
-]);
+];
 
 $mapping = ['one', 'three, 'four'];
 
-$iterator = new ProjectionIterator($values, $mapping);
+$iterator = new ProjectionOperation($values, $mapping);
 ```
 
 Scalar elements and `DateTime` object are ignored.
 
-Key/value Iterators
+Key/value
 ---
 
-### ValueIterator
+### ValueOperation
 
 Keep the values, drop the keys. The keys become an incremental number. This is comparable to
 [`array_values`](https://php.net/array_values).
 
 ```php
-$values = new \ArrayIterator(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro']);
+$values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'];
 
-$spanish = new ValueIterator($values);
+$spanish = new ValueOperation($values);
 ```
 
-### KeyIterator
+### KeyOperation
 
 Use the keys as values. The keys become an incremental number. This is comparable to
 [`array_keys`](https://php.net/array_keys).
 
 ```php
-$values = new \ArrayIterator(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro']);
+$values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'];
 
-$english = new KeyIterator($values);
+$english = new KeyOperation($values);
 ```
 
-### CombineIterator
+### CombineOperation
 
 Iterator through keys and values.
 
 ```php
-$english = new \ArrayIterator(['one', 'two', 'three', 'four']);
-$spanish = new \ArrayIterator(['uno', 'dos', 'tres', 'cuatro']);
+$english = ['one', 'two', 'three', 'four'];
+$spanish = ['uno', 'dos', 'tres', 'cuatro'];
 
-$iterator = new CombineIterator($english, $spanish);
+$iterator = new CombineOperation($english, $spanish);
 ```
 
 The key may be any type and doesn't need to be unique.
 
 ```php
-$keys = new \ArrayIterator([null, new \stdClass(), 'foo', ['hello', 'world'], 5.2, 'foo']);
-$values = new \ArrayIterator(['one', 'two', 'three', 'four', 'five', 'six']);
+$keys = [null, new \stdClass(), 'foo', ['hello', 'world'], 5.2, 'foo'];
+$values = ['one', 'two', 'three', 'four', 'five', 'six'];
 
-$iterator = new CombineIterator($keys, $values);
+$iterator = new CombineOperation($keys, $values);
 ```
 
 The number of elements yielded from the iterator only depends on the number of keys. If there are more keys than
 values, the value defaults to `null`. If there are more values than keys, the additional values are not returned.
 
-### FlipIterator
+### FlipOperation
 
 Use values as keys and visa versa.
 
 ```php
-$values = new \ArrayIterator(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro']);
+$values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'];
 
-$iterator = new FlipIterator($values);
+$iterator = new FlipOperation($values);
 ```
 
 Both the value and key may be any type and don't need to be unique.
 
-Assertion Iterators
+Validation
 ---
 
-### AssertTypeIterator
+### ExpectTypeOperation
 
 Assert the type of each element of the array using [`expect_type`](https://github.com/jasny/php-functions#expect_type)
 from jasny/php-functions.
@@ -409,9 +409,9 @@ As type you can specify any internal type, including `callable` and `scalar`, or
 Multiple types can be specified. The value needs to be one of these types. 
 
 ```php
-$values = new \ArrayIterator(['one' => 'uno', 'two' => 2, 'three' => new \stdClass(), 'four' => 'cautro']);
+$values = ['one' => 'uno', 'two' => 2, 'three' => new \stdClass(), 'four' => 'cautro'];
 
-$iterator = new AssertTypeIterator($values, ['string', 'int'], \UnexpectedValueException::class);
+$iterator = new AssertTypeOperation($values, ['string', 'int'], \UnexpectedValueException::class);
 ```
 
 A `Throwable` class name may be specified as third argument. The iterator throws an `UnexpectedValueException` by

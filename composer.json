@@ -1,6 +1,6 @@
 {
-    "name": "jasny/iterator",
-    "description": "A set of useful iterators (including map/reduce iterators)",
+    "name": "jasny/iterator-projection",
+    "description": "Transform (aka project) elements of an iterator",
     "license": "MIT",
     "type": "library",
     "authors": [
