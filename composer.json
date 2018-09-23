@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\Iterator\\": "src/"
+            "Jasny\\IteratorProjection\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jasny\\Iterator\\Tests\\": "tests/"
+            "Jasny\\IteratorProjection\\Tests\\": "tests/"
         }
     },
     "scripts": {
