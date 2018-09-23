@@ -77,25 +77,6 @@ class SortKeyProjectionTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIterateGenerator()
-    {
-        $keys = $this->sorted;
-        shuffle($keys);
-
-        $loop = function($keys) {
-            foreach ($keys as $key) {
-                yield $key => null;
-            }
-        };
-
-        $generator = $loop($keys);
-        $iterator = new SortKeyProjection($generator);
-
-        $result = iterator_to_array($iterator);
-
-        $this->assertSame($this->sorted, array_keys($result));
-    }
-
     public function testIterateIterator()
     {
         $keys = $this->sorted;
@@ -112,6 +93,33 @@ class SortKeyProjectionTest extends TestCase
         $this->assertNotSame($keys, array_keys($result));
 
         $this->assertSame($values, iterator_to_array($inner), "Original iterator should not be changed");
+    }
+
+    public function testIterateGenerator()
+    {
+        $keys = [['i' => 7], ['i' => 2], null, ['i' => 42], ['i' => -2]];
+
+        $loop = function($keys) {
+            foreach ($keys as $i => $key) {
+                yield $key => $i;
+            }
+        };
+
+        $generator = $loop($keys);
+        $iterator = new SortKeyProjection($generator, function($a, $b) {
+            return ($a['i'] ?? 0) <=> ($b['i'] ?? 0);
+        });
+
+        $resultKeys = [];
+        $resultValues = [];
+
+        foreach ($iterator as $key => $value) {
+            $resultKeys[] = $key;
+            $resultValues[] = $value;
+        }
+
+        $this->assertSame([4, 2, 1, 0, 3], $resultValues);
+        $this->assertSame([$keys[4], $keys[2], $keys[1], $keys[0], $keys[3]], $resultKeys);
     }
 
     public function testIterateArrayable()

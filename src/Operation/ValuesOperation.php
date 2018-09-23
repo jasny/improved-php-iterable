@@ -11,14 +11,16 @@ namespace Jasny\IteratorProjection\Operation;
 class ValuesOperation extends AbstractOperation
 {
     /**
-     * Apply the operation to every element of the input array / iterator.
+     * Apply logic.
      *
-     * @return \Generator
+     * @return \ArrayIterator
      */
     protected function apply(): \Traversable
     {
-        foreach ($this->input as $value) {
-            yield $value;
-        }
+        $array = is_array($this->input)
+            ? array_values($this->input)
+            : iterator_to_array($this->input, false);
+
+        return new \ArrayIterator($array);
     }
 }
