@@ -10,7 +10,7 @@ namespace Jasny;
  * @param iterable $iterable
  * @return array
  */
-function iterable_to_array(iterable $iterable)
+function iterable_to_array(iterable $iterable): array
 {
     switch (true) {
         case is_array($iterable):

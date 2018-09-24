@@ -1,6 +1,6 @@
 {
-    "name": "jasny/iterator-pipeline",
-    "description": "Support functional-style operations, such as map-reduce transformations, on iterators",
+    "name": "jasny/iteratable-functions",
+    "description": "Functions to interact with arrays, iterators and other traversable objects",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -16,8 +16,6 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "jasny/aggregator": "dev-master",
-        "jasny/iterator-stream": "dev-master",
         "jasny/php-functions": "^4.0"
     },
     "require-dev": {
@@ -25,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\IteratorPipeline\\": "src/"
+            "Jasny\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jasny\\IteratorPipeline\\Tests\\": "tests/"
+            "Jasny\\Tests\\": "tests/"
         }
     },
     "scripts": {

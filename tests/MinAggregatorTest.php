@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasny\IteratorPipeline\Tests\Aggregator;
+namespace Jasny\IteratorPipeline\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Jasny\IteratorPipeline\Aggregator\MinAggregator;
