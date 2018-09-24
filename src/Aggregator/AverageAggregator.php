@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Aggregator;
+namespace Jasny\IteratorPipeline\Aggregator;
 
 use function Jasny\expect_type;
 

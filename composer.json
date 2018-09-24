@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\Aggregator\\": "ls src/"
+            "Jasny\\IteratorPipeline\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jasny\\Aggregator\\Tests\\": "tests/"
+            "Jasny\\IteratorPipeline\\Tests\\": "tests/"
         }
     },
     "scripts": {

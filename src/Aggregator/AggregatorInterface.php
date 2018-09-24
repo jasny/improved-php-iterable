@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Aggregator;
+namespace Jasny\IteratorPipeline\Aggregator;
 
 /**
  * Aggregate input elements, resulting in an accumulated value.

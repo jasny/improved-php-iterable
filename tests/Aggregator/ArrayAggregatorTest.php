@@ -1,13 +1,13 @@
 <?php
 
-namespace Jasny\Tests\Aggregator;
+namespace Jasny\IteratorPipeline\Tests\Aggregator;
 
-use Jasny\Aggregator\ArrayAggregator;
+use Jasny\IteratorPipeline\Aggregator\ArrayAggregator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Aggregator\AbstractAggregator
- * @covers \Jasny\Aggregator\ArrayAggregator
+ * @covers \Jasny\IteratorPipeline\Aggregator\AbstractAggregator
+ * @covers \Jasny\IteratorPipeline\Aggregator\ArrayAggregator
  */
 class ArrayAggregatorTest extends TestCase
 {

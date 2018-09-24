@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Aggregator;
+namespace Jasny\IteratorPipeline\Aggregator;
 
 /**
  * Get the first element or the first element that matches a condition.

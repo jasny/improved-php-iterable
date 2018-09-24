@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Aggregator;
+namespace Jasny\IteratorPipeline\Aggregator;
 
 /**
  * Concatenates the input elements, separated by the specified delimiter, in encounter order.

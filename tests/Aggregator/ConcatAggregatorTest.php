@@ -1,13 +1,13 @@
 <?php
 
-namespace Jasny\Tests\Aggregator;
+namespace Jasny\IteratorPipeline\Tests\Aggregator;
 
 use PHPUnit\Framework\TestCase;
-use Jasny\Aggregator\ConcatAggregator;
+use Jasny\IteratorPipeline\Aggregator\ConcatAggregator;
 
 /**
- * @covers \Jasny\Aggregator\AbstractAggregator
- * @covers \Jasny\Aggregator\ConcatAggregator
+ * @covers \Jasny\IteratorPipeline\Aggregator\AbstractAggregator
+ * @covers \Jasny\IteratorPipeline\Aggregator\ConcatAggregator
  */
 class ConcatAggregatorTest extends TestCase
 {
