@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Aggregator;
+namespace Jasny\Aggregator;
 
 use function Jasny\expect_type;
 
@@ -10,7 +10,7 @@ use function Jasny\expect_type;
  * Aggregator that produces the sum of a numbers,
  * If no elements are present, the result is 0.
  */
-class SumAggregator extends AbstractAggregator
+class iterablesum extends AbstractAggregator
 {
     /**
      * Invoke the aggregator.

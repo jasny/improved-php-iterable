@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Jasny;
+
+/**
+ * Convert any iterable to an array.
+ *
+ * @param iterable $iterable
+ * @return \Iterator
+ */
+function iterable_to_iterator(iterable $iterable): \Iterator
+{
+    if (is_array($iterable)) {
+        return new \ArrayIterator($iterable);
+    }
+
+    if ($iterable instanceof \IteratorAggregate) {
+        $iterable = $iterable->getIterator();
+    }
+
+    if (!$iterable instanceof \Iterator) {
+        $iterable = new \IteratorIterator($iterable);
+    }
+
+    return $iterable;
+}
