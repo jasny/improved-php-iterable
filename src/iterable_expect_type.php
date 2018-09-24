@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jasny;
 
 use function Jasny\expect_type;
+use function Jasny\array_join_pretty;
 
 /**
  * Check the type of iterator elements.
@@ -22,10 +23,10 @@ function iterable_expect_type(
     string $throwable = \UnexpectedValueException::class,
     string $message = null
 ): \Generator {
-    expect_type($type, ['string', 'array'], "Expected type to be a string or string[], %s given");
+    expect_type($type, ['string', 'array'], \TypeError::class, "Expected type to be a string or string[], %s given");
 
     foreach ($iterable as $key => $value) {
-        expect_type($value, $type, $throwable, $message);
+        expect_type($value, $type, $throwable, $message ?? 'Expected all elements to be of type %2$s, %1$s given');
 
         yield $key => $value;
     }

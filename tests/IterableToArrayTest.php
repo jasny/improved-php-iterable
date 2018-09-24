@@ -1,43 +1,30 @@
 <?php
 
-namespace Jasny\IteratorPipeline\Tests;
+namespace Jasny\Tests;
 
-use function Jasny\iterable_to_array;
 use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_to_array;
 
 /**
  * @covers \Jasny\iterable_to_array
  */
 class IterableToArrayTest extends TestCase
 {
+    use ProvideIterablesTrait;
+
     public function provider()
     {
-        $generate = function($values): \Generator {
-            foreach ($values as $key => $value) {
-                yield $key => $value;
-            }
-        };
-
-        $values = ['I' => 'one', 'II' => 'two', 'III' => 'three'];
-
-        return [
-            [$values],
-            [new \ArrayIterator($values)],
-            [new \ArrayObject($values)],
-            \SplFixedArray::fromArray($values),
-            $generate($values)
-        ];
+        return $this->provideIterables(['I' => 'one', 'II' => 'two', 'III' => 'three']);
     }
 
     /**
      * @dataProvider provider
      */
-    public function test($values)
+    public function test($values, $expected)
     {
         $result = iterable_to_array($values);
 
-        $this->assertEquals($values, $result);
-        $this->assertSame($iterator, $aggregator->getIterator());
+        $this->assertSame($expected, $result);
     }
 
     public function testEmpty()

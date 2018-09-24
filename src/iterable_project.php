@@ -19,11 +19,11 @@ function iterable_project(iterable $iterable, array $mapping): \Generator
 
         if (is_array($value) || $value instanceof \ArrayAccess) {
             foreach ($mapping as $to => $from) {
-                $projected[$to] = $element[$from] ?? null;
+                $projected[$to] = $value[$from] ?? null;
             }
         } elseif (is_object($value) && !$value instanceof \DateTimeInterface) {
             foreach ($mapping as $to => $from) {
-                $projected[$to] = $element->$from ?? null;
+                $projected[$to] = $value->$from ?? null;
             }
         } else {
             $projected = $value;

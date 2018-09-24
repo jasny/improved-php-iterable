@@ -1,15 +1,17 @@
 <?php
 
-namespace Jasny\IteratorPipeline\Tests;
+namespace Jasny\Tests;
 
-use Jasny\IteratorPipeline\Projection\iterablesort;
 use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_sort;
 
 /**
- * @covers \Jasny\IteratorPipeline\Projection\iterablesort
+ * @covers \Jasny\iterable_sort
  */
-class SortProjectionTest extends TestCase
+class IterableSortTest extends TestCase
 {
+    use ProvideIterablesTrait;
+
     protected $sorted = [
         "Alpha",
         "Bravo",
@@ -39,20 +41,26 @@ class SortProjectionTest extends TestCase
         "Zulu"
     ];
 
-    public function testIterate()
+    public function provider()
     {
         $values = $this->sorted;
         shuffle($values);
 
-        $iterator = new iterablesort($values);
+        return $this->provideIterables($values);
+    }
 
+    /**
+     * @dataProvider provider
+     */
+    public function test($values)
+    {
+        $iterator = iterable_sort($values);
         $result = iterator_to_array($iterator);
 
         $this->assertSame($this->sorted, $result);
-        $this->assertNotSame($values, $result);
     }
 
-    public function testIterateSortFlags()
+    public function testSortFlags()
     {
         $values = [
             'img1.png',
@@ -61,7 +69,7 @@ class SortProjectionTest extends TestCase
             'img2.png'
         ];
 
-        $iterator = new iterablesort($values, \SORT_NATURAL);
+        $iterator = iterable_sort($values, \SORT_NATURAL);
 
         $result = iterator_to_array($iterator);
 
@@ -74,7 +82,7 @@ class SortProjectionTest extends TestCase
         $this->assertSame($expected, $result);
    }
 
-    public function testIterateKey()
+    public function testPreserveKeys()
     {
         $values = [
             'one' => 'India',
@@ -83,7 +91,7 @@ class SortProjectionTest extends TestCase
             'four' => 'Bravo'
         ];
 
-        $iterator = new iterablesort($values, \SORT_REGULAR, true);
+        $iterator = iterable_sort($values, \SORT_REGULAR, true);
 
         $result = iterator_to_array($iterator);
 
@@ -97,27 +105,11 @@ class SortProjectionTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIterateIterator()
-    {
-        $values = $this->sorted;
-        shuffle($values);
-
-        $inner = new \ArrayIterator($values);
-
-        $iterator = new iterablesort($inner);
-
-        $result = iterator_to_array($iterator);
-
-        $this->assertSame($this->sorted, $result);
-
-        $this->assertNotSame($values, $result);
-        $this->assertSame($values, iterator_to_array($inner), "Original iterator should not be changed");
-    }
-
-    public function testIterateGenerator()
+    public function testGenerator()
     {
         $keys = [(object)['a' => 'a'], ['b' => 'b'], null, 'd', 'd'];
         $values = [['n' => 'India'], ['n' => 'Zulu'], ['n' => 'Papa'], ['n' => 'Bravo'], ['n' => 'Foxtrot']];
+
         $loop = function($keys, $values) {
             foreach ($keys as $i => $key) {
                 yield $key => $values[$i];
@@ -125,7 +117,7 @@ class SortProjectionTest extends TestCase
         };
 
         $generator = $loop($keys, $values);
-        $iterator = new iterablesort($generator, function ($a, $b) {
+        $iterator = iterable_sort($generator, function ($a, $b) {
             return $a['n'] <=> $b['n'];
         }, true);
 
@@ -141,43 +133,13 @@ class SortProjectionTest extends TestCase
         $this->assertSame([$keys[3], $keys[4], $keys[0], $keys[2], $keys[1]], $resultKeys);
     }
 
-    public function testIterateArrayable()
-    {
-        $values = $this->sorted;
-        shuffle($values);
-
-        $inner = \SplFixedArray::fromArray($values);
-        $iterator = new iterablesort($inner);
-
-        $result = iterator_to_array($iterator);
-
-        $this->assertSame($this->sorted, $result);
-    }
-
-    public function testIterateArrayObject()
-    {
-        $values = $this->sorted;
-        shuffle($values);
-
-        $inner = new \ArrayObject($values);
-
-        $iterator = new iterablesort($inner);
-
-        $result = iterator_to_array($iterator);
-
-        $this->assertSame($this->sorted, $result);
-    }
-
-    public function testIterateCallback()
+    public function testCallback()
     {
         $compare = function($a, $b) {
             return (strlen($a) <=> strlen($b)) ?: $a <=> $b;
         };
 
-        $inner = new \ArrayIterator($this->sorted);
-
-        $iterator = new iterablesort($inner, $compare);
-
+        $iterator = iterable_sort($this->sorted, $compare);
         $result = iterator_to_array($iterator);
 
         $expected = $this->sorted;
@@ -186,7 +148,7 @@ class SortProjectionTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIterateCallbackKey()
+    public function testCallbackPreserveKeys()
     {
         $values = [
             'one' => 'India',
@@ -199,8 +161,7 @@ class SortProjectionTest extends TestCase
             return (strlen($a) <=> strlen($b)) ?: $a <=> $b;
         };
 
-        $iterator = new iterablesort($values, $compare, true);
-
+        $iterator = iterable_sort($values, $compare, true);
         $result = iterator_to_array($iterator);
 
         $expected = [
@@ -213,10 +174,9 @@ class SortProjectionTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIterateEmpty()
+    public function testEmpty()
     {
-        $iterator = new iterablesort(new \EmptyIterator());
-
+        $iterator = iterable_sort(new \EmptyIterator());
         $result = iterator_to_array($iterator);
 
         $this->assertSame([], $result);

@@ -1,15 +1,14 @@
 <?php
 
-namespace Jasny\IteratorPipeline\Tests;
+namespace Jasny\Tests;
 
-use Jasny\IteratorPipeline\Operation\ApplyOperation;
 use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_apply;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\ApplyOperation
- * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
+ * @covers \Jasny\iterable_apply
  */
-class ApplyOperationTest extends TestCase
+class IterableApplyTest extends TestCase
 {
     public function testIterate()
     {
@@ -19,7 +18,7 @@ class ApplyOperationTest extends TestCase
             'qux' => new \stdClass()
         ];
 
-        $iterator = new ApplyOperation($objects, function($value, $key) {
+        $iterator = iterable_apply($objects, function($value, $key) {
             $value->key = $key;
             return 10; // Should be ignored
         });
@@ -45,7 +44,7 @@ class ApplyOperationTest extends TestCase
 
         $inner = new \ArrayIterator($objects);
 
-        $iterator = new ApplyOperation($inner, function($value, $key) {
+        $iterator = iterable_apply($inner, function($value, $key) {
             $value->key = $key;
             return 10; // Should be ignored
         });
@@ -71,7 +70,7 @@ class ApplyOperationTest extends TestCase
 
         $inner = new \ArrayObject($objects);
 
-        $iterator = new ApplyOperation($inner, function($value, $key) {
+        $iterator = iterable_apply($inner, function($value, $key) {
             $value->key = $key;
             return 10; // Should be ignored
         });
@@ -89,7 +88,7 @@ class ApplyOperationTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new ApplyOperation(new \EmptyIterator(), function() {});
+        $iterator = iterable_apply(new \EmptyIterator(), function() {});
 
         $result = iterator_to_array($iterator);
 

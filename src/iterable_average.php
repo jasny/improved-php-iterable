@@ -6,9 +6,9 @@ namespace Jasny;
 
 /**
  * Return the arithmetic mean.
+ * If no elements are present, the result is NAN.
  *
  * @return float
- * @throws \UnexpectedValueException if not all values are integers or floats
  */
 function iterable_average(iterable $iterable): float
 {
@@ -16,8 +16,6 @@ function iterable_average(iterable $iterable): float
     $sum = 0;
 
     foreach ($iterable as $item) {
-        expect_type($item, ['int', 'float'],\UnexpectedValueException::class);
-
         $count++;
         $sum += $item;
     }

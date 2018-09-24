@@ -1,0 +1,81 @@
+<?php
+
+namespace Jasny\Tests;
+
+use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_flip;
+
+/**
+ * @covers \Jasny\iterable_flip
+ */
+class IterableFlipTest extends TestCase
+{
+    use ProvideIterablesTrait;
+
+    public function provider()
+    {
+        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
+        $tests = $this->provideIterables($values);
+
+        foreach ($tests as &$test) {
+            $test[1] = array_flip($test[1]);
+        }
+
+        return $tests;
+    }
+
+    /**
+     * @dataProvider provider
+     */
+    public function test($values, $expected)
+    {
+        $iterator = iterable_flip($values);
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testNotUnique()
+    {
+        $values = ['foo' => 'one', 'bar' => 'two', 'qux' => 'three', 'foo' => 'four'];
+
+        $iterator = iterable_flip($values);
+
+        $resultKeys = [];
+        $resultValues = [];
+
+        foreach ($iterator as $key => $value) {
+            $resultKeys[] = $key;
+            $resultValues[] = $value;
+        }
+
+        $this->assertSame(array_values($values), $resultKeys);
+        $this->assertSame(array_keys($values), $resultValues);
+    }
+
+    public function testMixed()
+    {
+        $values = ['one' => null, 'two' => new \stdClass(), 'three' => ['hello', 'world'], 'four' => 5.2];
+
+        $iterator = iterable_flip($values);
+
+        $resultKeys = [];
+        $resultValues = [];
+
+        foreach ($iterator as $key => $value) {
+            $resultKeys[] = $key;
+            $resultValues[] = $value;
+        }
+
+        $this->assertSame(array_values($values), $resultKeys);
+        $this->assertSame(array_keys($values), $resultValues);
+    }
+
+    public function testEmpty()
+    {
+        $iterator = iterable_flip(new \EmptyIterator());
+        $result = iterator_to_array($iterator);
+
+        $this->assertEquals([], $result);
+    }
+}

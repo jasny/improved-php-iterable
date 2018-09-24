@@ -1,21 +1,20 @@
 <?php
 
-namespace Jasny\Iterator\Tests\Operation;
+namespace Jasny\Tests;
 
-use Jasny\IteratorPipeline\Operation\FilterOperation;
 use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_filter;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\iterablefilter
- * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
+ * @covers \Jasny\iterable_filter
  */
-class FilterOperationTest extends TestCase
+class IterableFilterTest extends TestCase
 {
     public function testIterate()
     {
         $values = range(-10, 10);
 
-        $iterator = new FilterOperation($values, function($value) {
+        $iterator = iterable_filter($values, function($value) {
             return $value % 2 === 0;
         });
 
@@ -31,7 +30,7 @@ class FilterOperationTest extends TestCase
     {
         $values = ['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'];
 
-        $iterator = new FilterOperation($values, function($value, $key) {
+        $iterator = iterable_filter($values, function($value, $key) {
             return $key[0] === 'a';
         });
 
@@ -51,7 +50,7 @@ class FilterOperationTest extends TestCase
         };
 
         $generator = $loop($keys);
-        $iterator = new FilterOperation($generator, function($value, $key) {
+        $iterator = iterable_filter($generator, function($value, $key) {
             return !is_scalar($key);
         });
 
@@ -69,7 +68,7 @@ class FilterOperationTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new FilterOperation(new \EmptyIterator(), function($value, $key) {
+        $iterator = iterable_filter(new \EmptyIterator(), function($value, $key) {
             return true;
         });
 

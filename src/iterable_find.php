@@ -12,7 +12,7 @@ namespace Jasny;
  * @param callable $matcher
  * @return mixed
  */
-function iterable_first(iterable $iterable, callable $matcher = null)
+function iterable_find(iterable $iterable, callable $matcher = null)
 {
     foreach ($iterable as $key => $value) {
         if ((bool)call_user_func($matcher, $value, $key)) {

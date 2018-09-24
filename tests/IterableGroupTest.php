@@ -1,16 +1,18 @@
 <?php
 
-namespace Jasny\IteratorPipeline\Tests;
+namespace Jasny\Tests;
 
-use Jasny\IteratorPipeline\Projection\iterablegroup;
 use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_group;
 
 /**
- * @covers \Jasny\IteratorPipeline\Projection\iterablegroup
+ * @covers \Jasny\iterable_group
  */
-class GroupProjectionTest extends TestCase
+class IterableGroupTest extends TestCase
 {
-    public function testIterate()
+    use ProvideIterablesTrait;
+
+    public function provider()
     {
         $objects = [
             (object)['type' => 'one'],
@@ -21,7 +23,15 @@ class GroupProjectionTest extends TestCase
             (object)['type' => 'two']
         ];
 
-        $iterator = new iterablegroup($objects, function(\stdClass $object) {
+        return $this->provideIterables($objects);
+    }
+
+    /**
+     * @dataProvider provider
+     */
+    public function test($iterable, $objects)
+    {
+        $iterator = iterable_group($iterable, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -45,7 +55,7 @@ class GroupProjectionTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIterateMixed()
+    public function testMixed()
     {
         $parents = [
             new \stdClass(),
@@ -62,7 +72,7 @@ class GroupProjectionTest extends TestCase
             (object)['type' => $parents[1]]
         ];
 
-        $iterator = new iterablegroup($objects, function(\stdClass $object) {
+        $iterator = iterable_group($objects, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -93,12 +103,12 @@ class GroupProjectionTest extends TestCase
         $this->assertSame($expectedValues, $resultValues);
     }
 
-    public function testIterateKey()
+    public function testKey()
     {
         $values = ['alpha' => 'one', 'bat' => 'two', 'apple' => 'three', 'cat' => 'four', 'air' => 'five',
             'beast' => 'six'];
 
-        $iterator = new iterablegroup($values, function($value, $key) {
+        $iterator = iterable_group($values, function($value, $key) {
             return substr($key, 0, 1);
         });
 
@@ -113,55 +123,9 @@ class GroupProjectionTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIterateIterator()
+    public function testEmpty()
     {
-        $objects = [
-            (object)['type' => 'one'],
-            (object)['type' => 'two'],
-            (object)['type' => 'one']
-        ];
-        $inner = new \ArrayIterator($objects);
-
-        $iterator = new iterablegroup($inner, function(\stdClass $object) {
-            return $object->type;
-        });
-
-        $result = iterator_to_array($iterator);
-
-        $expected = [
-            'one' => [$objects[0], $objects[2]],
-            'two' => [$objects[1]]
-        ];
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testIterateArrayObject()
-    {
-        $objects = [
-            (object)['type' => 'one'],
-            (object)['type' => 'two'],
-            (object)['type' => 'one']
-        ];
-        $inner = new \ArrayObject($objects);
-
-        $iterator = new iterablegroup($inner, function(\stdClass $object) {
-            return $object->type;
-        });
-
-        $result = iterator_to_array($iterator);
-
-        $expected = [
-            'one' => [$objects[0], $objects[2]],
-            'two' => [$objects[1]]
-        ];
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testIterateEmpty()
-    {
-        $iterator = new iterablegroup(new \EmptyIterator(), function() {});
+        $iterator = iterable_group(new \EmptyIterator(), function() {});
 
         $result = iterator_to_array($iterator);
 

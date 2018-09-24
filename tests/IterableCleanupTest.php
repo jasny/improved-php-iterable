@@ -1,22 +1,28 @@
 <?php
 
-namespace Jasny\Iterator\Tests\Operation;
+namespace Jasny\Tests;
 
-use Jasny\IteratorPipeline\Operation\CleanupOperation;
 use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_cleanup;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\iterablecleanup
- * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
+ * @covers \Jasny\iterable_cleanup
  */
-class CleanupOperationTest extends TestCase
+class IterableCleanupTest extends TestCase
 {
-    public function testIterate()
+    use ProvideIterablesTrait;
+
+    public function provider()
     {
-        $values = ['one', 'two', null, 'foo', 0, '', null, [], -100];
+        return $this->provideIterables(['one', 'two', null, 'foo', 0, '', null, [], -100]);
+    }
 
-        $iterator = new CleanupOperation($values);
-
+    /**
+     * @dataProvider provider
+     */
+    public function test($values)
+    {
+        $iterator = iterable_cleanup($values);
         $result = iterator_to_array($iterator);
 
         $expected = [0 => 'one', 1 => 'two', 3 => 'foo', 4 => 0, 5 => '', 7 => [], 8 => -100];
@@ -35,7 +41,7 @@ class CleanupOperationTest extends TestCase
         };
 
         $generator = $loop($keys, $values);
-        $iterator = new CleanupOperation($generator);
+        $iterator = iterable_cleanup($generator);
 
         $resultKeys = [];
         $resultValues = [];
@@ -51,8 +57,7 @@ class CleanupOperationTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new CleanupOperation(new \EmptyIterator());
-
+        $iterator = iterable_cleanup(new \EmptyIterator());
         $result = iterator_to_array($iterator);
 
         $this->assertSame([], $result);

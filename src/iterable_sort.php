@@ -14,34 +14,24 @@ namespace Jasny;
  */
 function iterable_sort(iterable $iterable, $compare = \SORT_REGULAR, bool $preserveKeys = false): iterable
 {
-    expect_type($compare, ['callable', 'int'], "Expected comparator to be a callable or integer, %s given");
+    expect_type($compare, ['callable', 'int'], \TypeError::class,
+        "Expected compare to be a callable or integer, %s given");
 
     $comparator = is_int($compare) ? null : $compare;
     $flags = is_int($compare) ? $compare : \SORT_REGULAR;
 
-    if ($preserveKeys) {
-        $keys = [];
-        $values = [];
+    ['keys' => $keys, 'values' => $values] = $preserveKeys
+        ? iterable_separate($iterable)
+        : ['keys' => null, 'values' => is_array($iterable) ? $iterable : iterator_to_array($iterable, false)];
 
-        foreach ($iterable as $key => $value) {
-            $keys[] = $key;
-            $values[] = $value;
-        }
-    } else {
-        $values = is_array($iterable) ? $iterable : iterator_to_array($iterable, false);
-    }
+    isset($comparator)
+        ? uasort($values, $comparator)
+        : asort($values, $flags);
 
-    if (isset($comparator)) {
-        uasort($values, $comparator);
-    } else {
-        asort($values, $flags);
-    }
-
-    if (!isset($keys)) {
-        return $values;
-    }
+    $counter = 0;
 
     foreach ($values as $index => $value) {
-        yield $keys[$index] => $value;
+        $key = isset($keys) ? $keys[$index] : $counter++;
+        yield $key => $value;
     }
 }

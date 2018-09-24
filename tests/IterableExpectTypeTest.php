@@ -1,15 +1,14 @@
 <?php
 
-namespace Jasny\IteratorPipeline\Tests;
+namespace Jasny\Tests;
 
-use Jasny\IteratorPipeline\Operation\ExpectTypeOperation;
 use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_expect_type;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\iterableexpecttype
- * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
+ * @covers \Jasny\iterable_expect_type
  */
-class ExpectTypeOperationTest extends TestCase
+class IterableExpectTypeTest extends TestCase
 {
     public function validProvider()
     {
@@ -25,10 +24,9 @@ class ExpectTypeOperationTest extends TestCase
     /**
      * @dataProvider validProvider
      */
-    public function testIterate(array $values, $type)
+    public function test(array $values, $type)
     {
-        $iterator = new ExpectTypeOperation($values, $type);
-
+        $iterator = iterable_expect_type($values, $type);
         $result = iterator_to_array($iterator);
 
         $this->assertSame($values, $result); // Untouched
@@ -37,12 +35,11 @@ class ExpectTypeOperationTest extends TestCase
     /**
      * @dataProvider validProvider
      */
-    public function testIterateIteratorValid(array $values, $type)
+    public function testIteratorValid(array $values, $type)
     {
         $inner = new \ArrayIterator($values);
 
-        $iterator = new ExpectTypeOperation($inner, $type);
-
+        $iterator = iterable_expect_type($inner, $type);
         $result = iterator_to_array($iterator);
 
         $this->assertSame($values, $result); // Untouched
@@ -50,47 +47,59 @@ class ExpectTypeOperationTest extends TestCase
 
     /**
      * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected string, integer given
+     * @expectedExceptionMessage Expected all elements to be of type string, integer given
      */
     public function testFirstInvalid()
     {
         $values = [1, 'hello'];
 
-        $iterator = new ExpectTypeOperation($values, 'string');
+        $iterator = iterable_expect_type($values, 'string');
 
         iterator_to_array($iterator);
     }
 
     /**
      * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected integer, string given
+     * @expectedExceptionMessage Expected all elements to be of type integer, string given
      */
     public function testSecondInvalid()
     {
         $values = [1, 'hello'];
 
-        $iterator = new ExpectTypeOperation($values, 'integer');
+        $iterator = iterable_expect_type($values, 'integer');
 
         iterator_to_array($iterator);
     }
 
     /**
      * @expectedException \TypeError
-     * @expectedExceptionMessage Expected element to be string, stdClass object given
+     * @expectedExceptionMessage FOO BOO stdClass object WOO
      */
     public function testTypeError()
     {
         $values = [new \stdClass()];
 
-        $message = "Expected element to be string, %s given";
-        $iterator = new ExpectTypeOperation($values, 'string', \TypeError::class, $message);
+        $message = "FOO BOO %s WOO";
+        $iterator = iterable_expect_type($values, 'string', \TypeError::class, $message);
 
         iterator_to_array($iterator);
     }
 
-    public function testIterateEmpty()
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testDoNothing()
     {
-        $iterator = new ExpectTypeOperation(new \EmptyIterator(), 'int');
+        $values = [1, null, []]; // All invalid
+
+        iterable_expect_type($values, 'string');
+
+        $this->assertTrue(true, "No warning");
+    }
+
+    public function testEmpty()
+    {
+        $iterator = iterable_expect_type(new \EmptyIterator(), 'int');
 
         $result = iterator_to_array($iterator);
 

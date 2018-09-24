@@ -16,7 +16,7 @@ use Jasny\Iterator\CombineIterator;
 function iterable_reverse(iterable $iterable, bool $preserveKeys = false): iterable
 {
     if (is_array($iterable) || !$preserveKeys) {
-        $array = iterable_to_array($iterable);
+        $array = is_array($iterable) ? $iterable : iterator_to_array($iterable, false);
 
         return array_reverse($array, $preserveKeys);
     }

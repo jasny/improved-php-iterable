@@ -13,23 +13,18 @@ namespace Jasny;
  */
 function iterable_unique(iterable $iterable, callable $serialize = null): \Generator
 {
-    $fastMap = [];
-    $slowMap = null;
+    $fastMap = []; // entries as keys, entry must be a string
+    $slowMap = []; // non-string entries
 
     foreach ($iterable as $key => $value) {
         $entry = isset($serialize) ? call_user_func($serialize, $value, $key) : $value;
 
-        if (!is_string($entry) && isset($fastMap)) {
-            $slowMap = array_flip($fastMap);
-            $fastMap = null;
-        }
-
-        if (isset($fastMap[$entry]) || in_array($entry, $slowMap, true)) {
+        if (is_string($entry) ? isset($fastMap[$entry]) : in_array($entry, $slowMap, true)) {
             continue;
         }
 
-        if (isset($fastMap)) {
-            $fastMap[$entry] = count($fastMap);
+        if (is_string($entry)) {
+            $fastMap[$entry] = true;
         } else {
             $slowMap[] = $entry;
         }

@@ -1,15 +1,14 @@
 <?php
 
-namespace Jasny\IteratorPipeline\Tests;
+namespace Jasny\Tests;
 
-use Jasny\IteratorPipeline\Operation\ProjectOperation;
 use PHPUnit\Framework\TestCase;
+use function Jasny\iterable_project;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\iterableproject
- * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
+ * @covers \Jasny\iterable_project
  */
-class ProjectOperationTest extends TestCase
+class IterableProjectTest extends TestCase
 {
     public function fullProvider()
     {
@@ -41,11 +40,11 @@ class ProjectOperationTest extends TestCase
     /**
      * @dataProvider fullProvider
      */
-    public function testIterate(array $values)
+    public function test(array $values)
     {
         $map = ['I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' => 'four', 'V' => 'five'];
 
-        $iterator = new ProjectOperation($values, $map);
+        $iterator = iterable_project($values, $map);
 
         $result = iterator_to_array($iterator);
 
@@ -61,13 +60,13 @@ class ProjectOperationTest extends TestCase
     /**
      * @dataProvider fullProvider
      */
-    public function testIterateIterator(array $values)
+    public function testIterator(array $values)
     {
         $inner = new \ArrayIterator($values);
 
         $map = ['I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' => 'four', 'V' => 'five'];
 
-        $iterator = new ProjectOperation($inner, $map);
+        $iterator = iterable_project($inner, $map);
 
         $result = iterator_to_array($iterator);
 
@@ -110,11 +109,11 @@ class ProjectOperationTest extends TestCase
     /**
      * @dataProvider partialProvider
      */
-    public function testIterateFill(array $values)
+    public function testFill(array $values)
     {
         $map = ['one', 'three', 'four'];
 
-        $iterator = new ProjectOperation($values, $map);
+        $iterator = iterable_project($values, $map);
 
         $result = iterator_to_array($iterator);
 
@@ -127,7 +126,7 @@ class ProjectOperationTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIterateScalars()
+    public function testScalars()
     {
         $date = new \DateTime();
 
@@ -143,7 +142,7 @@ class ProjectOperationTest extends TestCase
 
         $map = ['one', 'three', 'four'];
 
-        $iterator = new ProjectOperation($inner, $map);
+        $iterator = iterable_project($inner, $map);
 
         $result = iterator_to_array($iterator);
 
@@ -159,11 +158,11 @@ class ProjectOperationTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIterateEmpty()
+    public function testEmpty()
     {
         $map = ['I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' => 'four', 'V' => 'five'];
 
-        $iterator = new ProjectOperation(new \EmptyIterator(), $map);
+        $iterator = iterable_project(new \EmptyIterator(), $map);
 
         $result = iterator_to_array($iterator);
 

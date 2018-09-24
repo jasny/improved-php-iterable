@@ -2,37 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Aggregator;
-
-use function Jasny\expect_type;
+namespace Jasny;
 
 /**
- * Aggregator that produces the sum of a numbers,
+ * Calculate the sum of all numbers.
  * If no elements are present, the result is 0.
+ *
+ * @param iterable $iterable
+ * @return int|float
  */
-class iterablesum extends AbstractAggregator
+function iterable_sum(iterable $iterable)
 {
-    /**
-     * Invoke the aggregator.
-     *
-     * @return int|float
-     * @throws \UnexpectedValueException if not all values are integers or floats
-     */
-    public function __invoke()
-    {
-        $sum = 0;
-
-        foreach ($iterator as $item) {
-            expect_type(
-                $item,
-                ['int', 'float'],
-                \UnexpectedValueException::class,
-                "All elements should be an int or float, %s given"
-            );
-
-            $sum += $item;
-        }
-
-        return $sum;
+    if (is_array($iterable)) {
+        return array_sum($iterable);
     }
+
+    $sum = 0;
+
+    foreach ($iterable as $item) {
+        $sum += $item;
+    }
+
+    return $sum;
 }

@@ -23,8 +23,38 @@
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\": "src/"
-        }
+            "Jasny\\Iterator\\": "src/Iterator/"
+        },
+        "files": [
+            "src/iterable_apply.php",
+            "src/iterable_average.php",
+            "src/iterable_cleanup.php",
+            "src/iterable_concat.php",
+            "src/iterable_count.php",
+            "src/iterable_expect_type.php",
+            "src/iterable_filter.php",
+            "src/iterable_find.php",
+            "src/iterable_first.php",
+            "src/iterable_flatten.php",
+            "src/iterable_flip.php",
+            "src/iterable_group.php",
+            "src/iterable_keys.php",
+            "src/iterable_map_keys.php",
+            "src/iterable_map.php",
+            "src/iterable_max.php",
+            "src/iterable_min.php",
+            "src/iterable_project.php",
+            "src/iterable_reduce.php",
+            "src/iterable_reverse.php",
+            "src/iterable_separate.php",
+            "src/iterable_sort_keys.php",
+            "src/iterable_sort.php",
+            "src/iterable_sum.php",
+            "src/iterable_to_array.php",
+            "src/iterable_to_iterator.php",
+            "src/iterable_unique.php",
+            "src/iterable_values.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

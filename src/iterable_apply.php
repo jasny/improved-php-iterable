@@ -11,7 +11,7 @@ namespace Jasny;
  * @param callable $callback
  * @return \Generator
  */
-function iteratable_apply(iterable $iterable, callable $callback): \Generator
+function iterable_apply(iterable $iterable, callable $callback): \Generator
 {
     foreach ($iterable as $key => $value) {
         call_user_func($callback, $value, $key);
