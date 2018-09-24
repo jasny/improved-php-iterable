@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Jasny;
 
 /**
- * Get the first element.
- * Returns null if empty.
+ * Get the first element of an iterable.
+ * Returns null if the iterable empty.
  *
  * @param iterable $iterable
  * @return mixed

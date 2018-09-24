@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Jasny;
+
+/**
+ * Convert any iterable to a Traversable object (Iterator or IteratorAggregate).
+ *
+ * @param iterable $iterable
+ * @return \Traversable
+ */
+function iterable_to_traversable(iterable $iterable): \Traversable
+{
+    return is_array($iterable) ? new \ArrayIterator($iterable) : $iterable;
+}

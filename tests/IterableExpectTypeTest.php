@@ -10,6 +10,8 @@ use function Jasny\iterable_expect_type;
  */
 class IterableExpectTypeTest extends TestCase
 {
+    use LazyExecutionIteratorTrait;
+
     public function validProvider()
     {
         return [
@@ -85,18 +87,6 @@ class IterableExpectTypeTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * Test that nothing happens when not iterating
-     */
-    public function testDoNothing()
-    {
-        $values = [1, null, []]; // All invalid
-
-        iterable_expect_type($values, 'string');
-
-        $this->assertTrue(true, "No warning");
-    }
-
     public function testEmpty()
     {
         $iterator = iterable_expect_type(new \EmptyIterator(), 'int');
@@ -104,5 +94,17 @@ class IterableExpectTypeTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_expect_type($iterator, 'int');
+
+        $this->assertTrue(true, "No warning");
     }
 }

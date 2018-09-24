@@ -11,6 +11,7 @@ use function Jasny\iterable_map_keys;
 class IterableMapKeysTest extends TestCase
 {
     use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
     public function provider()
     {
@@ -70,5 +71,17 @@ class IterableMapKeysTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_map_keys($iterator, function() {});
+
+        $this->assertTrue(true, "No warning");
     }
 }

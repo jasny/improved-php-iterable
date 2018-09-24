@@ -11,6 +11,7 @@ use function Jasny\iterable_group;
 class IterableGroupTest extends TestCase
 {
     use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
     public function provider()
     {
@@ -130,5 +131,17 @@ class IterableGroupTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_group($iterator, function() {});
+
+        $this->assertTrue(true, "No warning");
     }
 }

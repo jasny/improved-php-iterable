@@ -11,6 +11,7 @@ use function Jasny\iterable_flatten;
 class IterableFlattenTest extends TestCase
 {
     use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
     public function test()
     {
@@ -131,5 +132,17 @@ class IterableFlattenTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_flatten($iterator);
+
+        $this->assertTrue(true, "No warning");
     }
 }

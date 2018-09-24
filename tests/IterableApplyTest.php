@@ -10,7 +10,9 @@ use function Jasny\iterable_apply;
  */
 class IterableApplyTest extends TestCase
 {
-    public function testIterate()
+    use LazyExecutionIteratorTrait;
+
+    public function test()
     {
         $objects = [
             'foo' => new \stdClass(),
@@ -34,7 +36,7 @@ class IterableApplyTest extends TestCase
         $this->assertAttributeEquals('qux', 'key', $objects['qux']);
     }
 
-    public function testIterateIterator()
+    public function testIterator()
     {
         $objects = [
             'foo' => new \stdClass(),
@@ -60,7 +62,7 @@ class IterableApplyTest extends TestCase
         $this->assertAttributeEquals('qux', 'key', $objects['qux']);
     }
 
-    public function testIterateArrayObject()
+    public function testArrayObject()
     {
         $objects = [
             'foo' => new \stdClass(),
@@ -86,12 +88,24 @@ class IterableApplyTest extends TestCase
         $this->assertAttributeEquals('qux', 'key', $objects['qux']);
     }
 
-    public function testIterateEmpty()
+    public function testEmpty()
     {
         $iterator = iterable_apply(new \EmptyIterator(), function() {});
 
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_apply($iterator, function() {});
+
+        $this->assertTrue(true, "No warning");
     }
 }

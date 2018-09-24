@@ -11,6 +11,7 @@ use function Jasny\iterable_reverse;
 class IterableReverseTest extends TestCase
 {
     use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
     public function provider()
     {
@@ -28,8 +29,8 @@ class IterableReverseTest extends TestCase
      */
     public function test($values, $expected)
     {
-        $iterable = iterable_reverse($values);
-        $result = is_array($iterable) ? $iterable : iterator_to_array($iterable);
+        $iterator = iterable_reverse($values);
+        $result = iterator_to_array($iterator);
 
         $this->assertEquals($expected, $result);
     }
@@ -51,8 +52,8 @@ class IterableReverseTest extends TestCase
      */
     public function testPreserveKeys($values, $expected)
     {
-        $iterable = iterable_reverse($values, true);
-        $result = is_array($iterable) ? $iterable : iterator_to_array($iterable);
+        $iterator = iterable_reverse($values, true);
+        $result = iterator_to_array($iterator);
 
         $this->assertEquals($expected, $result);
     }
@@ -68,12 +69,12 @@ class IterableReverseTest extends TestCase
         };
 
         $generator = $loop($keys);
-        $iterable = iterable_reverse($generator, true);
+        $iterator = iterable_reverse($generator, true);
 
         $resultKeys = [];
         $resultValues = [];
 
-        foreach ($iterable as $key => $value) {
+        foreach ($iterator as $key => $value) {
             $resultKeys[] = $key;
             $resultValues[] = $value;
         }
@@ -84,15 +85,29 @@ class IterableReverseTest extends TestCase
 
     public function testEmpty()
     {
-        $result = iterable_reverse(new \EmptyIterator());
+        $iterator = iterable_reverse(new \EmptyIterator());
+        $result = iterator_to_array($iterator);
+        
         $this->assertEquals([], $result);
     }
 
     public function testEmptyPreserveKeys()
     {
-        $iterable = iterable_reverse(new \EmptyIterator(), true);
-        $result = iterator_to_array($iterable);
+        $iterator = iterable_reverse(new \EmptyIterator(), true);
+        $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_reverse($iterator);
+
+        $this->assertTrue(true, "No warning");
     }
 }

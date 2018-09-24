@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasny;
 
 /**
- * Convert any iterable to an array.
+ * Convert any iterable to an Iterator object.
  *
  * @param iterable $iterable
  * @return \Iterator

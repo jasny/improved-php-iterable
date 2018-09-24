@@ -29,6 +29,7 @@ function iterable_sort(iterable $iterable, $compare = \SORT_REGULAR, bool $prese
         : asort($values, $flags);
 
     $counter = 0;
+    unset($iterable);
 
     foreach ($values as $index => $value) {
         $key = isset($keys) ? $keys[$index] : $counter++;

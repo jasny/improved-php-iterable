@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Jasny;
 
-use Jasny\Iterator\CombineIterator;
-
 /**
  * Group elements of an array or iterator.
  *
  * @param iterable $iterable
  * @param callable $grouping
- * @return CombineIterator
+ * @return \Generator
  */
-function iterable_group(iterable $iterable, callable $grouping): CombineIterator
+function iterable_group(iterable $iterable, callable $grouping): \Generator
 {
     $groups = [];
     $values = [];
@@ -30,5 +28,9 @@ function iterable_group(iterable $iterable, callable $grouping): CombineIterator
         $values[$index][] = $value;
     }
 
-    return new CombineIterator($groups, $values);
+    unset($iterable);
+
+    foreach ($groups as $index => $group) {
+        yield $group => $values[$index];
+    }
 }

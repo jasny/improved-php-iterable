@@ -11,6 +11,7 @@ use function Jasny\iterable_unique;
 class IterableUniqueTest extends TestCase
 {
     use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
     public function provider()
     {
@@ -61,5 +62,17 @@ class IterableUniqueTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_unique($iterator);
+
+        $this->assertTrue(true, "No warning");
     }
 }

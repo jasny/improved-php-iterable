@@ -3,6 +3,7 @@
 namespace Jasny\Tests\Iterator;
 
 use Jasny\Iterator\CombineIterator;
+use Jasny\Tests\LazyExecutionIteratorTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class CombineIteratorTest extends TestCase
 {
+    use LazyExecutionIteratorTrait;
+
     public function testIterate()
     {
         $assoc = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'];
@@ -160,5 +163,18 @@ class CombineIteratorTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $keys = $this->createLazyExecutionIterator();
+        $values = new \ArrayIterator(range(0, 10));
+
+        new CombineIterator($keys, $values);
+
+        $this->assertTrue(true, "No warning");
     }
 }

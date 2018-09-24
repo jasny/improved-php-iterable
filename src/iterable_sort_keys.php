@@ -29,6 +29,8 @@ function iterable_sort_keys(iterable $iterable, $compare = \SORT_REGULAR): \Gene
         $values[] = $value;
     }
 
+    unset($iterable);
+
     isset($comparator)
         ? uasort($keys, $comparator)
         : asort($keys, $flags);

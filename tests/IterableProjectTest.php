@@ -10,6 +10,8 @@ use function Jasny\iterable_project;
  */
 class IterableProjectTest extends TestCase
 {
+    use LazyExecutionIteratorTrait;
+
     public function fullProvider()
     {
         $arrays = [
@@ -163,9 +165,20 @@ class IterableProjectTest extends TestCase
         $map = ['I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' => 'four', 'V' => 'five'];
 
         $iterator = iterable_project(new \EmptyIterator(), $map);
-
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_project($iterator, ['foo']);
+
+        $this->assertTrue(true, "No warning");
     }
 }

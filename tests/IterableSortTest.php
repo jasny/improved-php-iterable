@@ -11,6 +11,7 @@ use function Jasny\iterable_sort;
 class IterableSortTest extends TestCase
 {
     use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
     protected $sorted = [
         "Alpha",
@@ -180,5 +181,17 @@ class IterableSortTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertSame([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_sort($iterator);
+
+        $this->assertTrue(true, "No warning");
     }
 }

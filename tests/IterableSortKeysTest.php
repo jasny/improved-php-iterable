@@ -11,6 +11,7 @@ use function Jasny\iterable_sort_keys;
 class IterableSortKeysTest extends TestCase
 {
     use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
     protected $sorted = [
         "Alpha",
@@ -135,5 +136,17 @@ class IterableSortKeysTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertSame([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_sort_keys($iterator);
+
+        $this->assertTrue(true, "No warning");
     }
 }

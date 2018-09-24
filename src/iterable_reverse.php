@@ -11,23 +11,32 @@ use Jasny\Iterator\CombineIterator;
  *
  * @param iterable $iterable
  * @param bool     $preserveKeys
- * @return iterable
+ * @return \Generator
  */
-function iterable_reverse(iterable $iterable, bool $preserveKeys = false): iterable
+function iterable_reverse(iterable $iterable, bool $preserveKeys = false): \Generator
 {
-    if (is_array($iterable) || !$preserveKeys) {
-        $array = is_array($iterable) ? $iterable : iterator_to_array($iterable, false);
+    if (is_array($iterable)) {
+        $values = array_reverse($iterable, $preserveKeys);
+    } elseif (!$preserveKeys) {
+        $values = [];
 
-        return array_reverse($array, $preserveKeys);
+        foreach ($iterable as $key => $value) {
+            array_unshift($values, $value);
+        }
+    } else {
+        $keys = [];
+        $values = [];
+
+        foreach ($iterable as $key => $value) {
+            array_unshift($keys, $key);
+            array_unshift($values, $value);
+        }
     }
 
-    $keys = [];
-    $values = [];
+    unset($iterable);
 
-    foreach ($iterable as $key => $value) {
-        array_unshift($keys, $key);
-        array_unshift($values, $value);
+    foreach ($values as $index => $value) {
+        $key = isset($keys) ? $keys[$index] : $index;
+        yield $key => $value;
     }
-
-    return new CombineIterator($keys, $values);
 }

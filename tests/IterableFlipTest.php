@@ -11,6 +11,7 @@ use function Jasny\iterable_flip;
 class IterableFlipTest extends TestCase
 {
     use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
     public function provider()
     {
@@ -77,5 +78,17 @@ class IterableFlipTest extends TestCase
         $result = iterator_to_array($iterator);
 
         $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_flip($iterator);
+
+        $this->assertTrue(true, "No warning");
     }
 }

@@ -39,6 +39,7 @@
             "src/iterable_flip.php",
             "src/iterable_group.php",
             "src/iterable_keys.php",
+            "src/iterable_last.php",
             "src/iterable_map_keys.php",
             "src/iterable_map.php",
             "src/iterable_max.php",
@@ -52,6 +53,7 @@
             "src/iterable_sum.php",
             "src/iterable_to_array.php",
             "src/iterable_to_iterator.php",
+            "src/iterable_to_traversable.php",
             "src/iterable_unique.php",
             "src/iterable_values.php"
         ]

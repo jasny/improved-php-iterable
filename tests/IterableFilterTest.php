@@ -2,6 +2,7 @@
 
 namespace Jasny\Tests;
 
+use function Jasny\iterable_find;
 use PHPUnit\Framework\TestCase;
 use function Jasny\iterable_filter;
 
@@ -10,10 +11,19 @@ use function Jasny\iterable_filter;
  */
 class IterableFilterTest extends TestCase
 {
-    public function testIterate()
-    {
-        $values = range(-10, 10);
+    use ProvideIterablesTrait;
+    use LazyExecutionIteratorTrait;
 
+    public function provider()
+    {
+        return $this->provideIterables(range(-10, 10));
+    }
+
+    /**
+     * @dataProvider provider
+     */
+    public function test($values)
+    {
         $iterator = iterable_filter($values, function($value) {
             return $value % 2 === 0;
         });
@@ -26,10 +36,18 @@ class IterableFilterTest extends TestCase
         $this->assertSame(array_combine($expectedKeys, $expectedValues), $result);
     }
 
-    public function testIterateKey()
+    public function keyProvider()
     {
         $values = ['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'];
 
+        return $this->provideIterables($values, false, false);
+    }
+
+    /**
+     * @dataProvider keyProvider
+     */
+    public function testKey($values)
+    {
         $iterator = iterable_filter($values, function($value, $key) {
             return $key[0] === 'a';
         });
@@ -39,7 +57,7 @@ class IterableFilterTest extends TestCase
         $this->assertSame(['apple' => 'green', 'apricot' => 'orange'], $result);
     }
 
-    public function testIterateGenerator()
+    public function testGenerator()
     {
         $keys = [(object)['a' => 'a'], ['b' => 'b'], null, 'd', 'd'];
 
@@ -66,14 +84,26 @@ class IterableFilterTest extends TestCase
         $this->assertSame(array_slice($keys, 0, 3), $resultKeys);
     }
 
-    public function testIterateEmpty()
+    public function testEmpty()
     {
-        $iterator = iterable_filter(new \EmptyIterator(), function($value, $key) {
+        $iterator = iterable_filter(new \EmptyIterator(), function() {
             return true;
         });
 
         $result = iterator_to_array($iterator);
 
         $this->assertSame([], $result);
+    }
+
+    /**
+     * Test that nothing happens when not iterating
+     */
+    public function testLazyExecution()
+    {
+        $iterator = $this->createLazyExecutionIterator();
+
+        iterable_filter($iterator, function() { return true; });
+
+        $this->assertTrue(true, "No warning");
     }
 }
