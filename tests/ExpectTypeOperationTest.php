@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\ExpectTypeOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\ExpectTypeOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterableexpecttype
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class ExpectTypeOperationTest extends TestCase

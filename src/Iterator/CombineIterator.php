@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Iterator;
+namespace Jasny\Iterator;
+
+use function Jasny\iterable_to_iterator;
 
 /**
  * Iterator through keys and values, where key may be any type.
@@ -27,31 +29,8 @@ class CombineIterator implements \Iterator
      */
     public function __construct(iterable $keys, iterable $values)
     {
-        $this->keys = $this->iterableToIterator($keys);
-        $this->values = $this->iterableToIterator($values);
-    }
-
-    /**
-     * Turn any Traversable into an Iterator.
-     *
-     * @param iterable $iterable
-     * @return \Iterator
-     */
-    public function iterableToIterator(iterable $iterable): \Iterator
-    {
-        if (is_array($iterable)) {
-            return new \ArrayIterator($iterable);
-        }
-
-        if ($iterable instanceof \IteratorAggregate) {
-            $iterable = $iterable->getIterator();
-        }
-
-        if (!$iterable instanceof \Iterator) {
-            $iterable = new \IteratorIterator($iterable);
-        }
-
-        return $iterable;
+        $this->keys = iterable_to_iterator($keys);
+        $this->values = iterable_to_iterator($values);
     }
 
     /**

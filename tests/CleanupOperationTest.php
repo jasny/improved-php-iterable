@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\CleanupOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\CleanupOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterablecleanup
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class CleanupOperationTest extends TestCase

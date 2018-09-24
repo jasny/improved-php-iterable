@@ -2,11 +2,11 @@
 
 namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorPipeline\Projection\ReverseProjection;
+use Jasny\IteratorPipeline\Projection\iterablereverse;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Projection\ReverseProjection
+ * @covers \Jasny\IteratorPipeline\Projection\iterablereverse
  */
 class ReverseProjectionTest extends TestCase
 {
@@ -14,7 +14,7 @@ class ReverseProjectionTest extends TestCase
     {
         $values = range(3, 12);
 
-        $iterator = new ReverseProjection($values);
+        $iterator = new iterablereverse($values);
 
         $result = iterator_to_array($iterator);
 
@@ -26,7 +26,7 @@ class ReverseProjectionTest extends TestCase
     {
         $values = range(3, 12);
 
-        $iterator = new ReverseProjection($values, true);
+        $iterator = new iterablereverse($values, true);
 
         $result = iterator_to_array($iterator);
 
@@ -39,7 +39,7 @@ class ReverseProjectionTest extends TestCase
         $values = range(3, 12);
         $inner = new \ArrayIterator($values);
 
-        $iterator = new ReverseProjection($inner, true);
+        $iterator = new iterablereverse($inner, true);
 
         $result = iterator_to_array($iterator);
 
@@ -60,7 +60,7 @@ class ReverseProjectionTest extends TestCase
         };
 
         $generator = $loop($keys);
-        $iterator = new ReverseProjection($generator, true);
+        $iterator = new iterablereverse($generator, true);
 
         $resultKeys = [];
         $resultValues = [];
@@ -79,7 +79,7 @@ class ReverseProjectionTest extends TestCase
         $values = range(3, 12);
 
         $inner = \SplFixedArray::fromArray($values);
-        $iterator = new ReverseProjection($inner, true);
+        $iterator = new iterablereverse($inner, true);
 
         $result = iterator_to_array($iterator);
 
@@ -92,7 +92,7 @@ class ReverseProjectionTest extends TestCase
         $values = range(3, 12);
 
         $inner = new \ArrayObject($values);
-        $iterator = new ReverseProjection($inner);
+        $iterator = new iterablereverse($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -102,7 +102,7 @@ class ReverseProjectionTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new ReverseProjection(new \EmptyIterator());
+        $iterator = new iterablereverse(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

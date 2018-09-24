@@ -22,7 +22,7 @@ class iterablesum extends AbstractAggregator
     {
         $sum = 0;
 
-        foreach ($this->iterator as $item) {
+        foreach ($iterator as $item) {
             expect_type(
                 $item,
                 ['int', 'float'],

@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\UniqueOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\UniqueOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterableunique
  */
 class UniqueOperationTest extends TestCase
 {

@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\MapOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\MapOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterablemap
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class MapOperationTest extends TestCase

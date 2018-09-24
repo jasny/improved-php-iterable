@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Jasny;
 
-use function Jasny\expect_type;
-
 /**
  * Return the arithmetic mean.
  *

@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\MapKeyOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\MapKeyOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterablemapkeys
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class MapKeyIteratorTest extends TestCase

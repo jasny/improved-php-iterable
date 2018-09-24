@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\FlipOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\FlipOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterableflip
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class FlipOperationTest extends TestCase

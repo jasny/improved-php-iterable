@@ -2,11 +2,11 @@
 
 namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorPipeline\Projection\SortProjection;
+use Jasny\IteratorPipeline\Projection\iterablesort;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Projection\SortProjection
+ * @covers \Jasny\IteratorPipeline\Projection\iterablesort
  */
 class SortProjectionTest extends TestCase
 {
@@ -44,7 +44,7 @@ class SortProjectionTest extends TestCase
         $values = $this->sorted;
         shuffle($values);
 
-        $iterator = new SortProjection($values);
+        $iterator = new iterablesort($values);
 
         $result = iterator_to_array($iterator);
 
@@ -61,7 +61,7 @@ class SortProjectionTest extends TestCase
             'img2.png'
         ];
 
-        $iterator = new SortProjection($values, \SORT_NATURAL);
+        $iterator = new iterablesort($values, \SORT_NATURAL);
 
         $result = iterator_to_array($iterator);
 
@@ -83,7 +83,7 @@ class SortProjectionTest extends TestCase
             'four' => 'Bravo'
         ];
 
-        $iterator = new SortProjection($values, \SORT_REGULAR, true);
+        $iterator = new iterablesort($values, \SORT_REGULAR, true);
 
         $result = iterator_to_array($iterator);
 
@@ -104,7 +104,7 @@ class SortProjectionTest extends TestCase
 
         $inner = new \ArrayIterator($values);
 
-        $iterator = new SortProjection($inner);
+        $iterator = new iterablesort($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -125,7 +125,7 @@ class SortProjectionTest extends TestCase
         };
 
         $generator = $loop($keys, $values);
-        $iterator = new SortProjection($generator, function ($a, $b) {
+        $iterator = new iterablesort($generator, function ($a, $b) {
             return $a['n'] <=> $b['n'];
         }, true);
 
@@ -147,7 +147,7 @@ class SortProjectionTest extends TestCase
         shuffle($values);
 
         $inner = \SplFixedArray::fromArray($values);
-        $iterator = new SortProjection($inner);
+        $iterator = new iterablesort($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -161,7 +161,7 @@ class SortProjectionTest extends TestCase
 
         $inner = new \ArrayObject($values);
 
-        $iterator = new SortProjection($inner);
+        $iterator = new iterablesort($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -176,7 +176,7 @@ class SortProjectionTest extends TestCase
 
         $inner = new \ArrayIterator($this->sorted);
 
-        $iterator = new SortProjection($inner, $compare);
+        $iterator = new iterablesort($inner, $compare);
 
         $result = iterator_to_array($iterator);
 
@@ -199,7 +199,7 @@ class SortProjectionTest extends TestCase
             return (strlen($a) <=> strlen($b)) ?: $a <=> $b;
         };
 
-        $iterator = new SortProjection($values, $compare, true);
+        $iterator = new iterablesort($values, $compare, true);
 
         $result = iterator_to_array($iterator);
 
@@ -215,7 +215,7 @@ class SortProjectionTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new SortProjection(new \EmptyIterator());
+        $iterator = new iterablesort(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

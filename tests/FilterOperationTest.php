@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\FilterOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\FilterOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterablefilter
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class FilterOperationTest extends TestCase

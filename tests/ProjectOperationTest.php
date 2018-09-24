@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\ProjectOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\ProjectOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterableproject
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class ProjectOperationTest extends TestCase

@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\KeysOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\KeysOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterablekeys
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class KeysOperationTest extends TestCase

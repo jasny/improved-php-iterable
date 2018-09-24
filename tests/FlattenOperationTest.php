@@ -6,7 +6,7 @@ use Jasny\IteratorPipeline\Operation\FlattenOperation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Operation\FlattenOperation
+ * @covers \Jasny\IteratorPipeline\Operation\iterableflatten
  * @covers \Jasny\IteratorPipeline\Operation\AbstractOperation
  */
 class FlattenOperationTest extends TestCase

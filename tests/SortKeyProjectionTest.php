@@ -2,11 +2,11 @@
 
 namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorPipeline\Projection\SortKeyProjection;
+use Jasny\IteratorPipeline\Projection\iterableksort;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Projection\SortKeyProjection
+ * @covers \Jasny\IteratorPipeline\Projection\iterableksort
  */
 class SortKeyProjectionTest extends TestCase
 {
@@ -46,7 +46,7 @@ class SortKeyProjectionTest extends TestCase
 
         $values = array_fill_keys($keys, null);
 
-        $iterator = new SortKeyProjection($values);
+        $iterator = new iterableksort($values);
 
         $result = iterator_to_array($iterator);
 
@@ -63,7 +63,7 @@ class SortKeyProjectionTest extends TestCase
             'Bravo' => 'four'
         ];
 
-        $iterator = new SortKeyProjection($values);
+        $iterator = new iterableksort($values);
 
         $result = iterator_to_array($iterator);
 
@@ -85,7 +85,7 @@ class SortKeyProjectionTest extends TestCase
         $values = array_fill_keys($keys, null);
         $inner = new \ArrayObject($values);
 
-        $iterator = new SortKeyProjection($inner);
+        $iterator = new iterableksort($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -106,7 +106,7 @@ class SortKeyProjectionTest extends TestCase
         };
 
         $generator = $loop($keys);
-        $iterator = new SortKeyProjection($generator, function($a, $b) {
+        $iterator = new iterableksort($generator, function($a, $b) {
             return ($a['i'] ?? 0) <=> ($b['i'] ?? 0);
         });
 
@@ -125,7 +125,7 @@ class SortKeyProjectionTest extends TestCase
     public function testIterateArrayable()
     {
         $inner = \SplFixedArray::fromArray(array_fill(0, 10, null));
-        $iterator = new SortKeyProjection($inner);
+        $iterator = new iterableksort($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -140,7 +140,7 @@ class SortKeyProjectionTest extends TestCase
         $values = array_fill_keys($keys, null);
         $inner = new \ArrayObject($values);
 
-        $iterator = new SortKeyProjection($inner);
+        $iterator = new iterableksort($inner);
 
         $result = iterator_to_array($iterator);
 
@@ -156,7 +156,7 @@ class SortKeyProjectionTest extends TestCase
 
         $inner = new \ArrayIterator(array_fill_keys($this->sorted, null));
 
-        $iterator = new SortKeyProjection($inner, $compare);
+        $iterator = new iterableksort($inner, $compare);
 
         $result = iterator_to_array($iterator);
 
@@ -168,7 +168,7 @@ class SortKeyProjectionTest extends TestCase
     
     public function testIterateEmpty()
     {
-        $iterator = new SortKeyProjection(new \EmptyIterator());
+        $iterator = new iterableksort(new \EmptyIterator());
 
         $result = iterator_to_array($iterator);
 

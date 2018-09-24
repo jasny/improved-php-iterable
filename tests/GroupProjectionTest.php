@@ -2,11 +2,11 @@
 
 namespace Jasny\IteratorPipeline\Tests;
 
-use Jasny\IteratorPipeline\Projection\GroupProjection;
+use Jasny\IteratorPipeline\Projection\iterablegroup;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Projection\GroupProjection
+ * @covers \Jasny\IteratorPipeline\Projection\iterablegroup
  */
 class GroupProjectionTest extends TestCase
 {
@@ -21,7 +21,7 @@ class GroupProjectionTest extends TestCase
             (object)['type' => 'two']
         ];
 
-        $iterator = new GroupProjection($objects, function(\stdClass $object) {
+        $iterator = new iterablegroup($objects, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -62,7 +62,7 @@ class GroupProjectionTest extends TestCase
             (object)['type' => $parents[1]]
         ];
 
-        $iterator = new GroupProjection($objects, function(\stdClass $object) {
+        $iterator = new iterablegroup($objects, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -98,7 +98,7 @@ class GroupProjectionTest extends TestCase
         $values = ['alpha' => 'one', 'bat' => 'two', 'apple' => 'three', 'cat' => 'four', 'air' => 'five',
             'beast' => 'six'];
 
-        $iterator = new GroupProjection($values, function($value, $key) {
+        $iterator = new iterablegroup($values, function($value, $key) {
             return substr($key, 0, 1);
         });
 
@@ -122,7 +122,7 @@ class GroupProjectionTest extends TestCase
         ];
         $inner = new \ArrayIterator($objects);
 
-        $iterator = new GroupProjection($inner, function(\stdClass $object) {
+        $iterator = new iterablegroup($inner, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -145,7 +145,7 @@ class GroupProjectionTest extends TestCase
         ];
         $inner = new \ArrayObject($objects);
 
-        $iterator = new GroupProjection($inner, function(\stdClass $object) {
+        $iterator = new iterablegroup($inner, function(\stdClass $object) {
             return $object->type;
         });
 
@@ -161,7 +161,7 @@ class GroupProjectionTest extends TestCase
 
     public function testIterateEmpty()
     {
-        $iterator = new GroupProjection(new \EmptyIterator(), function() {});
+        $iterator = new iterablegroup(new \EmptyIterator(), function() {});
 
         $result = iterator_to_array($iterator);
 
