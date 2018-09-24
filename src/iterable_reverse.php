@@ -24,6 +24,7 @@ function iterable_reverse(iterable $iterable, bool $preserveKeys = false): \Gene
             array_unshift($values, $value);
         }
     } else {
+        /** @var array $keys */
         $keys = [];
         $values = [];
 

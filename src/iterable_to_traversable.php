@@ -7,7 +7,7 @@ namespace Jasny;
 /**
  * Convert any iterable to a Traversable object (Iterator or IteratorAggregate).
  *
- * @param iterable $iterable
+ * @param array|\Traversable $iterable
  * @return \Traversable
  */
 function iterable_to_traversable(iterable $iterable): \Traversable

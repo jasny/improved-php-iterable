@@ -15,8 +15,12 @@ use function Jasny\expect_type;
  */
 function iterable_sort_keys(iterable $iterable, $compare = \SORT_REGULAR): \Generator
 {
-    expect_type($compare, ['callable', 'int'], \TypeError::class,
-        "Expected comparator to be a callable or integer, %s given");
+    expect_type(
+        $compare,
+        ['callable', 'int'],
+        \TypeError::class,
+        "Expected comparator to be a callable or integer, %s given"
+    );
 
     $comparator = is_int($compare) ? null : $compare;
     $flags = is_int($compare) ? $compare : \SORT_REGULAR;

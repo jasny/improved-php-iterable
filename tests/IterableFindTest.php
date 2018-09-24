@@ -76,7 +76,7 @@ class IterableFindTest extends TestCase
 
     public function testEmpty()
     {
-        $result = iterable_find(new \EmptyIterator());
+        $result = iterable_find(new \EmptyIterator(), function() {});
 
         $this->assertNull($result);
     }

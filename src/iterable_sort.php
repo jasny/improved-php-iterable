@@ -14,8 +14,12 @@ namespace Jasny;
  */
 function iterable_sort(iterable $iterable, $compare = \SORT_REGULAR, bool $preserveKeys = false): iterable
 {
-    expect_type($compare, ['callable', 'int'], \TypeError::class,
-        "Expected compare to be a callable or integer, %s given");
+    expect_type(
+        $compare,
+        ['callable', 'int'],
+        \TypeError::class,
+        "Expected compare to be a callable or integer, %s given"
+    );
 
     $comparator = is_int($compare) ? null : $compare;
     $flags = is_int($compare) ? $compare : \SORT_REGULAR;

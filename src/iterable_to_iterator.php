@@ -7,7 +7,7 @@ namespace Jasny;
 /**
  * Convert any iterable to an Iterator object.
  *
- * @param iterable $iterable
+ * @param array|\Traversable $iterable
  * @return \Iterator
  */
 function iterable_to_iterator(iterable $iterable): \Iterator
