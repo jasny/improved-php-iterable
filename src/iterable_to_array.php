@@ -22,4 +22,6 @@ function iterable_to_array(iterable $iterable): array
         case $iterable instanceof \Traversable:
             return iterator_to_array($iterable, true);
     }
+
+    throw new \InvalidArgumentException("Unknown iterable: " . gettype($iterable)); // @codeCoverageIgnore
 }
