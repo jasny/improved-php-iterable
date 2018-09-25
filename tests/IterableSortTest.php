@@ -55,7 +55,7 @@ class IterableSortTest extends TestCase
      */
     public function test($values)
     {
-        $iterator = iterable_sort($values);
+        $iterator = iterable_sort($values, \SORT_STRING);
         $result = iterator_to_array($iterator);
 
         $this->assertSame($this->sorted, $result);
@@ -92,7 +92,7 @@ class IterableSortTest extends TestCase
             'four' => 'Bravo'
         ];
 
-        $iterator = iterable_sort($values, \SORT_REGULAR, true);
+        $iterator = iterable_sort($values, \SORT_STRING, true);
 
         $result = iterator_to_array($iterator);
 
@@ -177,7 +177,7 @@ class IterableSortTest extends TestCase
 
     public function testEmpty()
     {
-        $iterator = iterable_sort(new \EmptyIterator());
+        $iterator = iterable_sort(new \EmptyIterator(), \SORT_STRING);
         $result = iterator_to_array($iterator);
 
         $this->assertSame([], $result);
@@ -190,7 +190,7 @@ class IterableSortTest extends TestCase
     {
         $iterator = $this->createLazyExecutionIterator();
 
-        iterable_sort($iterator);
+        iterable_sort($iterator, \SORT_STRING);
 
         $this->assertTrue(true, "No warning");
     }

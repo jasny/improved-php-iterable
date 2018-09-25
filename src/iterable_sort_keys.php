@@ -10,10 +10,10 @@ use function Jasny\expect_type;
  * Sort all elements of an iterator based on the key.
  *
  * @param iterable     $iterable
- * @param callable|int $compare   SORT_* flags as binary set or callback comparator function
+ * @param callable|int $compare   SORT_* flag or callback comparator function
  * @return \Generator
  */
-function iterable_sort_keys(iterable $iterable, $compare = \SORT_REGULAR): \Generator
+function iterable_sort_keys(iterable $iterable, $compare): \Generator
 {
     expect_type(
         $compare,
@@ -23,7 +23,7 @@ function iterable_sort_keys(iterable $iterable, $compare = \SORT_REGULAR): \Gene
     );
 
     $comparator = is_int($compare) ? null : $compare;
-    $flags = is_int($compare) ? $compare : \SORT_REGULAR;
+    $flags = is_int($compare) ? $compare : 0;
 
     $keys = [];
     $values = [];

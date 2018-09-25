@@ -57,7 +57,7 @@ class IterableSortKeysTest extends TestCase
      */
     public function test($values)
     {
-        $iterator = iterable_sort_keys($values);
+        $iterator = iterable_sort_keys($values, \SORT_STRING);
         $result = iterator_to_array($iterator);
 
         $this->assertSame($this->sorted, array_keys($result));
@@ -72,7 +72,7 @@ class IterableSortKeysTest extends TestCase
             'Bravo' => 'four'
         ];
 
-        $iterator = iterable_sort_keys($values);
+        $iterator = iterable_sort_keys($values, \SORT_STRING);
         $result = iterator_to_array($iterator);
 
         $expected = [
@@ -131,7 +131,7 @@ class IterableSortKeysTest extends TestCase
     
     public function testEmpty()
     {
-        $iterator = iterable_sort_keys(new \EmptyIterator());
+        $iterator = iterable_sort_keys(new \EmptyIterator(), \SORT_STRING);
 
         $result = iterator_to_array($iterator);
 
@@ -145,7 +145,7 @@ class IterableSortKeysTest extends TestCase
     {
         $iterator = $this->createLazyExecutionIterator();
 
-        iterable_sort_keys($iterator);
+        iterable_sort_keys($iterator, \SORT_STRING);
 
         $this->assertTrue(true, "No warning");
     }

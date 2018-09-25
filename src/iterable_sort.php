@@ -8,11 +8,11 @@ namespace Jasny;
  * Sort all elements of an iterator.
  *
  * @param iterable     $iterable
- * @param callable|int $compare       SORT_* flags as binary set or callback comparator function
+ * @param callable|int $compare       SORT_* flag or callback comparator function
  * @param bool         $preserveKeys
  * @return \Generator
  */
-function iterable_sort(iterable $iterable, $compare = \SORT_REGULAR, bool $preserveKeys = false): \Generator
+function iterable_sort(iterable $iterable, $compare, bool $preserveKeys = false): \Generator
 {
     expect_type(
         $compare,
@@ -22,7 +22,7 @@ function iterable_sort(iterable $iterable, $compare = \SORT_REGULAR, bool $prese
     );
 
     $comparator = is_int($compare) ? null : $compare;
-    $flags = is_int($compare) ? $compare : \SORT_REGULAR;
+    $flags = is_int($compare) ? $compare : 0;
 
     ['keys' => $keys, 'values' => $values] = $preserveKeys
         ? iterable_separate($iterable)
