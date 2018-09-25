@@ -16,7 +16,8 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "jasny/iterable-functions": "dev-master"
+        "jasny/iterable-functions": "dev-master",
+        "jasny/php-functions": "dev-master as 4.1.1"
     },
     "require-dev": {
         "jasny/php-code-quality": "~2.3"
