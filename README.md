@@ -65,10 +65,10 @@ This library support functional-style operations, such as map-reduce transformat
 
 **Aggregation**
 * [`count(): int`](#count)
-* [`reduce(callable $callback)`](#reduce)
+* [`reduce(callable $callback[, mixed $initial])`](#reduce)
 * [`sum(): int|float`](#sum)
 * [`average(): int|float`](#average)
-* [`concat(string $glue): string`](#concat)
+* [`concat([string $glue]): string`](#concat)
 
 **Output**
 * [`output([resource|string $stream[, string $delimiter]])`](#output)

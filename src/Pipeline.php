@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jasny\IteratorPipeline;
 
+use Jasny\IteratorPipeline\Traits\AggregationTrait;
 use Jasny\IteratorPipeline\Traits\FilteringTrait;
 use Jasny\IteratorPipeline\Traits\FindingTrait;
 use Jasny\IteratorPipeline\Traits\MappingTrait;
@@ -23,6 +24,7 @@ class Pipeline implements \IteratorAggregate
     use FilteringTrait;
     use SortingTrait;
     use FindingTrait;
+    use AggregationTrait;
 
     /**
      * @var iterable
