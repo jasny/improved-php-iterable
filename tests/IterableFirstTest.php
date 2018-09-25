@@ -47,4 +47,13 @@ class IterableFirstTest extends TestCase
 
         $this->assertNull($result);
     }
+
+    /**
+     * @expectedException \RangeException
+     * @expectedExceptionMessage  Unable to get first element; iterable is empty
+     */
+    public function testEmptyRequired()
+    {
+        iterable_first(new \EmptyIterator(), true);
+    }
 }

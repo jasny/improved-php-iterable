@@ -35,4 +35,13 @@ class IterableLastTest extends TestCase
 
         $this->assertNull($result);
     }
+
+    /**
+     * @expectedException \RangeException
+     * @expectedExceptionMessage  Unable to get last element; iterable is empty
+     */
+    public function testEmptyRequired()
+    {
+        iterable_last(new \EmptyIterator(), true);
+    }
 }
