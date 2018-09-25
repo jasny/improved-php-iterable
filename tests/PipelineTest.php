@@ -72,4 +72,15 @@ class PipelineTest extends TestCase
         $this->assertInstanceOf(\Iterator::class, $iterator);
         $this->assertEquals($expected, iterator_to_array($iterator, true));
     }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testWith($values)
+    {
+        $pipeline = Pipeline::with($values);
+        $this->assertInstanceOf(Pipeline::class, $pipeline);
+
+        $this->assertAttributeSame($values, 'iterable', $pipeline);
+    }
 }
