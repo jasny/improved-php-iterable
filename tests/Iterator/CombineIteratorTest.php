@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jasny\Tests\Iterator;
 
 use Jasny\Iterator\CombineIterator;

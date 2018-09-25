@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jasny\Tests;
 
 use function Jasny\iterable_find;
