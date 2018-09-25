@@ -11,6 +11,7 @@ use Jasny\IteratorPipeline\Traits\SortingTrait;
 
 use function Jasny\iterable_to_array;
 use function Jasny\iterable_to_iterator;
+use function Jasny\expect_type;
 
 /**
  * Functional-style operations, such as map-reduce transformations on arrays and iterators.
@@ -49,9 +50,8 @@ class Pipeline implements \IteratorAggregate
     {
         $next = $callback($this->iterable, ...$args);
 
-        if (!is_iterable($next)) {
-            throw new \UnexpectedValueException("Expected an array or Traversable, %s returned");
-        }
+        expect_type($next, 'iterable', \UnexpectedValueException::class,
+            "Expected an array or Traversable, %s returned");
 
         $this->iterable = $next;
 

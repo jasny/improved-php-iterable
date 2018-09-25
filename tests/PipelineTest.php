@@ -15,44 +15,33 @@ class PipelineTest extends TestCase
 {
     use TestHelper;
 
-    public function iterableProvider()
+
+    public function testThen()
     {
-        $generator = function($values) {
-            foreach ($values as $key => $value) {
-                yield $key => $value;
-            }
-        };
+        $input = new \ArrayIterator(['a']);
+        $next = new \ArrayIterator(['z']);
 
-        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres'];
-
-        $tests = [
-            [$values, $values],
-            [new \ArrayIterator($values), $values],
-            [new \ArrayObject($values), $values],
-            [$generator($values), $values]
-        ];
-
-        return $tests;
-    }
-
-    /**
-     * @dataProvider iterableProvider
-     */
-    public function testThen($next, $expected)
-    {
-        $input = new \ArrayIterator(['foo']);
+        $callback = $this->createCallbackMock($this->once(), [$this->identicalTo($input), 'foo', 42], $next);
 
         $pipeline = new Pipeline($input);
 
-        $ret = $pipeline->then(function($iterable) use ($next) {
-            $this->assertSame($iterable, $iterable);
-            return $next;
-        });
-
+        $ret = $pipeline->then($callback, 'foo', 42);
         $this->assertSame($pipeline, $ret);
 
-        $result = $pipeline->toArray();
-        $this->assertEquals($expected, $result);
+        $this->assertAttributeSame($next, 'iterable', $pipeline);
+    }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     * @expectedExceptionMessage Expected an array or Traversable, stdClass object returned
+     */
+    public function testThenUnexpectedValue()
+    {
+        $pipeline = new Pipeline(['a']);
+
+        $pipeline->then(function() {
+            return (object)[];
+        });
     }
 
 
