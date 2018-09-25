@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "jasny/php-functions": "^4.0"
+        "jasny/php-functions": "dev-master as 4.2.0"
     },
     "require-dev": {
         "jasny/php-code-quality": "~2.3"
