@@ -10,9 +10,9 @@ namespace Jasny;
  * @param iterable     $iterable
  * @param callable|int $compare       SORT_* flags as binary set or callback comparator function
  * @param bool         $preserveKeys
- * @return iterable
+ * @return \Generator
  */
-function iterable_sort(iterable $iterable, $compare = \SORT_REGULAR, bool $preserveKeys = false): iterable
+function iterable_sort(iterable $iterable, $compare = \SORT_REGULAR, bool $preserveKeys = false): \Generator
 {
     expect_type(
         $compare,

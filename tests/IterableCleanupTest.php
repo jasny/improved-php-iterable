@@ -52,8 +52,8 @@ class IterableCleanupTest extends TestCase
             $resultValues[] = $value;
         }
 
-        $this->assertSame([1, 2, 3, 4], $resultValues);
-        $this->assertSame(array_slice($keys, 0, 4), $resultKeys);
+        $this->assertSame([1, 2, 4], $resultValues);
+        $this->assertSame([$keys[0], $keys[1], $keys[3]], $resultKeys);
     }
 
     public function testIterateEmpty()

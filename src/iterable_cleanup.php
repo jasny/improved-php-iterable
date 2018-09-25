@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasny;
 
 /**
- * Filter out null elements from iterator.
+ * Filter out elements with null value and/or null key from iterator.
  *
  * @param iterable $iterable
  * @return \Generator
@@ -13,7 +13,7 @@ namespace Jasny;
 function iterable_cleanup(iterable $iterable): \Generator
 {
     foreach ($iterable as $key => $value) {
-        if (isset($value)) {
+        if (isset($key) && isset($value)) {
             yield $key => $value;
         }
     }
