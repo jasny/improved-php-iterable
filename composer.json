@@ -1,5 +1,5 @@
 {
-    "name": "jasny/pipeline-iterator",
+    "name": "jasny/iterator-pipeline",
     "description": "Support functional-style operations, such as map-reduce transformations, on interators",
     "license": "MIT",
     "type": "library",
@@ -15,8 +15,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/jasny/pipeline-iterator/issues",
-        "source": "https://github.com/jasny/pipeline-iterator"
+        "issues": "https://github.com/jasny/iterator-pipeline/issues",
+        "source": "https://github.com/jasny/iterator-pipeline"
     },
     "require": {
         "php": ">=7.1.0"

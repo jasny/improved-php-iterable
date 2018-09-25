@@ -1,10 +1,10 @@
 # Jasny Pipeline iterator
 
-[![Build Status](https://travis-ci.org/jasny/pipeline-iterator.svg?branch=master)](https://travis-ci.org/jasny/pipeline-iterator)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/pipeline-iterator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/pipeline-iterator/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/jasny/pipeline-iterator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/pipeline-iterator/?branch=master)
-[![Packagist Stable Version](https://img.shields.io/packagist/v/jasny/pipeline-iterator.svg)](https://packagist.org/packages/jasny/pipeline-iterator)
-[![Packagist License](https://img.shields.io/packagist/l/jasny/pipeline-iterator.svg)](https://packagist.org/packages/jasny/pipeline-iterator)
+[![Build Status](https://travis-ci.org/jasny/iterator-pipeline.svg?branch=master)](https://travis-ci.org/jasny/iterator-pipeline)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/iterator-pipeline/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator-pipeline/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/jasny/iterator-pipeline/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator-pipeline/?branch=master)
+[![Packagist Stable Version](https://img.shields.io/packagist/v/jasny/iterator-pipeline.svg)](https://packagist.org/packages/jasny/iterator-pipeline)
+[![Packagist License](https://img.shields.io/packagist/l/jasny/iterator-pipeline.svg)](https://packagist.org/packages/jasny/iterator-pipeline)
 
 This library support functional-style operations, such as map-reduce transformations on
 [iterators](http://php.net/manual/en/class.iterator.php).
