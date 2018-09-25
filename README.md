@@ -1,10 +1,10 @@
 # Jasny Iterable functions
 
-[![Build Status](https://travis-ci.org/jasny/iterator-functions.svg?branch=master)](https://travis-ci.org/jasny/iterator-functions)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/iterator-functions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator-functions/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/jasny/iterator-functions/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator-functions/?branch=master)
-[![Packagist Stable Version](https://img.shields.io/packagist/v/jasny/iterator-functions.svg)](https://packagist.org/packages/jasny/iterator-functions)
-[![Packagist License](https://img.shields.io/packagist/l/jasny/iterator-functions.svg)](https://packagist.org/packages/jasny/iterator-functions)
+[![Build Status](https://travis-ci.org/jasny/iterable-functions.svg?branch=master)](https://travis-ci.org/jasny/iterable-functions)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/iterable-functions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterable-functions/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/jasny/iterable-functions/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterable-functions/?branch=master)
+[![Packagist Stable Version](https://img.shields.io/packagist/v/jasny/iterable-functions.svg)](https://packagist.org/packages/jasny/iterable-functions)
+[![Packagist License](https://img.shields.io/packagist/l/jasny/iterable-functions.svg)](https://packagist.org/packages/jasny/iterable-functions)
 
 Functions for arrays, Iterators and other Traversable objects.
 

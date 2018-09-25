@@ -1,5 +1,5 @@
 {
-    "name": "jasny/iteratable-functions",
+    "name": "jasny/iterable-functions",
     "description": "Functions to interact with arrays, iterators and other traversable objects",
     "license": "MIT",
     "type": "library",
@@ -11,8 +11,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/jasny/pipeline-iterator/issues",
-        "source": "https://github.com/jasny/pipeline-iterator"
+        "issues": "https://github.com/jasny/iterable-functions/issues",
+        "source": "https://github.com/jasny/iterable-functions"
     },
     "require": {
         "php": ">=7.1.0",
