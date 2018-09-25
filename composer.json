@@ -48,6 +48,7 @@
             "src/iterable_reduce.php",
             "src/iterable_reverse.php",
             "src/iterable_separate.php",
+            "src/iterable_slice.php",
             "src/iterable_sort_keys.php",
             "src/iterable_sort.php",
             "src/iterable_sum.php",

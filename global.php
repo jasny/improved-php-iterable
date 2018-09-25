@@ -64,7 +64,6 @@ function iterable_count($iterable)
  * @param string          $throwable  Class name
  * @param string          $message
  * @return \Generator
- * @throws \Throwable if type doesn't match
  */
 function iterable_expect_type($iterable, $type, $throwable = 'UnexpectedValueException', $message = NULL)
 {
