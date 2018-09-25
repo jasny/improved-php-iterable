@@ -46,8 +46,8 @@ This library support functional-style operations, such as map-reduce transformat
 * [`expectType(string|array $type[, string $message])`](#expecttype)
 
 **Sorting**
-* [`sort([callable $compare])`](#sort)
-* [`ksort([callable $compare])`](#ksort)
+* [`sort([int|callable $compare[, bool $preserveKeys]])`](#sort)
+* [`sortKeys([int|callable $compare])`](#sortkeys)
 * [`reverse()`](#reverse)
 
 #### Other methods
@@ -95,7 +95,7 @@ This can be rewritten as
 ```php
 use Jasny\IteratorPipeline\Pipeline;
 
-Pipeline::pipe($values)
+Pipeline::with($values)
     ->filter(function($value) {
         return is_int($value) && $value < 10;
     })
@@ -114,7 +114,7 @@ The static `pipe()` method also takes an array.
 ```php
 use Jasny\IteratorPipeline\Pipeline;
 
-Pipeline::pipe([
+Pipeline::with([
     new Person("Max", 18),
     new Person("Peter", 23),
     new Person("Pamela", 23)
@@ -144,7 +144,7 @@ traversable. Alternatively you can use `getIterator`.
 Copy the elements of the iterator into an array.
 
 ```php
-Pipeline::pipe(["one", "two", "three"])
+Pipeline::with(["one", "two", "three"])
     ->toArray();
 ```
 
@@ -158,7 +158,7 @@ Uses [`ConcatAggregator`](https://github.com/jasny/aggregator#concataggregator)
 Map each element to a value using a callback function.
 
 ```php
-Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
+Pipeline::with([3, 2, 2, 3, 7, 3, 6, 5])
     ->map(function(int $i): int {
         return $i * $i;
     });
@@ -169,7 +169,7 @@ Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
 The second argument of the callback is the key.
 
 ```php
-Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
     ->map(function(string $value, string $key): string {
         return "{$value} {$key}";
     });
@@ -184,7 +184,7 @@ Creates a [`MapIterator`](https://github.com/jasny/iterator#mapiterator).
 Map the key of each element to a new key using a callback function.
 
 ```php
-Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
     ->mapKeys(function(string $key): string {
         return subst($key, 0, 1);
     });
@@ -195,7 +195,7 @@ Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
 The second argument of the callback is the **value**. _This is different to for other callbacks._
 
 ```php
-Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
     ->map(function(string $key, string $value): string {
         return "{$key} ({$value})";
     });
@@ -217,7 +217,7 @@ $persons = [
     'lawyer' => new Person("Pamela", 23)
 ];
 
-Pipeline::pipe($persons)
+Pipeline::with($persons)
     ->apply(function(Person $value, string $key): void {
         $value->role = $key;
     });
@@ -230,7 +230,7 @@ Creates an [`ApplyIterator](https://github.com/jasny/iterator#applyiterator)
 The `then()` method can be used for callback that returns a `Generator` or other `Traversable`.
 
 ```php
-Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
     ->then(function(\Traversable $values): \Generator {
         foreach ($values as $key => $value) {
             yield $key[0] => "$value $key";
@@ -243,7 +243,7 @@ Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
 It may be used to apply a custom (outer) iterator.
 
 ```php
-Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
     ->then(function(\Traversable $values): \Iterator {
         return new MyCustomIterator($values);
     });
@@ -254,7 +254,7 @@ Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
 Group elements of an iterator, with the group name as key and an array of elements as value.
 
 ```php
-Pipeline::pipe(['apple', 'berry', 'cherry', 'apricot'])
+Pipeline::with(['apple', 'berry', 'cherry', 'apricot'])
     ->group(function(string $value): string {
         return $value[0];
     });
@@ -265,7 +265,7 @@ Pipeline::pipe(['apple', 'berry', 'cherry', 'apricot'])
 The second argument is the key.
 
 ```php
-Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'])
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'])
     ->group(function(string $value, string $key): string {
         return $key[0];
     });
@@ -288,7 +288,7 @@ $groups = [
     'seven'
 ];
 
-Pipeline::pipe($groups)
+Pipeline::with($groups)
     ->flatten();
 
 // ['one', 'two', 'three', 'four', 'five', 'six', 'seven']
@@ -311,7 +311,7 @@ $rows = [
     ['one' => 'één', 'two' => 'twee', 'three' => 'drie', 'five' => 'vijf']
 ];
 
-Pipeline::pipe($rows)
+Pipeline::with($rows)
     ->project(['I' => 'one', 'II' => 'two', 'II' => 'three', 'IV' => 'four']);
 
 // [
@@ -336,7 +336,7 @@ Keep the values, drop the keys. The keys become an incremental number. This is c
 [`array_values`](https://php.net/array_values).
 
 ```php
-Pipeline::pipe(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'])
+Pipeline::with(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'])
     ->values();
     
 // ['uno', 'dos', 'tres', 'cuatro']
@@ -350,7 +350,7 @@ Use the keys as values. The keys become an incremental number. This is comparabl
 [`array_keys`](https://php.net/array_keys).
 
 ```php
-Pipeline::pipe(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'])
+Pipeline::with(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'])
     ->keys();
     
 // ['one', 'two', 'three', 'four']
@@ -363,7 +363,7 @@ Creates a [`KeyIterator`](https://github.com/jasny/iterator#keyiterator)
 Use another iterator as keys and the current iterator as values.
 
 ```php
-Pipeline::pipe(['one', 'two', 'three', 'four'])
+Pipeline::with(['one', 'two', 'three', 'four'])
     ->setKeys(new \ArrayIterator(['I', 'II', 'III', 'IV']));
 
 // [ 'I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' => 'four' ]    
@@ -381,7 +381,7 @@ Creates a [`CombineIterator`](https://github.com/jasny/iterator#combineiterator)
 Use values as keys and visa versa.
 
 ```php
-Pipeline::pipe(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'])
+Pipeline::with(['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro'])
     ->flip();
 
 // ['uno' => 'one', 'dos' => 'two', 'tres' => 'three', 'cuatro' => 'four']
@@ -401,7 +401,7 @@ Eliminate elements based on a criteria.
 The callback function is required and should return a boolean.
 
 ```php
-Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
+Pipeline::with([3, 2, 2, 3, 7, 3, 6, 5])
     ->filter(function(int $i): bool {
         return $i % 2 === 0; // is even
     });
@@ -412,7 +412,7 @@ Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
 The second argument of the callback is the key.
 
 ```php
-Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'])
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'])
     ->filter(function(string $value, string $key): bool {
         return $key[0] === 'a';
     });
@@ -427,7 +427,7 @@ Creates a [`CallbackFilterIterator`](https://php.net/callbackfilteriterator)
 Filter out `null` values from iteratable.
 
 ```php
-Pipeline::pipe(['one', 'two', null, 'four', 'null])
+Pipeline::with(['one', 'two', null, 'four', 'null])
     ->cleanup();
 
 // [0 => 'one', 1 => 'two', 3 => 'four']
@@ -440,7 +440,7 @@ Creates a [`CleanupIterator`](https://github.com/jasny/iterator#cleanupiterator)
 Filter on unique elements.
 
 ```php
-Pipeline::pipe(['foo', 'bar', 'qux', 'foo', 'zoo'])
+Pipeline::with(['foo', 'bar', 'qux', 'foo', 'zoo'])
     ->unique();
 
 // [0 => 'foo', 1 => 'bar', 2 => qux, 4 => 'zoo']
@@ -455,7 +455,7 @@ $persons = [
     new Person("Pamela", 23)
 ];
 
-Pipeline::pipe($persons)
+Pipeline::with($persons)
     ->unique(function(Person $value): int {
         return $value->age;
     });
@@ -466,7 +466,7 @@ Pipeline::pipe($persons)
 All values are stored for reference. The callback function can also be used to serialize and hash the value.
 
 ```php
-Pipeline::pipe($persons)
+Pipeline::with($persons)
     ->unique(function(Person $value): int {
         return hash('sha256', serialize($value));
     });
@@ -476,7 +476,7 @@ Pipeline::pipe($persons)
 The seconds argument is the key.
 
 ```php
-Pipeline::pipe(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'])
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'])
     ->unique(function(string $value, string $key): string {
         return $key[0];
     });
@@ -502,7 +502,7 @@ $someGenerator = function($max) {
     }
 };
 
-Pipeline::pipe($someGenerator(1000))
+Pipeline::with($someGenerator(1000))
     ->uniqueKeys();
 
 // ['c' => 0, 'e' => 3, 'a' => 4, 1 => 6, 8 => 7, 4 => 9, 'd' => 10, 6 => 11 9 => 15 7 => 17,
@@ -516,7 +516,7 @@ Creates a [`UniqueIterator`](https://github.com/jasny/iterator#uniqueiterator) t
 Get only the first elements of an iterator.
 
 ```php
-Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
+Pipeline::with([3, 2, 2, 3, 7, 3, 6, 5])
     ->limit(5);
 ```
 
@@ -527,14 +527,14 @@ Creates a [`LimitIterator`](https://php.net/limititerator)
 Get a limited subset of the elements using an offset.
 
 ```php
-Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
+Pipeline::with([3, 2, 2, 3, 7, 3, 6, 5])
     ->slice(3);
 ```
 
 You may also specify a limit.
 
 ```php
-Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
+Pipeline::with([3, 2, 2, 3, 7, 3, 6, 5])
     ->slice(3, 2);
 ```
 
@@ -546,7 +546,7 @@ Validate that a value has a specific type using [`expect_type`](https://github.c
 Throws an [`UnexpectedValueException`](https://php.net/unexpectedvalueexception).
 
 ```php
-Pipeline::pipe($values)
+Pipeline::with($values)
     ->expectType('int');
 ```
 
@@ -554,7 +554,7 @@ An alternative message may be specified as second argument, where the first `%s`
 `%s` (or `%2$s`) by the type.
 
 ```php
-Pipeline::pipe($values)
+Pipeline::with($values)
     ->expectType('int', "Value for element '%s' should be an integer, %s given");
 ```
 
@@ -570,7 +570,7 @@ Sorting requires traversing through the iterator to index all elements.
 Create an iterator with sorted elements.
 
 ```php
-Pipeline::pipe(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
+Pipeline::with(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
     ->sorted();
     
 // ["Alpha", "Beta", "Charlie", "Delta", "Echo", "Foxtrot"]
@@ -579,7 +579,7 @@ Pipeline::pipe(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
 Instead of using the default sorting, a callback may be passed as user defined comparison function.
 
 ```php
-Pipeline::pipe(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
+Pipeline::with(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
     ->sorted(function($a, $b): int {
         return strlen($a) <=> strlen($b) ?: $a <=> $b;
     });
@@ -596,7 +596,7 @@ Uses [`SortIteratorAggregate`](https://github.com/jasny/iterator#sortiteratoragg
 Create an iterator with sorted elements by key.
 
 ```php
-Pipeline::pipe(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
+Pipeline::with(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
     ->sortedByKeys();
     
 // ["Alpha" => "one", "Bravo" => "two", "Charlie" => "three", "Delta" => "four"]
@@ -605,7 +605,7 @@ Pipeline::pipe(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alph
 A callback may be passed as user defined comparison function.
 
 ```php
-Pipeline::pipe(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
+Pipeline::with(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
     ->sortedByKeys(function($a, $b): int {
         return strlen($a) <=> strlen($b) ?: $a <=> $b;
     });
@@ -620,7 +620,7 @@ Uses [`SortKeyIteratorAggregate`](https://github.com/jasny/iterator#sortkeyitera
 Create an iterator with elements in the reversed orderd. The keys are preserved.
 
 ```php
-Pipeline::pipe(range(5, 10))
+Pipeline::with(range(5, 10))
     ->reverse();
 
 // [5 => 10, 4 => 9, 3 => 8, 2 => 7, 1 => 6, 0 => 5]
@@ -638,7 +638,7 @@ These methods invoke traversing through the iterator and return a single element
 Get the first element.
 
 ```php
-Pipeline::pipe(["one", "two", "three"])
+Pipeline::with(["one", "two", "three"])
     ->first();
 
 // "one"
@@ -651,7 +651,7 @@ Uses [`FirstAggregator`](https://github.com/jasny/aggregator#firstaggregator)
 Find the first element that matches a condition. Returns `null` if no element is found.
 
 ```php
-Pipeline::pipe(["one", "two", "three"])
+Pipeline::with(["one", "two", "three"])
     ->find(function(string $value): bool {
         return substr($value, 0, 1) === 't';
     });
@@ -662,7 +662,7 @@ Pipeline::pipe(["one", "two", "three"])
 It's possible to use the key in this callable.
 
 ```php
-Pipeline::pipe(["one" => "uno", "two" => "dos", "three" => "tres"])
+Pipeline::with(["one" => "uno", "two" => "dos", "three" => "tres"])
     ->find(function(string $value, string $key): bool {
         return substr($key, 0, 1) === 't';
     });
@@ -677,7 +677,7 @@ Uses [`FirstAggregator`](https://github.com/jasny/aggregator#firstaggregator)
 Returns the minimal element according to a given comparator.
 
 ```php
-Pipeline::pipe([99.7, 24, -7.2, -337, 122.0]))
+Pipeline::with([99.7, 24, -7.2, -337, 122.0]))
     ->min();
 
 // -337
@@ -686,7 +686,7 @@ Pipeline::pipe([99.7, 24, -7.2, -337, 122.0]))
 It's possible to pass a callable for custom logic for comparison.
 
 ```php
-Pipeline::pipe([99.7, 24, -7.2, -337, 122.0])
+Pipeline::with([99.7, 24, -7.2, -337, 122.0])
     ->min(function($a, $b) {
         return abs($a) <=> abs($b);
     });
@@ -701,7 +701,7 @@ Uses [`MinAggregator`](https://github.com/jasny/aggregator#minaggregator)
 Returns the maximal element according to a given comparator.
 
 ```php
-Pipeline::pipe([99.7, 24, -7.2, -337, 122.0]))
+Pipeline::with([99.7, 24, -7.2, -337, 122.0]))
     ->max();
     
 // 122.0
@@ -710,7 +710,7 @@ Pipeline::pipe([99.7, 24, -7.2, -337, 122.0]))
 It's possible to pass a callable for custom logic for comparison.
 
 ```php
-Pipeline::pipe([99.7, 24, -7.2, -337, 122.0])
+Pipeline::with([99.7, 24, -7.2, -337, 122.0])
     ->max(function($a, $b) {
         return abs($a) <=> abs($b);
     });
@@ -730,7 +730,7 @@ Traverse through all elements and reduce it to a single value.
 Returns the number of elements.
 
 ```php
-Pipeline::pipe([2, 8, 4, 12]))
+Pipeline::with([2, 8, 4, 12]))
     ->count();
     
 // 4
@@ -743,7 +743,7 @@ Uses [`CountAggregator`](https://github.com/jasny/aggregator#countaggregator)
 Reduce all elements to a single value using a callback.
 
 ```php
-Pipeline::pipe([2, 3, 4])
+Pipeline::with([2, 3, 4])
     ->reduce(function(int $product, int $value): int {
         return $product * $value;
     }, 1);
@@ -758,7 +758,7 @@ Uses [`ReduceAggregator`](https://github.com/jasny/aggregator#reduceaggregator)
 Calculate the sum of a numbers. If no elements are present, the result is 0.
  
 ```php
-Pipeline::pipe([2, 8, 4, 12])
+Pipeline::with([2, 8, 4, 12])
     ->sum();
     
 // 26
@@ -771,7 +771,7 @@ Uses [`SumAggregator`](https://github.com/jasny/aggregator#sumaggregator)
 Calculate the arithmetic mean. If no elements are present, the result is `NAN`.
 
 ```php
-Pipeline::pipe([2, 8, 4, 12]))
+Pipeline::with([2, 8, 4, 12]))
     ->average;
     
 // 6.5
@@ -786,7 +786,7 @@ Concatenate the input elements, separated by the specified delimiter, in encount
 This is comparable to [implode](https://php.net/implode) on normal arrays. 
 
 ```php
-Pipeline::pipe(["hello", "sweet", "world"])
+Pipeline::with(["hello", "sweet", "world"])
     ->concat(" - ");
     
 // "hello - sweet - world"
@@ -803,7 +803,7 @@ To use it with a [PSR-7 stream](https://www.php-fig.org/psr/psr-7/#13-streams), 
 resource and pass it to constructor.
 
 ```php
-Pipeline::pipe($values)
+Pipeline::with($values)
     ->output($psr7request->getBody()->detach());
 ```
 
@@ -812,14 +812,14 @@ Pipeline::pipe($values)
 Output the elements to a stream. The elements should be strings.
 
 ```php
-Pipeline::pipe(["one", "two", "three"])
+Pipeline::with(["one", "two", "three"])
     ->output();
 ```
 
 Takes a writable stream resource or a file name / uri (string) as first argument. Defaults to `php://output`.
 
 ```php
-Pipeline::pipe(["one", "two", "three"])
+Pipeline::with(["one", "two", "three"])
     ->output('path/to/my/file');
 ```
 
@@ -840,14 +840,14 @@ $rows = [
     ['three', 'qux', 'blue', -20]
 ];
     
-Pipeline::pipe($rows)
+Pipeline::with($rows)
     ->outputCsv('path/to/my/file.csv');
 ```
 
 Optionally headers can be specified as second argument.
 
 ```php
-Pipeline::pipe($rows)
+Pipeline::with($rows)
     ->outputCsv('path/to/my/file.csv', ['number', 'word', 'color', 'integer']);
 ```
 
@@ -862,7 +862,7 @@ $rows = [
     ['number' => 'three', 'color' => 'blue']
 ];
     
-Pipeline::pipe($rows)
+Pipeline::with($rows)
     ->project(['number', 'word', 'color', 'integer'])
     ->outputCsv('path/to/my/file.csv');
 ```
@@ -882,7 +882,7 @@ $rows = [
     ['number' => 'three', 'color' => 'blue']
 ];
 
-Pipeline::pipe($rows)
+Pipeline::with($rows)
     ->outputJson();
 ```
 
@@ -898,7 +898,7 @@ use Jasny\IteratorStream\JsonOutputStream;
 
 $rows = ...
 
-Pipeline::pipe($rows)
+Pipeline::with($rows)
     ->outputJson('php://output', \JSON_PRETTY_PRINT | JsonOutputStream::OUTPUT_LINES);
 ```
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jasny\PipelineIterator\Tests;
 
 use Jasny\IteratorPipeline\Pipeline;

@@ -6,17 +6,20 @@ namespace Jasny\IteratorPipeline;
 
 use Jasny\IteratorPipeline\Traits\FilteringTrait;
 use Jasny\IteratorPipeline\Traits\MappingTrait;
+use Jasny\IteratorPipeline\Traits\SortingTrait;
 
 use function Jasny\iterable_to_array;
 use function Jasny\iterable_to_iterator;
 
 /**
  * Functional-style operations, such as map-reduce transformations on arrays and iterators.
+ * A pipeline uses Generators, meaning it can be used only once.
  */
 class Pipeline implements \IteratorAggregate
 {
     use MappingTrait;
     use FilteringTrait;
+    use SortingTrait;
 
     /**
      * @var iterable
@@ -65,5 +68,17 @@ class Pipeline implements \IteratorAggregate
     public function toArray(): array
     {
         return iterable_to_array($this->iterable);
+    }
+
+
+    /**
+     * Factory method
+     *
+     * @param iterable $iterable
+     * @return static
+     */
+    public static function with(iterable $iterable): self
+    {
+        return new static($iterable);
     }
 }
