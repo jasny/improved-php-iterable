@@ -8,6 +8,7 @@ namespace Jasny;
  * Return the arithmetic mean.
  * If no elements are present, the result is NAN.
  *
+ * @param iterable $iterable
  * @return float
  */
 function iterable_average(iterable $iterable): float

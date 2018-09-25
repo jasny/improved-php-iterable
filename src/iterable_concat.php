@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasny;
 
 /**
- * Invoke the aggregator.
+ * Concatenate all elements into a single string.
  *
  * @param iterable $iterable
  * @param string   $glue

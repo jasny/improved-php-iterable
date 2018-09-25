@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasny;
 
 /**
- * Count iterable.
+ * Count element of an iterable.
  *
  * @return int
  */
