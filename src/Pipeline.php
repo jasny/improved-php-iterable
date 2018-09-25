@@ -4,54 +4,64 @@ declare(strict_types=1);
 
 namespace Jasny\IteratorPipeline;
 
-use Jasny\IteratorPipeline\Aggregation\AggregatorInterface;
-use Jasny\IteratorPipeline\Aggregation\ArrayAggregator;
+use Jasny\IteratorPipeline\Traits\MappingTrait;
 
+use function Jasny\iterable_to_array;
+use function Jasny\iterable_to_iterator;
+
+/**
+ * Functional-style operations, such as map-reduce transformations on arrays and iterators.
+ */
 class Pipeline implements \IteratorAggregate
 {
+    use MappingTrait;
+
     /**
      * @var iterable
      */
     protected $iterable;
 
-
+    /**
+     * Pipeline constructor.
+     *
+     * @param iterable $iterable
+     */
+    public function __construct(iterable $iterable)
+    {
+        $this->iterable = $iterable;
+    }
 
     /**
-     * Get iterable as array.
-     * 
-     * @return array
+     * Set the next step of the pipeline.
+     *
+     * @param iterable
+     * @return $this
      */
-    public function toArray(): array
+    protected function step(iterable $iterable): self
     {
-        switch (true) {
-            case method_exists($this->iterable, 'toArray'):
-                return $this->iterable->toArray();
-            case method_exists($this->iterable, 'getArrayCopy'):
-                return $this->iterable->getArrayCopy();
-            default:
-                return iterable_to_array($this->iterable, true);
-        }
+        $this->iterable = $iterable;
+
+        return $this;
     }
+
 
     /**
      * Get iterator.
      *
-     * @return \Traversable
+     * @return \Iterator
      */
-    public function getIterator(): \Traversable
+    public function getIterator(): \Iterator
     {
-        if (is_array($this->iterable)) {
-            return new \ArrayIterator($this->iterable);
-        }
+        return iterable_to_iterator($this->iterable);
+    }
 
-        $iterator = $this->iterable instanceof \IteratorAggregate
-            ? $this->iterable->getIterator()
-            : $this->iterable;
-
-        if (!$iterator instanceof \Iterator) {
-            $iterator = new \IteratorIterator($iterator);
-        }
-
-        return $iterator;
+    /**
+     * Get iterable as array.
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return iterable_to_array($this->iterable);
     }
 }

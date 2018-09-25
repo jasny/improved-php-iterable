@@ -6,11 +6,9 @@
 [![Packagist Stable Version](https://img.shields.io/packagist/v/jasny/iterator-pipeline.svg)](https://packagist.org/packages/jasny/iterator-pipeline)
 [![Packagist License](https://img.shields.io/packagist/l/jasny/iterator-pipeline.svg)](https://packagist.org/packages/jasny/iterator-pipeline)
 
-This library support functional-style operations, such as map-reduce transformations on
+This library support functional-style operations, such as map-reduce transformations on arrays and
 [iterators](http://php.net/manual/en/class.iterator.php).
 
-The `Pipeline` is implements the [builder design pattern](https://sourcemaking.com/design_patterns/builder), wrapping
-each `Iterator`. It uses
 
 * [SPL iterators](http://php.net/manual/en/spl.iterators.php)
 * [Jasny iterators](https://github.com/jasny/iterator)
@@ -364,7 +362,7 @@ Creates a [`KeyIterator`](https://github.com/jasny/iterator#keyiterator)
 
 ### setKeys
 
-Use another iterator as keys.
+Use another iterator as keys and the current iterator as values.
 
 ```php
 Pipeline::pipe(['one', 'two', 'three', 'four'])

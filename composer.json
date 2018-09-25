@@ -8,10 +8,6 @@
             "name": "Arnold Daniels",
             "email": "arnold@jasny.net",
             "homepage": "http://www.jasny.net"
-        },
-        {
-            "name": "Fabio B. Silva",
-            "email": "fabio.bat.silva@gmail.com"
         }
     ],
     "support": {
@@ -19,19 +15,20 @@
         "source": "https://github.com/jasny/iterator-pipeline"
     },
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.1.0",
+        "jasny/iterable-functions": "dev-master"
     },
     "require-dev": {
         "jasny/php-code-quality": "~2.3"
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\PipelineIterator\\": "src/"
+            "Jasny\\IteratorPipeline\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jasny\\PipelineIterator\\Tests\\": "tests/"
+            "Jasny\\IteratorPipeline\\Tests\\": "tests/"
         }
     },
     "scripts": {
