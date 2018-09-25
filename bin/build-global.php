@@ -6,7 +6,7 @@ $userFunctions = get_defined_functions()['user'];
 $jasnyFunctions = [];
 
 foreach ($userFunctions as $function) {
-    if (stripos($function, 'jasny\\') === 0) {
+    if (stripos($function, 'jasny\\iterable_') === 0) {
         $jasnyFunctions[] = $function;
     }
 }
