@@ -15,7 +15,6 @@ use function Jasny\array_join_pretty;
  * @param string          $throwable  Class name
  * @param string          $message
  * @return \Generator
- * @throws \Throwable if type doesn't match
  */
 function iterable_expect_type(
     iterable $iterable,
