@@ -6,16 +6,6 @@ namespace Jasny\IteratorPipeline\Traits;
 
 use Jasny\IteratorPipeline\Pipeline;
 use Jasny\Iterator\CombineIterator;
-use function Jasny\iterable_map;
-use function Jasny\iterable_map_keys;
-use function Jasny\iterable_apply;
-use function Jasny\iterable_group;
-use function Jasny\iterable_flatten;
-use function Jasny\iterable_project;
-use function Jasny\iterable_values;
-use function Jasny\iterable_keys;
-use function Jasny\iterable_flip;
-use function Jasny\expect_type;
 
 /**
  * Mapping and projection methods for iterator pipeline
@@ -23,17 +13,13 @@ use function Jasny\expect_type;
 trait MappingTrait
 {
     /**
-     * @var iterable
-     */
-    protected $iterable;
-
-    /**
-     * Set the next step of the pipeline.
+     * Define the next step via a callback that returns an array or Traversable object.
      *
-     * @param iterable
+     * @param callable $callback
+     * @param mixed    ...$args
      * @return $this
      */
-    abstract protected function step(iterable $iterable): Pipeline;
+    abstract public function then(callable $callback, ...$args);
 
 
     /**
@@ -42,9 +28,9 @@ trait MappingTrait
      * @param callable $callback
      * @return $this
      */
-    public function map(callable $callback): Pipeline
+    public function map(callable $callback)
     {
-        return $this->step(iterable_map($this->iterable, $callback));
+        return $this->then('Jasny\iterable_map', $callback);
     }
 
     /**
@@ -53,9 +39,9 @@ trait MappingTrait
      * @param callable $callback
      * @return $this
      */
-    public function mapKeys(callable $callback): Pipeline
+    public function mapKeys(callable $callback)
     {
-        return $this->step(iterable_map_keys($this->iterable, $callback));
+        return $this->then('Jasny\iterable_map_keys', $callback);
     }
 
     /**
@@ -65,24 +51,9 @@ trait MappingTrait
      * @param callable $callback
      * @return $this
      */
-    public function apply(callable $callback): Pipeline
+    public function apply(callable $callback)
     {
-        return $this->step(iterable_apply($this->iterable, $callback));
-    }
-
-    /**
-     * Define the next step via a callback that returns a `Generator` or other `Traversable`.
-     *
-     * @param callable $callback
-     * @return $this
-     */
-    public function then(callable $callback): Pipeline
-    {
-        $next = $callback($this->iterable);
-        expect_type($next, 'iterable', \UnexpectedValueException::class,
-            "Expected callback to return an array or Traversable, %s returned");
-
-        return $this->step($next);
+        return $this->then('Jasny\iterable_apply', $callback);
     }
 
     /**
@@ -91,9 +62,9 @@ trait MappingTrait
      * @param callable $grouping
      * @return $this
      */
-    public function group(callable $grouping): Pipeline
+    public function group(callable $grouping)
     {
-        return $this->step(iterable_group($this->iterable, $grouping));
+        return $this->then('Jasny\iterable_group', $grouping);
     }
 
     /**
@@ -101,9 +72,9 @@ trait MappingTrait
      *
      * @return $this
      */
-    public function flatten(): Pipeline
+    public function flatten()
     {
-        return $this->step(iterable_flatten($this->iterable));
+        return $this->then('Jasny\iterable_flatten');
     }
 
     /**
@@ -112,9 +83,9 @@ trait MappingTrait
      * @param array $mapping  [new key => old key, ...]
      * @return $this
      */
-    public function project(array $mapping): Pipeline
+    public function project(array $mapping)
     {
-        return $this->step(iterable_project($this->iterable, $mapping));
+        return $this->then('Jasny\iterable_project', $mapping);
     }
 
 
@@ -123,9 +94,9 @@ trait MappingTrait
      *
      * @return $this
      */
-    public function values(): Pipeline
+    public function values()
     {
-        return $this->step(iterable_values($this->iterable));
+        return $this->then('Jasny\iterable_values');
     }
 
     /**
@@ -133,9 +104,9 @@ trait MappingTrait
      *
      * @return $this
      */
-    public function keys(): Pipeline
+    public function keys()
     {
-        return $this->step(iterable_keys($this->iterable));
+        return $this->then('Jasny\iterable_keys');
     }
 
     /**
@@ -144,9 +115,13 @@ trait MappingTrait
      * @param iterable $keys
      * @return $this
      */
-    public function setKeys(iterable $keys): Pipeline
+    public function setKeys(iterable $keys)
     {
-        return $this->step(new CombineIterator($keys, $this->iterable));
+        $combine = function($values, $keys) {
+            return new CombineIterator($keys, $values);
+        };
+
+        return $this->then($combine, $keys);
     }
 
     /**
@@ -154,8 +129,8 @@ trait MappingTrait
      *
      * @return Pipeline
      */
-    public function flip(): Pipeline
+    public function flip()
     {
-        return $this->step(iterable_flip($this->iterable));
+        return $this->then('Jasny\iterable_flip');
     }
 }

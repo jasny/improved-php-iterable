@@ -4,28 +4,19 @@ declare(strict_types=1);
 
 namespace Jasny\IteratorPipeline\Traits;
 
-use function Jasny\iterable_sort;
-use function Jasny\iterable_sort_keys;
-use function Jasny\iterable_reverse;
-use Jasny\IteratorPipeline\Pipeline;
-
 /**
  * Methods that change the order of the elements.
  */
 trait SortingTrait
 {
     /**
-     * @var iterable
-     */
-    protected $iterable;
-
-    /**
-     * Set the next step of the pipeline.
+     * Define the next step via a callback that returns an array or Traversable object.
      *
-     * @param iterable
+     * @param callable $callback
+     * @param mixed    ...$args
      * @return $this
      */
-    abstract protected function step(iterable $iterable): Pipeline;
+    abstract public function then(callable $callback, ...$args);
 
 
     /**
@@ -35,20 +26,20 @@ trait SortingTrait
      * @param bool         $preserveKeys
      * @return $this
      */
-    public function sort($compare, bool $preserveKeys = true): Pipeline
+    public function sort($compare, bool $preserveKeys = true)
     {
-        return $this->step(iterable_sort($this->iterable, $compare, $preserveKeys));
+        return $this->then('Jasny\iterable_sort', $compare, $preserveKeys);
     }
 
     /**
      * Sort all elements of an iterator based on the key.
      *
      * @param callable|int $compare   SORT_* flags as binary set or callback comparator function
-     * @return Pipeline
+     * @return $this
      */
-    public function sortKeys($compare): Pipeline
+    public function sortKeys($compare)
     {
-        return $this->step(iterable_sort_keys($this->iterable, $compare));
+        return $this->then('Jasny\iterable_sort_keys', $compare);
     }
 
     /**
@@ -56,8 +47,8 @@ trait SortingTrait
      *
      * @return $this
      */
-    public function reverse(): Pipeline
+    public function reverse()
     {
-        return $this->step(iterable_reverse($this->iterable));
+        return $this->then('Jasny\iterable_reverse');
     }
 }

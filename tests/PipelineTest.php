@@ -15,7 +15,7 @@ class PipelineTest extends TestCase
 {
     use TestHelper;
 
-    public function provider()
+    public function iterableProvider()
     {
         $generator = function($values) {
             foreach ($values as $key => $value) {
@@ -36,16 +36,44 @@ class PipelineTest extends TestCase
     }
 
     /**
-     * @dataProvider provider
+     * @dataProvider iterableProvider
      */
-    public function testStep($values)
+    public function testThen($next, $expected)
     {
-        $pipeline = new Pipeline([]);
+        $input = new \ArrayIterator(['foo']);
 
-        $ret = $this->callPrivateMethod($pipeline, 'step', [$values]);
+        $pipeline = new Pipeline($input);
+
+        $ret = $pipeline->then(function($iterable) use ($next) {
+            $this->assertSame($iterable, $iterable);
+            return $next;
+        });
 
         $this->assertSame($pipeline, $ret);
-        $this->assertAttributeSame($values, 'iterable', $pipeline);
+
+        $result = $pipeline->toArray();
+        $this->assertEquals($expected, $result);
+    }
+
+
+    public function provider()
+    {
+        $generator = function($values) {
+            foreach ($values as $key => $value) {
+                yield $key => $value;
+            }
+        };
+
+        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres'];
+
+        $tests = [
+            [$values, $values],
+            [new \ArrayIterator($values), $values],
+            [new \ArrayObject($values), $values],
+            [$generator($values), $values]
+        ];
+
+        return $tests;
     }
 
     /**

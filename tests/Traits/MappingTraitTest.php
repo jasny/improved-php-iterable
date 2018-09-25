@@ -68,47 +68,6 @@ class MappingTraitTest extends TestCase
     }
 
 
-    public function iterableProvider()
-    {
-        $generator = function($values) {
-            foreach ($values as $key => $value) {
-                yield $key => $value;
-            }
-        };
-
-        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres'];
-
-        $tests = [
-            [$values, $values],
-            [new \ArrayIterator($values), $values],
-            [new \ArrayObject($values), $values],
-            [$generator($values), $values]
-        ];
-
-        return $tests;
-    }
-
-    /**
-     * @dataProvider iterableProvider
-     */
-    public function testThen($next, $expected)
-    {
-        $input = new \ArrayIterator(['foo']);
-
-        $pipeline = new Pipeline($input);
-
-        $ret = $pipeline->then(function($iterable) use ($next) {
-            $this->assertSame($iterable, $iterable);
-            return $next;
-        });
-
-        $this->assertSame($pipeline, $ret);
-
-        $result = $pipeline->toArray();
-        $this->assertEquals($expected, $result);
-    }
-
-
     public function testGroup()
     {
         $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
@@ -177,6 +136,27 @@ class MappingTraitTest extends TestCase
         $this->assertSame($pipeline, $ret);
 
         $this->assertEquals(['one', 'two', 'three'], $pipeline->toArray());
+    }
+
+
+    public function iterableProvider()
+    {
+        $generator = function($values) {
+            foreach ($values as $key => $value) {
+                yield $key => $value;
+            }
+        };
+
+        $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres'];
+
+        $tests = [
+            [$values, $values],
+            [new \ArrayIterator($values), $values],
+            [new \ArrayObject($values), $values],
+            [$generator($values), $values]
+        ];
+
+        return $tests;
     }
 
     /**

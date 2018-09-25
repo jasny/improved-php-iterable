@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jasny\IteratorPipeline;
 
 use Jasny\IteratorPipeline\Traits\FilteringTrait;
+use Jasny\IteratorPipeline\Traits\FindingTrait;
 use Jasny\IteratorPipeline\Traits\MappingTrait;
 use Jasny\IteratorPipeline\Traits\SortingTrait;
 
@@ -20,6 +21,7 @@ class Pipeline implements \IteratorAggregate
     use MappingTrait;
     use FilteringTrait;
     use SortingTrait;
+    use FindingTrait;
 
     /**
      * @var iterable
@@ -37,14 +39,21 @@ class Pipeline implements \IteratorAggregate
     }
 
     /**
-     * Set the next step of the pipeline.
+     * Define the next step via a callback that returns an array or Traversable object.
      *
-     * @param iterable
+     * @param callable $callback
+     * @param mixed    ...$args
      * @return $this
      */
-    protected function step(iterable $iterable): self
+    public function then(callable $callback, ...$args)
     {
-        $this->iterable = $iterable;
+        $next = $callback($this->iterable, ...$args);
+
+        if (!is_iterable($next)) {
+            throw new \UnexpectedValueException("Expected an array or Traversable, %s returned");
+        }
+
+        $this->iterable = $next;
 
         return $this;
     }
@@ -77,7 +86,7 @@ class Pipeline implements \IteratorAggregate
      * @param iterable $iterable
      * @return static
      */
-    public static function with(iterable $iterable): self
+    final public static function with(iterable $iterable): self
     {
         return new static($iterable);
     }

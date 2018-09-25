@@ -4,30 +4,19 @@ declare(strict_types=1);
 
 namespace Jasny\IteratorPipeline\Traits;
 
-use Jasny\IteratorPipeline\Pipeline;
-use function Jasny\iterable_filter;
-use function Jasny\iterable_cleanup;
-use function Jasny\iterable_unique;
-use function Jasny\iterable_slice;
-use function Jasny\iterable_expect_type;
-
 /**
  * Filtering methods for iterator pipeline.
  */
 trait FilteringTrait
 {
     /**
-     * @var iterable
-     */
-    protected $iterable;
-
-    /**
-     * Set the next step of the pipeline.
+     * Define the next step via a callback that returns an array or Traversable object.
      *
-     * @param iterable
+     * @param callable $callback
+     * @param mixed    ...$args
      * @return $this
      */
-    abstract protected function step(iterable $iterable): Pipeline;
+    abstract public function then(callable $callback, ...$args);
 
 
     /**
@@ -36,9 +25,9 @@ trait FilteringTrait
      * @param callable $matcher
      * @return $this
      */
-    public function filter(callable $matcher): Pipeline
+    public function filter(callable $matcher)
     {
-        return $this->step(iterable_filter($this->iterable, $matcher));
+        return $this->then('Jasny\iterable_filter', $matcher);
     }
 
     /**
@@ -46,9 +35,9 @@ trait FilteringTrait
      *
      * @return $this
      */
-    public function cleanup(): Pipeline
+    public function cleanup()
     {
-        return $this->step(iterable_cleanup($this->iterable));
+        return $this->then('Jasny\iterable_cleanup');
     }
 
     /**
@@ -57,9 +46,9 @@ trait FilteringTrait
      * @param callable|null $grouper  If provided, filtering will be based on return value.
      * @return $this
      */
-    public function unique(?callable $grouper = null): Pipeline
+    public function unique(?callable $grouper = null)
     {
-        return $this->step(iterable_unique($this->iterable, $grouper));
+        return $this->then('Jasny\iterable_unique', $grouper);
     }
 
     /**
@@ -68,11 +57,11 @@ trait FilteringTrait
      *
      * @return $this
      */
-    public function uniqueKeys(): Pipeline
+    public function uniqueKeys()
     {
-        return $this->step(iterable_unique($this->iterable, function($value, $key) {
+        return $this->then('Jasny\iterable_unique', function($value, $key) {
             return $key;
-        }));
+        });
     }
 
     /**
@@ -81,9 +70,9 @@ trait FilteringTrait
      * @param int $size
      * @return $this
      */
-    public function limit(int $size): Pipeline
+    public function limit(int $size)
     {
-        return $this->step(iterable_slice($this->iterable, 0, $size));
+        return $this->then('Jasny\iterable_slice', 0, $size);
     }
 
     /**
@@ -93,9 +82,9 @@ trait FilteringTrait
      * @param int|null $size    size limit
      * @return $this
      */
-    public function slice(int $offset, ?int $size = null): Pipeline
+    public function slice(int $offset, ?int $size = null)
     {
-        return $this->step(iterable_slice($this->iterable, $offset, $size));
+        return $this->then('Jasny\iterable_slice', $offset, $size);
     }
 
 
@@ -110,6 +99,6 @@ trait FilteringTrait
      */
     public function expectType($type, string $message = null)
     {
-        return $this->step(iterable_expect_type($this->iterable, $type, \UnexpectedValueException::class, $message));
+        return $this->then('Jasny\iterable_expect_type', $type, \UnexpectedValueException::class, $message);
     }
 }
