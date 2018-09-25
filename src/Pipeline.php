@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jasny\IteratorPipeline;
 
+use Jasny\IteratorPipeline\Traits\FilteringTrait;
 use Jasny\IteratorPipeline\Traits\MappingTrait;
 
 use function Jasny\iterable_to_array;
@@ -15,6 +16,7 @@ use function Jasny\iterable_to_iterator;
 class Pipeline implements \IteratorAggregate
 {
     use MappingTrait;
+    use FilteringTrait;
 
     /**
      * @var iterable

@@ -41,11 +41,9 @@ This library support functional-style operations, such as map-reduce transformat
 * [`cleanup()`](#cleanup)
 * [`unique([callable $callback])`](#unique)
 * [`uniqueKeys()`](#uniquekeys)
-* [`limit(int size)`](#limit)
-* [`slice(int offset[, int size])`](#slice)
-* [`infinete()`](#infinete)
-* [`assert(callable callback, string message)`](#assert)
-* [`assertType(string|array type[, string message])`](#expecttype)
+* [`limit(int $size)`](#limit)
+* [`slice(int $offset[, int $size])`](#slice)
+* [`expectType(string|array $type[, string $message])`](#expecttype)
 
 **Sorting**
 * [`sort([callable $compare])`](#sort)
@@ -400,7 +398,7 @@ Creates a [`FlipIterator`](https://github.com/jasny/iterator#flipiterator) using
 
 Eliminate elements based on a criteria.
 
-The callback function is required amd should return a boolean.
+The callback function is required and should return a boolean.
 
 ```php
 Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
@@ -426,7 +424,7 @@ Creates a [`CallbackFilterIterator`](https://php.net/callbackfilteriterator)
 
 ### cleanup()
 
-Remove elements thar are `null`.
+Filter out `null` values from iteratable.
 
 ```php
 Pipeline::pipe(['one', 'two', null, 'four', 'null])
@@ -494,6 +492,8 @@ Creates a [`UniqueIterator`](https://github.com/jasny/iterator#uniqueiterator)
 
 The keys of an iterator don't have to be unique (and don't have to be a scalar). This is unlike an associated array.
 
+The `uniqueKeys()` method filters our duplicate keys.
+
 ```php
 $someGenerator = function($max) {
     for ($i = 0; $i < $max; $i++) {
@@ -513,7 +513,7 @@ Creates a [`UniqueIterator`](https://github.com/jasny/iterator#uniqueiterator) t
 
 ### limit
 
-Get the first only elements of an iterator.
+Get only the first elements of an iterator.
 
 ```php
 Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
@@ -540,50 +540,14 @@ Pipeline::pipe([3, 2, 2, 3, 7, 3, 6, 5])
 
 Creates a [`LimitIterator`](https://php.net/limititerator)
 
-### infinete
-
-Infinitely iterate over the iterator.
-
-```php
-Pipeline::pipe(range(0, 10))
-    ->infinete();
-```
-
-_This method can easily create an infinete loop, crashing your app._
-
-Creates an [`InfiniteIterator`](https://php.net/infiniteiterator)
-
-### assert
-
-Validate a value using a callback. Throws an [`UnexpectedValueException`](https://php.net/unexpectedvalueexception)
-if the callback returns `false`.
-
-```php
-Pipeline::pipe($values)
-    ->assert(
-        function($value): bool {
-            return is_int($value) && $value > 0;
-        },
-        "Value for element '%s' must be a positive integer"
-    );
-```
-
-The message must be specified as second argument, where `%s` is replaced by the key. The `%s` must be omited if the
-key is not a scalar.
-
-An alterative method to assert values is to use `apply`. This give greater freedom, like customizing the message
-based on the value or throwing a custom exception.
-
-Creates an [`AssertIterator`](https://github.com/jasny/iterator#assertiterator)
-
-### assertType
+### expectType
 
 Validate that a value has a specific type using [`expect_type`](https://github.com/jasny/php-functions#expect_type).
 Throws an [`UnexpectedValueException`](https://php.net/unexpectedvalueexception).
 
 ```php
 Pipeline::pipe($values)
-    ->assertType('int');
+    ->expectType('int');
 ```
 
 An alternative message may be specified as second argument, where the first `%s` is replaced by the key and the second
@@ -591,7 +555,7 @@ An alternative message may be specified as second argument, where the first `%s`
 
 ```php
 Pipeline::pipe($values)
-    ->assertType('int', "Value for element '%s' should be an integer, %s given");
+    ->expectType('int', "Value for element '%s' should be an integer, %s given");
 ```
 
 Creates an [`AssertTypeIterator`](https://github.com/jasny/iterator#asserttypeiterator)

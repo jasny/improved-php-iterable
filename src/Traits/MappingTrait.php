@@ -33,7 +33,7 @@ trait MappingTrait
      * @param iterable
      * @return $this
      */
-    abstract protected function step(iterable $iterable);
+    abstract protected function step(iterable $iterable): Pipeline;
 
 
     /**
