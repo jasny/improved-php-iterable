@@ -144,19 +144,19 @@ class IterableProjectTest extends TestCase
         ];
         $inner = new \ArrayIterator($values);
 
-        $map = ['one', 'three', 'four'];
+        $map = ['I' => 'one', 'III' => 'three', 'IV' => 'four'];
 
         $iterator = iterable_project($inner, $map);
 
         $result = iterator_to_array($iterator);
 
         $expected = [
-            ['uno', 'tres', 'cuatro'],
-            null,
-            42,
-            'hello',
-            $date,
-            ['één', 'drie', 'vier']
+            ['I' => 'uno', 'III' => 'tres', 'IV' => 'cuatro'],
+            ['I' => null, 'III' => null, 'IV' => null],
+            ['I' => null, 'III' => null, 'IV' => null],
+            ['I' => null, 'III' => null, 'IV' => null],
+            ['I' => null, 'III' => null, 'IV' => null],
+            ['I' => 'één', 'III' => 'drie', 'IV' => 'vier']
         ];
 
         $this->assertSame($expected, $result);

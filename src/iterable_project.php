@@ -6,7 +6,6 @@ namespace Jasny;
 
 /**
  * Project each element of an iterator to an associated (or numeric) array.
- * Scalar, null and resource elements are untouched.
  *
  * @param iterable $iterable
  * @param array $mapping
@@ -26,7 +25,7 @@ function iterable_project(iterable $iterable, array $mapping): \Generator
                 $projected[$to] = $value->$from ?? null;
             }
         } else {
-            $projected = $value;
+            $projected = array_fill_keys(array_keys($mapping), null);
         }
 
         yield $key => $projected;
