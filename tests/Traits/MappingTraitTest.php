@@ -151,6 +151,31 @@ class MappingTraitTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testReshape()
+    {
+        $rows = [
+            (object)['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
+            (object)['three' => 'san', 'one' => 'yi', 'two' => 'er', 'five' => 'wu', 'four' => 'si'],
+            (object)['two' => 'twee', 'five' => 'vijf', 'three' => 'drie', 'four' => 'vier']
+        ];
+
+        $pipeline = new Pipeline($rows);
+
+        $ret = $pipeline->reshape(['one' => true, 'two' => false, 'three' => 'III', 'four' => 0]);
+        $this->assertSame($pipeline, $ret);
+
+        $result = $pipeline->toArray();
+
+        $expected = [
+            (object)['one' => 'uno', 'five' => 'cinco', 'III' => 'tres', 0 => 'cuatro'],
+            (object)['one' => 'yi', 'five' => 'wu', 'III' => 'san', 0 => 'si'],
+            (object)['five' => 'vijf', 'III' => 'drie', 0 => 'vier']
+        ];
+
+        $this->assertSame($rows, $result); // Still the same objects
+        $this->assertEquals($expected, $result);
+    }
+
 
     public function testValues()
     {

@@ -26,6 +26,7 @@ This library support functional-style operations, such as map-reduce transformat
 * [`flatten()`](#flatten)
 * [`column(int|string|null $valueColumn[, int|string|null $keyColumn])`](#column)
 * [`project(array $mapping)`](#project)
+* [`reshape(array $columns)`](#reshape)
 * [`values()`](#values)
 * [`keys()`](#keys)
 * [`setKeys(Traversable $keys)`](#setkeys)
@@ -379,6 +380,36 @@ If an element doesn't have a specified key, the value will be `null`.
 
 The order of keys of the projected array is always the same as the order of the mapping. The mapping may also be a
 numeric array.
+
+### reshape
+
+Reshape each element of an iterator, adding or removing properties or keys.
+
+The method takes an rray with the column name as key. The value may be a boolean, specifying if th column should
+remain or be removed. Alternatively the column may be a string or int, renaming the column name (key).
+
+Columns that are not specified are untouched. This has the same effect as `'column' => true`.
+
+```php
+$rows = [
+    ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
+    ['three' => 'san', 'two' => 'er', 'five' => 'wu', 'four' => 'si'],
+    ['two' => 'twee', 'four' => 'vier']
+];
+
+Pipeline::with($rows)
+    ->reshape(['one' => true, 'two' => false, 'three' => 'III', 'four' => 0])
+    ->toArray();
+
+// [
+//     ['one' => 'uno', 'five' => 'cinco', 'III' => 'tres', 0 => 'cuatro'],
+//     ['five' => 'wu', 'III' => 'san', 0 => 'si'],
+//     [0 => 'vier']
+// ];
+```
+
+Note that unlike with `project()`, the array or object is modified. If the element does not have the specific key, it's
+ignored. If the element is not an object or array, it's untouched.
 
 ### values
 

@@ -103,6 +103,17 @@ trait MappingTrait
         return $this->then('Jasny\iterable_project', $mapping);
     }
 
+    /**
+     * Reshape each element of an iterator, adding or removing properties or keys.
+     *
+     * @param array $columns  [key => bool|string|int, ...]
+     * @return static
+     */
+    public function reshape(array $columns)
+    {
+        return $this->then('Jasny\iterable_reshape', $columns);
+    }
+
 
     /**
      * Keep the values, drop the keys. The keys become an incremental number.
