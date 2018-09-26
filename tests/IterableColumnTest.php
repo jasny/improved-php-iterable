@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use function Jasny\iterable_column;
 
 /**
- * @covers \Jasny\iterable_project
+ * @covers \Jasny\iterable_column
  */
 class IterableColumntTest extends TestCase
 {
