@@ -113,7 +113,7 @@ class IterableProjectTest extends TestCase
     /**
      * @dataProvider partialProvider
      */
-    public function testFill(array $values)
+    public function testPartial(array $values)
     {
         $map = ['one', 'three', 'four'];
 

@@ -47,6 +47,7 @@
             "src/iterable_min.php",
             "src/iterable_project.php",
             "src/iterable_reduce.php",
+            "src/iterable_reshape.php",
             "src/iterable_reverse.php",
             "src/iterable_separate.php",
             "src/iterable_slice.php",
