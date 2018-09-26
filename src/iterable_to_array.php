@@ -8,20 +8,27 @@ namespace Jasny;
  * Convert any iterable to an array.
  *
  * @param array|\Traversable $iterable
+ * @param bool|null          $preserveKeys  NULL means don't care
  * @return array
  */
-function iterable_to_array(iterable $iterable): array
+function iterable_to_array(iterable $iterable, ?bool $preserveKeys = null): array
 {
     switch (true) {
         case is_array($iterable):
-            return $iterable;
+            break;
         case is_object($iterable) && method_exists($iterable, 'toArray'):
-            return $iterable->toArray();
+            $iterable = $iterable->toArray();
+            break;
         case is_object($iterable) && method_exists($iterable, 'getArrayCopy'):
-            return $iterable->getArrayCopy();
+            $iterable = $iterable->getArrayCopy();
+            break;
+
         case $iterable instanceof \Traversable:
-            return iterator_to_array($iterable, true);
+            return iterator_to_array($iterable, $preserveKeys === true);
+        default:
+            $type = get_type_description($iterable);
+            throw new \InvalidArgumentException("Unknown iterable: $type"); // @codeCoverageIgnore
     }
 
-    throw new \InvalidArgumentException("Unknown iterable: " . gettype($iterable)); // @codeCoverageIgnore
+    return $preserveKeys === false ? array_values($iterable) : $iterable;
 }

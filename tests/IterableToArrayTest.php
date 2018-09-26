@@ -16,7 +16,12 @@ class IterableToArrayTest extends TestCase
 
     public function provider()
     {
-        return $this->provideIterables(['I' => 'one', 'II' => 'two', 'III' => 'three']);
+        return $this->provideIterables(['I' => 'one', 'II' => 'two', 'III' => 'three'], true);
+    }
+
+    public function noTrickyProvider()
+    {
+        return $this->provideIterables(['I' => 'one', 'II' => 'two', 'III' => 'three'], false);
     }
 
     /**
@@ -26,7 +31,31 @@ class IterableToArrayTest extends TestCase
     {
         $result = iterable_to_array($values);
 
+        if ($values instanceof \Generator) {
+            $expected = array_values($expected);
+        }
+
         $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @dataProvider noTrickyProvider
+     */
+    public function testPreverseKeys($values, $expected)
+    {
+        $result = iterable_to_array($values, true);
+
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testNoKeys($values, $expected)
+    {
+        $result = iterable_to_array($values, false);
+
+        $this->assertSame(array_values($expected), $result);
     }
 
     public function testEmpty()
