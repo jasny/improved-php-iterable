@@ -18,15 +18,19 @@ namespace Jasny;
 function iterable_column(iterable $iterable, $valueColumn, $keyColumn = null): \Generator
 {
     foreach ($iterable as $key => $value) {
-        if (is_array($value) || (is_object($value) && $value instanceof \ArrayAccess)) {
-            $key = isset($keyColumn) ? ($value[$keyColumn] ?? null) : $key;
-            $value = isset($valueColumn) ? ($value[$valueColumn] ?? null) : $value;
-        } elseif (is_object($value) && !$value instanceof \DateTimeInterface) {
-            $key = isset($keyColumn) ? ($value->$keyColumn ?? null) : $key;
-            $value = isset($valueColumn) ? ($value->$valueColumn ?? null) : $value;
-        } else {
-            $key = isset($keyColumn) ? null : $key;
-            $value = isset($valueColumn) ? null : $value;
+        switch (true) {
+            case is_array($value) || (is_object($value) && $value instanceof \ArrayAccess):
+                $key = isset($keyColumn) ? ($value[$keyColumn] ?? null) : $key;
+                $value = isset($valueColumn) ? ($value[$valueColumn] ?? null) : $value;
+                break;
+            case is_object($value) && !$value instanceof \DateTimeInterface:
+                $key = isset($keyColumn) ? ($value->$keyColumn ?? null) : $key;
+                $value = isset($valueColumn) ? ($value->$valueColumn ?? null) : $value;
+                break;
+            default:
+                $key = isset($keyColumn) ? null : $key;
+                $value = isset($valueColumn) ? null : $value;
+                break;
         }
 
         yield $key => $value;

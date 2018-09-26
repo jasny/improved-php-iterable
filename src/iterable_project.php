@@ -8,7 +8,7 @@ namespace Jasny;
  * Project each element of an iterator to an associated (or numeric) array.
  *
  * @param iterable $iterable
- * @param array $mapping
+ * @param array    $mapping
  * @return \Generator
  */
 function iterable_project(iterable $iterable, array $mapping): \Generator
