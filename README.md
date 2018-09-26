@@ -24,6 +24,7 @@ This library support functional-style operations, such as map-reduce transformat
 * [`then(callable $callback)`](#then)
 * [`group(callable $callback)`](#group)
 * [`flatten()`](#flatten)
+* [`column(int|string|null $valueColumn[, int|string|null $keyColumn])`](#column)
 * [`project(array $mapping)`](#project)
 * [`values()`](#values)
 * [`keys()`](#keys)
@@ -313,6 +314,43 @@ Pipeline::with($groups)
 By default the keys are dropped, replaces by an incrementing counter (so as an numeric array). By passing `true` as
 second parameters, the keys are remained.
 
+### column
+
+Return the values from a single column / property. Each element should be an array or object.
+
+```php
+$rows = [
+    ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
+    ['one' => 'yi', 'two' => 'er', 'three' => 'san', 'four' => 'si', 'five' => 'wu'],
+    ['one' => 'één', 'two' => 'twee', 'three' => 'drie', 'five' => 'vijf']
+];
+
+Pipeline::with($rows)
+    ->column('three')
+    ->toArray(); // ['tres', 'san', 'drie']
+
+```
+
+Create key/value pairs by specifying the key.
+
+```php
+$rows = [
+    ['one' => 'uno', 'two' => 'dos', 'three' => 'tres', 'four' => 'cuatro', 'five' => 'cinco'],
+    ['one' => 'yi', 'two' => 'er', 'three' => 'san', 'four' => 'si', 'five' => 'wu'],
+    ['one' => 'één', 'two' => 'twee', 'three' => 'drie', 'five' => 'vijf']
+];
+
+Pipeline::with($rows)
+    ->column('three', 'two')
+    ->toArray(); // ['dos' => 'tres', 'er' => 'san', 'twee' -=> 'drie']
+
+```
+
+Alternatively you may only specify the key column, using `null` for the value column, to keep the value unmodified.
+
+If an element doesn't have a specified key, the key and/or value will be `null`.
+
+
 ### project
 
 Project each element of an iterator to an associated (or numeric) array. Each element should be an array or object.
@@ -331,9 +369,9 @@ Pipeline::with($rows)
     ->toArray();
 
 // [
-//   ['I' => 'uno', 'II' => 'dos', 'III' => 'tres', 'IV' => 'cuatro', 'V' => 'cinco'],
-//   ['I' => 'yi', 'II' => 'er', 'III' => 'san', 'IV' => 'si', 'V' => 'wu'],
-//   ['I' => 'één', 'II' => 'twee', 'III' => 'drie', 'IV' => null, 'V' => 'vijf']
+//   ['I' => 'uno', 'II' => 'dos', 'III' => 'tres', 'IV' => 'cuatro'],
+//   ['I' => 'yi', 'II' => 'er', 'III' => 'san', 'IV' => 'si'],
+//   ['I' => 'één', 'II' => 'twee', 'III' => 'drie', 'IV' => null]
 // ]
 ```
 
@@ -341,8 +379,6 @@ If an element doesn't have a specified key, the value will be `null`.
 
 The order of keys of the projected array is always the same as the order of the mapping. The mapping may also be a
 numeric array.
-
-Scalar elements and `DateTime` object are ignored.
 
 ### values
 

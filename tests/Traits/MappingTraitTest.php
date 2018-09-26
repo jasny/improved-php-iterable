@@ -94,6 +94,40 @@ class MappingTraitTest extends TestCase
         $this->assertEquals(['one', 'two', 'three', 'four'], $result);
     }
 
+    public function testColumn()
+    {
+        $rows = [
+            ['I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' =>'four'],
+            ['I' => 'uno', 'II' => 'dos', 'III' => 'tres', 'IV' => 'quatro'],
+            ['I' => 'één', 'II' => 'twee', 'IV' => 'vier'],
+        ];
+
+        $pipeline = new Pipeline($rows);
+
+        $ret = $pipeline->column('III');
+        $this->assertSame($pipeline, $ret);
+
+        $result = $pipeline->toArray();
+        $this->assertEquals(['three', 'tres', null], $result);
+    }
+
+    public function testColumnPairs()
+    {
+        $rows = [
+            ['I' => 'one', 'II' => 'two', 'III' => 'three', 'IV' =>'four'],
+            ['I' => 'uno', 'II' => 'dos', 'III' => 'tres', 'IV' => 'quatro'],
+            ['I' => 'één', 'II' => 'twee', 'IV' => 'vier'],
+        ];
+
+        $pipeline = new Pipeline($rows);
+
+        $ret = $pipeline->column('III', 'II');
+        $this->assertSame($pipeline, $ret);
+
+        $result = $pipeline->toArray();
+        $this->assertEquals(['two' => 'three', 'dos' => 'tres', 'twee' => null], $result);
+    }
+
     public function testProject()
     {
         $rows = [

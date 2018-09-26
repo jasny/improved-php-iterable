@@ -77,8 +77,23 @@ trait MappingTrait
         return $this->then('Jasny\iterable_flatten');
     }
 
+
     /**
-     * Project each element of an iterator to an associated (or numeric) array. Each element should be an array or object.
+     * Return the values from a single column / property.
+     * Create key/value pairs by specifying the key.
+     *
+     * @param string|int|null $valueColumn  null to keep values
+     * @param string|int|null $keyColumn    null to keep keys
+     * @return static
+     */
+    public function column($valueColumn, $keyColumn = null)
+    {
+        return $this->then('Jasny\iterable_column', $valueColumn, $keyColumn);
+    }
+
+    /**
+     * Project each element of an iterator to an associated (or numeric) array.
+     * Each element should be an array or object.
      *
      * @param array $mapping  [new key => old key, ...]
      * @return static
