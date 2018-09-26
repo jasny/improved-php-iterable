@@ -48,7 +48,7 @@ class Pipeline implements \IteratorAggregate
      * @param mixed    ...$args
      * @return $this
      */
-    public function then(callable $callback, ...$args)
+    public function then(callable $callback, ...$args): self
     {
         $next = $callback($this->iterable, ...$args);
 
@@ -78,7 +78,7 @@ class Pipeline implements \IteratorAggregate
      */
     public function toArray(): array
     {
-        return iterable_to_array($this->iterable);
+        return iterable_to_array($this->iterable, true);
     }
 
 

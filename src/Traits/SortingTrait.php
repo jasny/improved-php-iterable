@@ -14,7 +14,7 @@ trait SortingTrait
      *
      * @param callable $callback
      * @param mixed    ...$args
-     * @return $this
+     * @return static
      */
     abstract public function then(callable $callback, ...$args);
 
@@ -24,7 +24,7 @@ trait SortingTrait
      *
      * @param callable|int $compare       SORT_* flags as binary set or callback comparator function
      * @param bool         $preserveKeys
-     * @return $this
+     * @return static
      */
     public function sort($compare, bool $preserveKeys = true)
     {
@@ -35,7 +35,7 @@ trait SortingTrait
      * Sort all elements of an iterator based on the key.
      *
      * @param callable|int $compare   SORT_* flags as binary set or callback comparator function
-     * @return $this
+     * @return static
      */
     public function sortKeys($compare)
     {
@@ -45,7 +45,7 @@ trait SortingTrait
     /**
      * Reverse order of elements of an iterable.
      *
-     * @return $this
+     * @return static
      */
     public function reverse()
     {

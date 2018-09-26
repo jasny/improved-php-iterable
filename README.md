@@ -1,4 +1,4 @@
-# Jasny Pipeline iterator
+# Jasny Iterator Pipeline
 
 [![Build Status](https://travis-ci.org/jasny/iterator-pipeline.svg?branch=master)](https://travis-ci.org/jasny/iterator-pipeline)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/iterator-pipeline/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/iterator-pipeline/?branch=master)
@@ -8,12 +8,6 @@
 
 This library support functional-style operations, such as map-reduce transformations on arrays and
 [iterators](http://php.net/manual/en/class.iterator.php).
-
-
-* [SPL iterators](http://php.net/manual/en/spl.iterators.php)
-* [Jasny iterators](https://github.com/jasny/iterator)
-* [Jasny aggregators](https://github.com/jasny/iterable-functionss)
-* [Jasny iterator stream](https://github.com/jasny/iterator-stream)
 
 ## Installation
 
@@ -75,15 +69,24 @@ This library support functional-style operations, such as map-reduce transformat
 Consider the following code.
 
 ```php
-$values = new ArrayIterator($values);
-$filteredValues = new CallbackFilterIterator($values, function($value) {
+use Jasny\iterable_filter;
+use Jasny\iterable_unique;
+use Jasny\iterable_unique;
+use Jasny\iterable_slice;
+
+$filteredValues = iterable_filter($values, function($value) {
    return is_int($value) && $value > 10;
 });
-$firstValues = new LimitIterator($values, 0, 10);
 
-foreach ($firstValues as $value) {
-    echo $value, "\n";
-}
+$uniqueValues = iterable_unique($filteredValues);
+
+$mappedValues = iterable_map($uniqueValues, function($value) {
+    return $value * $value - 1;
+});
+
+$firstValues = iterable_slice($mappedValues, 0, 10);
+
+$result = iterable_to_array($firstValues);
 ```
 
 This can be rewritten as
@@ -91,21 +94,24 @@ This can be rewritten as
 ```php
 use Jasny\IteratorPipeline\Pipeline;
 
-Pipeline::with($values)
+$result = Pipeline::with($values)
     ->filter(function($value) {
         return is_int($value) && $value < 10;
     })
+    ->unique()
+    ->map(function($value) {
+        return $value * $value - 1;
+    })
     ->limit(10)
-    ->output();
+    ->toArray();
 ```
 
 ## Usage
 
 This library provides Utility methods for creating streams.
 
-`Jasny\IteratorPipeline\Pipeline` takes a `Traversable` as source argument.
-
-The static `pipe()` method also takes an array.
+`Pipeline` takes an array or `Traversable` object as source argument. The static `with()` method
+can be used instead of `new`.
 
 ```php
 use Jasny\IteratorPipeline\Pipeline;
@@ -119,16 +125,44 @@ Pipeline::with([
 $dirs = new Pipeline(new \DirectoryIterator('some/path'));
 ```
 
-In a [SOLID](https://en.wikipedia.org/wiki/SOLID) application, you don't want to use static methods. Instead, use the
-`PipelineFactory`.
+A pipeline uses [PHP generators](http://php.net/manual/en/language.generators.overview.php), which are forward-only and
+non-rewindable. This means a pipeline can only be used one.
+
+### PipelineBuilder
+
+The `PipelineBuilder` can be used to create a blueprint for pipelines. The builder contains the mapping methods of
+`Pipeline` and not the other methods.
 
 ```php
-use Jasny\IteratorPipeline\PipelineFactory;
+use Jasny\IteratorPipeline\PipelineBuilder;
 
-$factory = new PipelineFactory();
+$builder = new PipelineBuilder();
 
-$factory->pipe(['one', 'two', 'three']);
+$blueprint = $builder
+    ->expectType('string')
+    ->filter(function(string $value): bool) {
+        strlen($value) > 10;
+    });
+    
+// later
+$pipeline = $blueprint->with($iterable);
 ```
+
+A `PipelineBuilder` is an immutable object, each method call creates a new copy of the builder.
+
+Alternatively the pipeline builder can be invoked, which creates a pipeline and calls `toArray()` on it.
+
+```php
+use Jasny\IteratorPipeline\PipelineBuilder;
+
+$unique = (new PipelineBuilder())
+    ->unique()
+    ->values();
+
+$result = $unique($values);
+```
+
+## Method reference
 
 ### getIterator
 

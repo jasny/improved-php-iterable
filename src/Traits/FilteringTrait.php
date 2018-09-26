@@ -14,7 +14,7 @@ trait FilteringTrait
      *
      * @param callable $callback
      * @param mixed    ...$args
-     * @return $this
+     * @return static
      */
     abstract public function then(callable $callback, ...$args);
 
@@ -23,7 +23,7 @@ trait FilteringTrait
      * Eliminate elements based on a criteria.
      *
      * @param callable $matcher
-     * @return $this
+     * @return static
      */
     public function filter(callable $matcher)
     {
@@ -33,7 +33,7 @@ trait FilteringTrait
     /**
      * Filter out `null` values from iteratable.
      *
-     * @return $this
+     * @return static
      */
     public function cleanup()
     {
@@ -44,7 +44,7 @@ trait FilteringTrait
      * Filter on unique elements.
      *
      * @param callable|null $grouper  If provided, filtering will be based on return value.
-     * @return $this
+     * @return static
      */
     public function unique(?callable $grouper = null)
     {
@@ -55,7 +55,7 @@ trait FilteringTrait
      * Filter our duplicate keys.
      * Unlike associative arrays, the keys of iterators don't have to be unique.
      *
-     * @return $this
+     * @return static
      */
     public function uniqueKeys()
     {
@@ -68,7 +68,7 @@ trait FilteringTrait
      * Get only the first elements of an iterator.
      *
      * @param int $size
-     * @return $this
+     * @return static
      */
     public function limit(int $size)
     {
@@ -80,7 +80,7 @@ trait FilteringTrait
      *
      * @param int      $offset
      * @param int|null $size    size limit
-     * @return $this
+     * @return static
      */
     public function slice(int $offset, ?int $size = null)
     {

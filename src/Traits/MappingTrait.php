@@ -17,7 +17,7 @@ trait MappingTrait
      *
      * @param callable $callback
      * @param mixed    ...$args
-     * @return $this
+     * @return static
      */
     abstract public function then(callable $callback, ...$args);
 
@@ -26,7 +26,7 @@ trait MappingTrait
      * Map each element to a value using a callback function.
      *
      * @param callable $callback
-     * @return $this
+     * @return static
      */
     public function map(callable $callback)
     {
@@ -37,7 +37,7 @@ trait MappingTrait
      * Map the key of each element to a new key using a callback function.
      *
      * @param callable $callback
-     * @return $this
+     * @return static
      */
     public function mapKeys(callable $callback)
     {
@@ -49,7 +49,7 @@ trait MappingTrait
      * Any value returned by the callback is ignored.
      *
      * @param callable $callback
-     * @return $this
+     * @return static
      */
     public function apply(callable $callback)
     {
@@ -60,7 +60,7 @@ trait MappingTrait
      * Group elements of an iterator, with the group name as key and an array of elements as value.
      *
      * @param callable $grouping
-     * @return $this
+     * @return static
      */
     public function group(callable $grouping)
     {
@@ -70,7 +70,7 @@ trait MappingTrait
     /**
      * Walk through all sub-iterables and concatenate them.
      *
-     * @return $this
+     * @return static
      */
     public function flatten()
     {
@@ -81,7 +81,7 @@ trait MappingTrait
      * Project each element of an iterator to an associated (or numeric) array. Each element should be an array or object.
      *
      * @param array $mapping  [new key => old key, ...]
-     * @return $this
+     * @return static
      */
     public function project(array $mapping)
     {
@@ -92,7 +92,7 @@ trait MappingTrait
     /**
      * Keep the values, drop the keys. The keys become an incremental number.
      *
-     * @return $this
+     * @return static
      */
     public function values()
     {
@@ -102,7 +102,7 @@ trait MappingTrait
     /**
      * Use the keys as values. The keys become an incremental number.
      *
-     * @return $this
+     * @return static
      */
     public function keys()
     {
@@ -113,7 +113,7 @@ trait MappingTrait
      * Use another iterator as keys and the current iterator as values.
      *
      * @param iterable $keys
-     * @return $this
+     * @return static
      */
     public function setKeys(iterable $keys)
     {
