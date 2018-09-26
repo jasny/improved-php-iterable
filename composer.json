@@ -29,6 +29,7 @@
             "src/iterable_apply.php",
             "src/iterable_average.php",
             "src/iterable_cleanup.php",
+            "src/iterable_column.php",
             "src/iterable_concat.php",
             "src/iterable_count.php",
             "src/iterable_expect_type.php",

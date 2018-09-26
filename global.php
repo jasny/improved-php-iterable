@@ -16,6 +16,7 @@ function iterable_apply($iterable, $callback)
  * Return the arithmetic mean.
  * If no elements are present, the result is NAN.
  *
+ * @param iterable $iterable
  * @return float
  */
 function iterable_average($iterable)
@@ -24,7 +25,7 @@ function iterable_average($iterable)
 }
 
 /**
- * Filter out null elements from iterator.
+ * Filter out elements with null value and/or null key from iterator.
  *
  * @param iterable $iterable
  * @return \Generator
@@ -35,7 +36,7 @@ function iterable_cleanup($iterable)
 }
 
 /**
- * Invoke the aggregator.
+ * Concatenate all elements into a single string.
  *
  * @param iterable $iterable
  * @param string   $glue
@@ -47,7 +48,7 @@ function iterable_concat($iterable, $glue = '')
 }
 
 /**
- * Count iterable.
+ * Count element of an iterable.
  *
  * @return int
  */
@@ -97,14 +98,14 @@ function iterable_find($iterable, $matcher)
 
 /**
  * Get the first element of an iterable.
- * Returns null if the iterable empty.
  *
  * @param iterable $iterable
+ * @param bool     $required  Throw RangeException instead of returning null for empty iterable
  * @return mixed
  */
-function iterable_first($iterable)
+function iterable_first($iterable, $required = false)
 {
-    return jasny\iterable_first($iterable);
+    return jasny\iterable_first($iterable, $required);
 }
 
 /**
@@ -155,14 +156,14 @@ function iterable_keys($iterable)
 
 /**
  * Get the last element of an iterable.
- * Returns null if the iterable empty.
  *
  * @param iterable $iterable
+ * @param bool     $required  Throw RangeException instead of returning null for empty iterable
  * @return mixed
  */
-function iterable_last($iterable)
+function iterable_last($iterable, $required = false)
 {
-    return jasny\iterable_last($iterable);
+    return jasny\iterable_last($iterable, $required);
 }
 
 /**
@@ -215,7 +216,6 @@ function iterable_min($iterable, $compare = NULL)
 
 /**
  * Project each element of an iterator to an associated (or numeric) array.
- * Scalar, null and resource elements are untouched.
  *
  * @param iterable $iterable
  * @param array $mapping
@@ -263,13 +263,26 @@ function iterable_separate($iterable)
 }
 
 /**
+ * Get a limited subset of the elements using an offset and (optionally) a limit.
+ *
+ * @param iterable $iterable
+ * @param int      $offset
+ * @param int|null $limit
+ * @return \Generator
+ */
+function iterable_slice($iterable, $offset, $limit = NULL)
+{
+    return jasny\iterable_slice($iterable, $offset, $limit);
+}
+
+/**
  * Sort all elements of an iterator based on the key.
  *
  * @param iterable     $iterable
- * @param callable|int $compare   SORT_* flags as binary set or callback comparator function
+ * @param callable|int $compare   SORT_* flag or callback comparator function
  * @return \Generator
  */
-function iterable_sort_keys($iterable, $compare = 0)
+function iterable_sort_keys($iterable, $compare)
 {
     return jasny\iterable_sort_keys($iterable, $compare);
 }
@@ -278,11 +291,11 @@ function iterable_sort_keys($iterable, $compare = 0)
  * Sort all elements of an iterator.
  *
  * @param iterable     $iterable
- * @param callable|int $compare       SORT_* flags as binary set or callback comparator function
+ * @param callable|int $compare       SORT_* flag or callback comparator function
  * @param bool         $preserveKeys
- * @return iterable
+ * @return \Generator
  */
-function iterable_sort($iterable, $compare = 0, $preserveKeys = false)
+function iterable_sort($iterable, $compare, $preserveKeys = false)
 {
     return jasny\iterable_sort($iterable, $compare, $preserveKeys);
 }
@@ -303,11 +316,12 @@ function iterable_sum($iterable)
  * Convert any iterable to an array.
  *
  * @param array|\Traversable $iterable
+ * @param bool|null          $preserveKeys  NULL means don't care
  * @return array
  */
-function iterable_to_array($iterable)
+function iterable_to_array($iterable, $preserveKeys = NULL)
 {
-    return jasny\iterable_to_array($iterable);
+    return jasny\iterable_to_array($iterable, $preserveKeys);
 }
 
 /**
