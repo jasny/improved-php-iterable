@@ -25,9 +25,12 @@ function iterable_to_array(iterable $iterable, ?bool $preserveKeys = null): arra
 
         case $iterable instanceof \Traversable:
             return iterator_to_array($iterable, $preserveKeys === true);
+
         default:
+            // @codeCoverageIgnoreStart
             $type = get_type_description($iterable);
-            throw new \InvalidArgumentException("Unknown iterable: $type"); // @codeCoverageIgnore
+            throw new \InvalidArgumentException("Unknown iterable: $type");
+            // @codeCoverageIgnoreEnd
     }
 
     return $preserveKeys === false ? array_values($iterable) : $iterable;
