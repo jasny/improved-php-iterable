@@ -7,6 +7,9 @@ namespace Jasny\IteratorPipeline\Traits;
 use function Jasny\iterable_first;
 use function Jasny\iterable_last;
 use function Jasny\iterable_find;
+use function Jasny\iterable_has_any;
+use function Jasny\iterable_has_all;
+use function Jasny\iterable_has_none;
 use function Jasny\iterable_min;
 use function Jasny\iterable_max;
 
@@ -54,6 +57,39 @@ trait FindingTrait
     public function find(callable $matcher)
     {
         return iterable_find($this->iterable, $matcher);
+    }
+
+    /**
+     * Check if any element matches the condition.
+     *
+     * @param callable $matcher
+     * @return bool
+     */
+    public function hasAny(callable $matcher): bool
+    {
+        return iterable_has_any($this->iterable, $matcher);
+    }
+
+    /**
+     * Check if all elements match the condition.
+     *
+     * @param callable $matcher
+     * @return bool
+     */
+    public function hasAll(callable $matcher): bool
+    {
+        return iterable_has_all($this->iterable, $matcher);
+    }
+
+    /**
+     * Check that no elements match the condition.
+     *
+     * @param callable $matcher
+     * @return bool
+     */
+    public function hasNone(callable $matcher): bool
+    {
+        return iterable_has_none($this->iterable, $matcher);
     }
 
 

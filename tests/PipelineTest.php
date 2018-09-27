@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jasny\PipelineIterator\Tests;
 
 use Jasny\IteratorPipeline\Pipeline;
+use Jasny\IteratorPipeline\PipelineBuilder;
 use Jasny\TestHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -99,5 +100,11 @@ class PipelineTest extends TestCase
         $this->assertInstanceOf(Pipeline::class, $pipeline);
 
         $this->assertAttributeSame($values, 'iterable', $pipeline);
+    }
+
+    public function testBuild()
+    {
+        $builder = Pipeline::build();
+        $this->assertInstanceOf(PipelineBuilder::class, $builder);
     }
 }

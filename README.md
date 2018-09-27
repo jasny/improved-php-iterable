@@ -112,8 +112,8 @@ $result = Pipeline::with($values)
 
 This library provides Utility methods for creating streams.
 
-`Pipeline` takes an array or `Traversable` object as source argument. The static `with()` method
-can be used instead of `new`.
+`Pipeline` takes an array or `Traversable` object as source argument. The static `with()` method can be used instead of
+`new`.
 
 ```php
 use Jasny\IteratorPipeline\Pipeline;
@@ -135,12 +135,12 @@ non-rewindable. This means a pipeline can only be used one.
 The `PipelineBuilder` can be used to create a blueprint for pipelines. The builder contains the mapping methods of
 `Pipeline` and not the other methods.
 
+The static `Pipeline::build()` method can be used as syntax sugar to create a builder.
+
 ```php
-use Jasny\IteratorPipeline\PipelineBuilder;
+use Jasny\IteratorPipeline\Pipeline;
 
-$builder = new PipelineBuilder();
-
-$blueprint = $builder
+$blueprint = Pipeline::build()
     ->expectType('string')
     ->filter(function(string $value): bool) {
         strlen($value) > 10;
@@ -155,14 +155,15 @@ A `PipelineBuilder` is an immutable object, each method call creates a new copy 
 Alternatively the pipeline builder can be invoked, which creates a pipeline and calls `toArray()` on it.
 
 ```php
-use Jasny\IteratorPipeline\PipelineBuilder;
+use Jasny\IteratorPipeline\Pipeline;
 
-$unique = (new PipelineBuilder())
+$unique = Pipeline::build()
     ->unique()
     ->values();
 
 $result = $unique($values);
 ```
+
 
 ## Method reference
 
@@ -726,6 +727,46 @@ Pipeline::with(["one" => "uno", "two" => "dos", "three" => "tres"])
         return substr($key, 0, 1) === 't';
     }); // "dos"
 ```
+
+### hasAny
+
+Check if any element matches the given condition.
+
+```php
+Pipeline::with(["one", "two", "three"])
+    ->hasAny(function(string $value): bool {
+        return substr($value, 0, 1) === 't';
+    }); // true
+```
+
+The callback is similar to `find`.
+
+### hasAll
+
+Check if all elements match the given condition.
+
+```php
+Pipeline::with(["one", "two", "three"])
+    ->hasAny(function(string $value): bool {
+        return substr($value, 0, 1) === 't';
+    }); // false
+```
+
+The callback is similar to `find`.
+
+### hasNone
+
+Check the no element matches the given condition. This is the inverse of `hasAny()`.
+
+```php
+Pipeline::with(["one", "two", "three"])
+    ->hasNone(function(string $value): bool {
+        return substr($value, 0, 1) === 't';
+    }); // false
+```
+
+The callback is similar to `find`.
+
 
 ### min
 

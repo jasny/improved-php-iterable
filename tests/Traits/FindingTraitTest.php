@@ -60,6 +60,51 @@ class FindingTraitTest extends TestCase
         $this->assertEquals('two', $result);
     }
 
+    public function testHasAny()
+    {
+        $pipeline = new Pipeline(['one', 'two', 'three']);
+
+        $result1 = $pipeline->hasAny(function($value) {
+            return $value[0] === 't';
+        });
+        $this->assertTrue($result1);
+
+        $result2 = $pipeline->hasAny(function($value) {
+            return $value[0] === 'x';
+        });
+        $this->assertFalse($result2);
+    }
+
+    public function testHasAll()
+    {
+        $pipeline = new Pipeline(['one', 'two', 'three']);
+
+        $result1 = $pipeline->hasAll(function($value) {
+            return strlen($value) > 1;
+        });
+        $this->assertTrue($result1);
+
+        $result2 = $pipeline->hasAll(function($value) {
+            return $value[0] === 't';
+        });
+        $this->assertFalse($result2);
+    }
+
+    public function testHasNone()
+    {
+        $pipeline = new Pipeline(['one', 'two', 'three']);
+
+        $result1 = $pipeline->hasNone(function($value) {
+            return $value[0] === 't';
+        });
+        $this->assertFalse($result1);
+
+        $result2 = $pipeline->hasNone(function($value) {
+            return $value[0] === 'x';
+        });
+        $this->assertTrue($result2);
+    }
+
 
     public function testMin()
     {

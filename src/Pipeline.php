@@ -92,4 +92,14 @@ class Pipeline implements \IteratorAggregate
     {
         return new static($iterable);
     }
+
+    /**
+     * Factory method for PipelineBuilder
+     *
+     * @return PipelineBuilder
+     */
+    public static function build(): PipelineBuilder
+    {
+        return new PipelineBuilder();
+    }
 }
