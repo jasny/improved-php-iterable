@@ -23,7 +23,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Ipl\\Iterator\\": "src/Iterator/"
+            "Ipl\\Iterator\\": "src/Iterator/",
+            "Ipl\\IteratorPipeline\\": "src/IteratorPipeline/"
         },
         "files": [
             "src/iterable_apply.php",
