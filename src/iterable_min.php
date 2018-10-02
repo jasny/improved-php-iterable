@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny;
+namespace Ipl;
 
 /**
  * Get the minimal element according to a given comparator.

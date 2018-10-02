@@ -1,5 +1,5 @@
 {
-    "name": "jasny/iterable-functions",
+    "name": "ipl/iterable",
     "description": "Functions to interact with arrays, iterators and other traversable objects",
     "license": "MIT",
     "type": "library",
@@ -11,8 +11,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/jasny/iterable-functions/issues",
-        "source": "https://github.com/jasny/iterable-functions"
+        "issues": "https://github.com/improved-php-library/iterable/issues",
+        "source": "https://github.com/improved-php-library/iterable"
     },
     "require": {
         "php": ">=7.1.0",
@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\Iterator\\": "src/Iterator/"
+            "Ipl\\Iterator\\": "src/Iterator/"
         },
         "files": [
             "src/iterable_apply.php",
@@ -65,9 +65,12 @@
             "src/iterable_walk.php"
         ]
     },
+    "provides": {
+        "ext-ipl_iterable": "*"
+    },
     "autoload-dev": {
         "psr-4": {
-            "Jasny\\Tests\\": "tests/"
+            "Ipl\\Tests\\": "tests/"
         }
     },
     "scripts": {

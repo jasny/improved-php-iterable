@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny;
+namespace Ipl;
 
 /**
  * Group elements of an array or iterator.

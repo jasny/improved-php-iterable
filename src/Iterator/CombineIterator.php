@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Iterator;
+namespace Ipl\Iterator;
 
-use function Jasny\iterable_to_iterator;
+use function Ipl\iterable_to_iterator;
 
 /**
  * Iterator through keys and values, where key may be any type.

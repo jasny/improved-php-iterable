@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny;
+namespace Ipl;
 
 /**
  * Use the values, drop the keys.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny;
+namespace Ipl;
 
 /**
  * Replace the keys of an iterable using a callback.

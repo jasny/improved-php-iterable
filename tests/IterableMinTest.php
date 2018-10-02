@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_min;
+use function Ipl\iterable_min;
 
 /**
- * @covers \Jasny\iterable_min
+ * @covers \Ipl\iterable_min
  */
 class IterableMinTest extends TestCase
 {

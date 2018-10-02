@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_sort_keys;
+use function Ipl\iterable_sort_keys;
 
 /**
- * @covers \Jasny\iterable_sort_keys
+ * @covers \Ipl\iterable_sort_keys
  */
 class IterableSortKeysTest extends TestCase
 {

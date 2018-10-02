@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 trait ProvideIterablesTrait
 {

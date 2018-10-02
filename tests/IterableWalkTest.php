@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_apply;
-use function Jasny\iterable_walk;
+use function Ipl\iterable_apply;
+use function Ipl\iterable_walk;
 
 /**
- * @covers \Jasny\iterable_walk
+ * @covers \Ipl\iterable_walk
  */
 class IterableWalkTest extends TestCase
 {

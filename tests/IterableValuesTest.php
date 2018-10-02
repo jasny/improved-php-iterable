@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_values;
+use function Ipl\iterable_values;
 
 /**
- * @covers \Jasny\iterable_values
+ * @covers \Ipl\iterable_values
  */
 class IterableValuesTest extends TestCase
 {

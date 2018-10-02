@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_reshape;
+use function Ipl\iterable_reshape;
 
 /**
- * @covers \Jasny\iterable_reshape
+ * @covers \Ipl\iterable_reshape
  */
 class IterableReshapeTest extends TestCase
 {

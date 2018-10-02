@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny;
+namespace Ipl;
 
 use function Jasny\expect_type;
 use function Jasny\array_join_pretty;

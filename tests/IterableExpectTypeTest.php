@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_expect_type;
+use function Ipl\iterable_expect_type;
 
 /**
- * @covers \Jasny\iterable_expect_type
+ * @covers \Ipl\iterable_expect_type
  */
 class IterableExpectTypeTest extends TestCase
 {

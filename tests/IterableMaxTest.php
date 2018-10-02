@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_max;
+use function Ipl\iterable_max;
 
 /**
- * @covers \Jasny\iterable_max
+ * @covers \Ipl\iterable_max
  */
 class IterableMaxTest extends TestCase
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_reverse;
+use function Ipl\iterable_reverse;
 
 /**
- * @covers \Jasny\iterable_reverse
+ * @covers \Ipl\iterable_reverse
  */
 class IterableReverseTest extends TestCase
 {

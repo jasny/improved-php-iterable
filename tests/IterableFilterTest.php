@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
-use function Jasny\iterable_find;
+use function Ipl\iterable_find;
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_filter;
+use function Ipl\iterable_filter;
 
 /**
- * @covers \Jasny\iterable_filter
+ * @covers \Ipl\iterable_filter
  */
 class IterableFilterTest extends TestCase
 {

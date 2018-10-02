@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_slice;
+use function Ipl\iterable_slice;
 
 /**
- * @covers \Jasny\iterable_slice
+ * @covers \Ipl\iterable_slice
  */
 class IterableSliceTest extends TestCase
 {

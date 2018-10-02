@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_has_any;
+use function Ipl\iterable_has_any;
 use function Jasny\str_contains;
 
 /**
- * @covers \Jasny\iterable_has_any
+ * @covers \Ipl\iterable_has_any
  */
 class IterableHasAnyTest extends TestCase
 {

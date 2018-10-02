@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_to_array;
+use function Ipl\iterable_to_array;
 
 /**
- * @covers \Jasny\iterable_to_array
+ * @covers \Ipl\iterable_to_array
  */
 class IterableToArrayTest extends TestCase
 {

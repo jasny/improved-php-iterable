@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_cleanup;
+use function Ipl\iterable_cleanup;
 
 /**
- * @covers \Jasny\iterable_cleanup
+ * @covers \Ipl\iterable_cleanup
  */
 class IterableCleanupTest extends TestCase
 {

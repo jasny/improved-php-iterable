@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_sort;
+use function Ipl\iterable_sort;
 
 /**
- * @covers \Jasny\iterable_sort
+ * @covers \Ipl\iterable_sort
  */
 class IterableSortTest extends TestCase
 {

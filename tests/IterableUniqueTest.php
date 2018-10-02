@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_unique;
+use function Ipl\iterable_unique;
 
 /**
- * @covers \Jasny\iterable_unique
+ * @covers \Ipl\iterable_unique
  */
 class IterableUniqueTest extends TestCase
 {

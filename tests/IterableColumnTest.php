@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_column;
+use function Ipl\iterable_column;
 
 /**
- * @covers \Jasny\iterable_column
+ * @covers \Ipl\iterable_column
  */
 class IterableColumntTest extends TestCase
 {

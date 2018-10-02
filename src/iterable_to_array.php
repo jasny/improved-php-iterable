@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jasny;
+namespace Ipl;
+
+use function Jasny\get_type_description;
 
 /**
  * Convert any iterable to an array.

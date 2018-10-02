@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_count;
+use function Ipl\iterable_count;
 
 /**
- * @covers \Jasny\iterable_count
+ * @covers \Ipl\iterable_count
  */
 class IterableCountTest extends TestCase
 {

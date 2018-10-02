@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_flip;
+use function Ipl\iterable_flip;
 
 /**
- * @covers \Jasny\iterable_flip
+ * @covers \Ipl\iterable_flip
  */
 class IterableFlipTest extends TestCase
 {

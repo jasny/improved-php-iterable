@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_to_traversable;
+use function Ipl\iterable_to_traversable;
 
 /**
- * @covers \Jasny\iterable_to_traversable
+ * @covers \Ipl\iterable_to_traversable
  */
 class IterableToTraversableTest extends TestCase
 {

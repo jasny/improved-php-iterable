@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_concat;
+use function Ipl\iterable_concat;
 
 /**
- * @covers \Jasny\iterable_concat
+ * @covers \Ipl\iterable_concat
  */
 class IterableConcatTest extends TestCase
 {

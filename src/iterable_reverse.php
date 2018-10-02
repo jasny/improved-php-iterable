@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jasny;
+namespace Ipl;
 
-use Jasny\Iterator\CombineIterator;
+use Ipl\Iterator\CombineIterator;
 
 /**
  * Reverse order of elements of an iterable.

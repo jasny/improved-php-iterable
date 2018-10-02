@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests\Iterator;
+namespace Ipl\Tests\Iterator;
 
-use Jasny\Iterator\CombineIterator;
-use Jasny\Tests\LazyExecutionIteratorTrait;
+use Ipl\Iterator\CombineIterator;
+use Ipl\Tests\LazyExecutionIteratorTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\Iterator\CombineIterator
+ * @covers \Ipl\Iterator\CombineIterator
  */
 class CombineIteratorTest extends TestCase
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_sum;
+use function Ipl\iterable_sum;
 
 /**
- * @covers \Jasny\iterable_sum
+ * @covers \Ipl\iterable_sum
  */
 class IterableSumTest extends TestCase
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_flatten;
+use function Ipl\iterable_flatten;
 
 /**
- * @covers \Jasny\iterable_flatten
+ * @covers \Ipl\iterable_flatten
  */
 class IterableFlattenTest extends TestCase
 {

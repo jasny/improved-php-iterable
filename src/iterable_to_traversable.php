@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny;
+namespace Ipl;
 
 /**
  * Convert any iterable to a Traversable object (Iterator or IteratorAggregate).

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_separate;
+use function Ipl\iterable_separate;
 
 /**
- * @covers \Jasny\iterable_separate
+ * @covers \Ipl\iterable_separate
  */
 class IterableSeparateTest extends TestCase
 {

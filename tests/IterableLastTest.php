@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\Tests;
+namespace Ipl\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Jasny\iterable_last;
+use function Ipl\iterable_last;
 
 /**
- * @covers \Jasny\iterable_last
+ * @covers \Ipl\iterable_last
  */
 class IterableLastTest extends TestCase
 {
