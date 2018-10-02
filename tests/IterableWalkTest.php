@@ -6,11 +6,12 @@ namespace Jasny\Tests;
 
 use PHPUnit\Framework\TestCase;
 use function Jasny\iterable_apply;
+use function Jasny\iterable_walk;
 
 /**
- * @covers \Jasny\iterable_apply
+ * @covers \Jasny\iterable_walk
  */
-class IterableApplyTest extends TestCase
+class IterableWalkTest extends TestCase
 {
     use LazyExecutionIteratorTrait;
     use ProvideIterablesTrait;
@@ -43,33 +44,20 @@ class IterableApplyTest extends TestCase
 
         $this->assertObjectNotHasAttribute('key', $objects['foo']);
 
-        $result = iterator_to_array($iterator);
-
-        $this->assertSame($objects, $result);
+        iterable_walk($iterator);
 
         $this->assertAttributeEquals('foo', 'key', $objects['foo']);
         $this->assertAttributeEquals('bar', 'key', $objects['bar']);
         $this->assertAttributeEquals('qux', 'key', $objects['qux']);
     }
 
-    public function testEmpty()
-    {
-        $iterator = iterable_apply(new \EmptyIterator(), function() {});
-
-        $result = iterator_to_array($iterator);
-
-        $this->assertEquals([], $result);
-    }
-
     /**
-     * Test that nothing happens when not iterating
+     * @dataProvider provider
      */
-    public function testLazyExecution()
+    public function testNop($values)
     {
-        $iterator = $this->createLazyExecutionIterator();
+        iterable_walk($values);
 
-        iterable_apply($iterator, function() {});
-
-        $this->assertTrue(true, "No warning");
+        $this->assertTrue(true, 'No warning');
     }
 }

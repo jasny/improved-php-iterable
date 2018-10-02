@@ -61,7 +61,8 @@
             "src/iterable_to_iterator.php",
             "src/iterable_to_traversable.php",
             "src/iterable_unique.php",
-            "src/iterable_values.php"
+            "src/iterable_values.php",
+            "src/iterable_walk.php"
         ]
     },
     "autoload-dev": {
