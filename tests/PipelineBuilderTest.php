@@ -1,12 +1,12 @@
 <?php
 
-namespace Jasny\IteratorPipeline\Tests;
+namespace Ipl\IteratorPipeline\Tests;
 
-use Jasny\IteratorPipeline\PipelineBuilder;
+use Ipl\IteratorPipeline\PipelineBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\PipelineBuilder
+ * @covers \Ipl\IteratorPipeline\PipelineBuilder
  */
 class PipelineBuilderTest extends TestCase
 {

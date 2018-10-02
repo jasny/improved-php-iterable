@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Traits;
+namespace Ipl\IteratorPipeline\Traits;
 
-use function Jasny\iterable_count;
-use function Jasny\iterable_reduce;
-use function Jasny\iterable_sum;
-use function Jasny\iterable_average;
-use function Jasny\iterable_concat;
+use function Ipl\iterable_count;
+use function Ipl\iterable_reduce;
+use function Ipl\iterable_sum;
+use function Ipl\iterable_average;
+use function Ipl\iterable_concat;
 
 /**
  * Pipeline aggregation methods.

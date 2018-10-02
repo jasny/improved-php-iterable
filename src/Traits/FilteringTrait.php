@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Traits;
+namespace Ipl\IteratorPipeline\Traits;
 
 /**
  * Filtering methods for iterator pipeline.

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Traits;
+namespace Ipl\IteratorPipeline\Traits;
 
-use function Jasny\iterable_first;
-use function Jasny\iterable_last;
-use function Jasny\iterable_find;
-use function Jasny\iterable_has_any;
-use function Jasny\iterable_has_all;
-use function Jasny\iterable_has_none;
-use function Jasny\iterable_min;
-use function Jasny\iterable_max;
+use function Ipl\iterable_first;
+use function Ipl\iterable_last;
+use function Ipl\iterable_find;
+use function Ipl\iterable_has_any;
+use function Ipl\iterable_has_all;
+use function Ipl\iterable_has_none;
+use function Ipl\iterable_min;
+use function Ipl\iterable_max;
 
 /**
  * Pipeline methods for finding an element in an iterable.

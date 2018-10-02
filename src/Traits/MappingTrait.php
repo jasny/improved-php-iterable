@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Traits;
+namespace Ipl\IteratorPipeline\Traits;
 
-use Jasny\IteratorPipeline\Pipeline;
+use Ipl\IteratorPipeline\Pipeline;
 use Jasny\Iterator\CombineIterator;
 
 /**

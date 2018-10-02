@@ -1,5 +1,5 @@
 {
-    "name": "jasny/iterator-pipeline",
+    "name": "ipl/iterator-pipeline",
     "description": "Support functional-style operations, such as map-reduce transformations, on interators",
     "license": "MIT",
     "type": "library",
@@ -11,12 +11,12 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/jasny/iterator-pipeline/issues",
-        "source": "https://github.com/jasny/iterator-pipeline"
+        "issues": "https://github.com/improved-php-library/iterator-pipeline/issues",
+        "source": "https://github.com/improved-php-library/iterator-pipeline"
     },
     "require": {
         "php": ">=7.1.0",
-        "jasny/iterable-functions": "dev-master",
+        "ipl/iterable-functions": "dev-master",
         "jasny/php-functions": "dev-master as 4.1.1"
     },
     "require-dev": {
@@ -24,13 +24,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Jasny\\IteratorPipeline\\": "src/"
+            "Ipl\\IteratorPipeline\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jasny\\IteratorPipeline\\Tests\\": "tests/"
+            "Ipl\\IteratorPipeline\\Tests\\": "tests/"
         }
+    },
+    "provides": {
+        "ext-ipl_iterator_pipeline": "*"
     },
     "scripts": {
         "test": [

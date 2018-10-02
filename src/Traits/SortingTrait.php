@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Traits;
+namespace Ipl\IteratorPipeline\Traits;
 
 /**
  * Methods that change the order of the elements.

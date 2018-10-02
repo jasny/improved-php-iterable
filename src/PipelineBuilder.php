@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline;
+namespace Ipl\IteratorPipeline;
 
 use Jasny\Iterator\CombineIterator;
-use Jasny\IteratorPipeline\Traits\FilteringTrait;
-use Jasny\IteratorPipeline\Traits\MappingTrait;
-use Jasny\IteratorPipeline\Traits\SortingTrait;
-use function Jasny\iterable_to_array;
+use Ipl\IteratorPipeline\Traits\FilteringTrait;
+use Ipl\IteratorPipeline\Traits\MappingTrait;
+use Ipl\IteratorPipeline\Traits\SortingTrait;
+use function Ipl\iterable_to_array;
 
 /**
  * The `PipelineBuilder` can be used to create a blueprint for pipelines.

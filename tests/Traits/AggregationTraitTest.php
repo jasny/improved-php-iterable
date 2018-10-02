@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Tests\Traits;
+namespace Ipl\IteratorPipeline\Tests\Traits;
 
-use Jasny\IteratorPipeline\Pipeline;
+use Ipl\IteratorPipeline\Pipeline;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Traits\AggregationTrait
+ * @covers \Ipl\IteratorPipeline\Traits\AggregationTrait
  */
 class AggregationTraitTest extends TestCase
 {

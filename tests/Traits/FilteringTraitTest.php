@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jasny\IteratorPipeline\Tests\Traits;
+namespace Ipl\IteratorPipeline\Tests\Traits;
 
-use Jasny\IteratorPipeline\Pipeline;
+use Ipl\IteratorPipeline\Pipeline;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Jasny\IteratorPipeline\Traits\FilteringTrait
+ * @covers \Ipl\IteratorPipeline\Traits\FilteringTrait
  */
 class FilteringTraitTest extends TestCase
 {
