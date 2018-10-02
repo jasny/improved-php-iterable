@@ -1,7 +1,7 @@
 # XPL iterable - PHP extension
 
-[![Build Status](https://travis-ci.org/jasny/xpl-iterable.svg?branch=master)](https://travis-ci.org/jasny/xpl-iterable)
-[![Build status](https://ci.appveyor.com/api/projects/status/todo/branch/master?svg=true)](https://ci.appveyor.com/project/jasny/xpl-iterable/branch/master)
+[![Build Status](https://travis-ci.org/improved-php-library/iterable.svg?branch=master)](https://travis-ci.org/improved-php-library/iterable)
+[![Build status](https://ci.appveyor.com/api/projects/status/TODO/branch/master?svg=true)](https://ci.appveyor.com/project/improved-php-library/iterable/branch/master)
 
 > **TODO** There is no extension yet, just the PHP library.
 
@@ -18,4 +18,5 @@
 
 Add the following line to your `php.ini`
 
-    extension=xpl_iterable.so
+    extension=ipl_iterable.so
+
