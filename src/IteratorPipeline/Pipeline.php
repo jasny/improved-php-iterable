@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 namespace Ipl\IteratorPipeline;
 
-use Ipl\IteratorPipeline\Traits\AggregationTrait;
-use Ipl\IteratorPipeline\Traits\FilteringTrait;
-use Ipl\IteratorPipeline\Traits\FindingTrait;
-use Ipl\IteratorPipeline\Traits\MappingTrait;
-use Ipl\IteratorPipeline\Traits\SortingTrait;
-
-use function Ipl\iterable_to_array;
-use function Ipl\iterable_to_iterator;
+use Ipl as i;
 use function Jasny\expect_type;
 
 /**
@@ -20,11 +13,11 @@ use function Jasny\expect_type;
  */
 class Pipeline implements \IteratorAggregate
 {
-    use MappingTrait;
-    use FilteringTrait;
-    use SortingTrait;
-    use FindingTrait;
-    use AggregationTrait;
+    use Traits\MappingTrait;
+    use Traits\FilteringTrait;
+    use Traits\SortingTrait;
+    use Traits\FindingTrait;
+    use Traits\AggregationTrait;
 
     /**
      * @var iterable
@@ -52,8 +45,12 @@ class Pipeline implements \IteratorAggregate
     {
         $next = $callback($this->iterable, ...$args);
 
-        expect_type($next, 'iterable', \UnexpectedValueException::class,
-            "Expected an array or Traversable, %s returned");
+        expect_type(
+            $next,
+            'iterable',
+            \UnexpectedValueException::class,
+            "Expected an array or Traversable, %s returned"
+        );
 
         $this->iterable = $next;
 
@@ -68,7 +65,7 @@ class Pipeline implements \IteratorAggregate
      */
     public function getIterator(): \Iterator
     {
-        return iterable_to_iterator($this->iterable);
+        return i\iterable_to_iterator($this->iterable);
     }
 
     /**
@@ -78,7 +75,7 @@ class Pipeline implements \IteratorAggregate
      */
     public function toArray(): array
     {
-        return iterable_to_array($this->iterable, true);
+        return i\iterable_to_array($this->iterable, true);
     }
 
 

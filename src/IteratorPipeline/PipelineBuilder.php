@@ -77,7 +77,7 @@ class PipelineBuilder
      */
     public function setKeys(iterable $keys)
     {
-        $combine = function($values, $keys) {
+        $combine = function ($values, $keys) {
             return new CombineIterator($keys, $values);
         };
 

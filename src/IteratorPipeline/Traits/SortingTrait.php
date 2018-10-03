@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ipl\IteratorPipeline\Traits;
 
+use Ipl as i;
+
 /**
  * Methods that change the order of the elements.
  */
@@ -28,7 +30,7 @@ trait SortingTrait
      */
     public function sort($compare, bool $preserveKeys = true)
     {
-        return $this->then('Ipl\iterable_sort', $compare, $preserveKeys);
+        return $this->then(i\iterable_sort, $compare, $preserveKeys);
     }
 
     /**
@@ -39,7 +41,7 @@ trait SortingTrait
      */
     public function sortKeys($compare)
     {
-        return $this->then('Ipl\iterable_sort_keys', $compare);
+        return $this->then(i\iterable_sort_keys, $compare);
     }
 
     /**
@@ -49,6 +51,6 @@ trait SortingTrait
      */
     public function reverse()
     {
-        return $this->then('Ipl\iterable_reverse');
+        return $this->then(i\iterable_reverse);
     }
 }

@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 namespace Ipl\IteratorPipeline\Traits;
 
-use function Ipl\iterable_first;
-use function Ipl\iterable_last;
-use function Ipl\iterable_find;
-use function Ipl\iterable_has_any;
-use function Ipl\iterable_has_all;
-use function Ipl\iterable_has_none;
-use function Ipl\iterable_min;
-use function Ipl\iterable_max;
+use Ipl as i;
 
 /**
  * Pipeline methods for finding an element in an iterable.
@@ -32,7 +25,7 @@ trait FindingTrait
      */
     public function first(bool $required = false)
     {
-        return iterable_first($this->iterable, $required);
+        return i\iterable_first($this->iterable, $required);
     }
 
     /**
@@ -43,7 +36,7 @@ trait FindingTrait
      */
     public function last(bool $required = false)
     {
-        return iterable_last($this->iterable, $required);
+        return i\iterable_last($this->iterable, $required);
     }
 
 
@@ -56,7 +49,7 @@ trait FindingTrait
      */
     public function find(callable $matcher)
     {
-        return iterable_find($this->iterable, $matcher);
+        return i\iterable_find($this->iterable, $matcher);
     }
 
     /**
@@ -67,7 +60,7 @@ trait FindingTrait
      */
     public function hasAny(callable $matcher): bool
     {
-        return iterable_has_any($this->iterable, $matcher);
+        return i\iterable_has_any($this->iterable, $matcher);
     }
 
     /**
@@ -78,7 +71,7 @@ trait FindingTrait
      */
     public function hasAll(callable $matcher): bool
     {
-        return iterable_has_all($this->iterable, $matcher);
+        return i\iterable_has_all($this->iterable, $matcher);
     }
 
     /**
@@ -89,7 +82,7 @@ trait FindingTrait
      */
     public function hasNone(callable $matcher): bool
     {
-        return iterable_has_none($this->iterable, $matcher);
+        return i\iterable_has_none($this->iterable, $matcher);
     }
 
 
@@ -102,7 +95,7 @@ trait FindingTrait
      */
     public function min(?callable $compare = null)
     {
-        return iterable_min($this->iterable, $compare);
+        return i\iterable_min($this->iterable, $compare);
     }
 
     /**
@@ -114,6 +107,6 @@ trait FindingTrait
      */
     public function max(?callable $compare = null)
     {
-        return iterable_max($this->iterable, $compare);
+        return i\iterable_max($this->iterable, $compare);
     }
 }

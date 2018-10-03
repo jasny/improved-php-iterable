@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Ipl\IteratorPipeline\Traits;
 
-use function Ipl\iterable_count;
-use function Ipl\iterable_reduce;
-use function Ipl\iterable_sum;
-use function Ipl\iterable_average;
-use function Ipl\iterable_concat;
+use Ipl as i;
 
 /**
  * Pipeline aggregation methods.
@@ -27,7 +23,7 @@ trait AggregationTrait
      */
     public function count(): int
     {
-        return iterable_count($this->iterable);
+        return i\iterable_count($this->iterable);
     }
 
     /**
@@ -39,7 +35,7 @@ trait AggregationTrait
      */
     public function reduce(callable $callback, $initial = null)
     {
-        return iterable_reduce($this->iterable, $callback, $initial);
+        return i\iterable_reduce($this->iterable, $callback, $initial);
     }
 
     /**
@@ -50,7 +46,7 @@ trait AggregationTrait
      */
     public function sum()
     {
-        return iterable_sum($this->iterable);
+        return i\iterable_sum($this->iterable);
     }
 
     /**
@@ -61,7 +57,7 @@ trait AggregationTrait
      */
     public function average(): float
     {
-        return iterable_average($this->iterable);
+        return i\iterable_average($this->iterable);
     }
 
     /**
@@ -72,6 +68,6 @@ trait AggregationTrait
      */
     public function concat(string $glue = ''): string
     {
-        return iterable_concat($this->iterable, $glue);
+        return i\iterable_concat($this->iterable, $glue);
     }
 }
