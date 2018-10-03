@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ipl\IteratorPipeline\Tests\Traits;
+namespace Ipl\Tests\IteratorPipeline\Traits;
 
 use Ipl\IteratorPipeline\Pipeline;
 use PHPUnit\Framework\TestCase;

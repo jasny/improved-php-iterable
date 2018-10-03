@@ -1,6 +1,8 @@
 <?php
 
-namespace Ipl\IteratorPipeline\Tests;
+declare(strict_types=1);
+
+namespace Ipl\Tests\IteratorPipeline;
 
 use Ipl\IteratorPipeline\PipelineBuilder;
 use PHPUnit\Framework\TestCase;

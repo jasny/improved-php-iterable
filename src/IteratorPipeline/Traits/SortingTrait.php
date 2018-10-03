@@ -28,7 +28,7 @@ trait SortingTrait
      */
     public function sort($compare, bool $preserveKeys = true)
     {
-        return $this->then('Jasny\iterable_sort', $compare, $preserveKeys);
+        return $this->then('Ipl\iterable_sort', $compare, $preserveKeys);
     }
 
     /**
@@ -39,7 +39,7 @@ trait SortingTrait
      */
     public function sortKeys($compare)
     {
-        return $this->then('Jasny\iterable_sort_keys', $compare);
+        return $this->then('Ipl\iterable_sort_keys', $compare);
     }
 
     /**
@@ -49,6 +49,6 @@ trait SortingTrait
      */
     public function reverse()
     {
-        return $this->then('Jasny\iterable_reverse');
+        return $this->then('Ipl\iterable_reverse');
     }
 }

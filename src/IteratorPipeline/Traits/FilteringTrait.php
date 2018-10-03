@@ -27,7 +27,7 @@ trait FilteringTrait
      */
     public function filter(callable $matcher)
     {
-        return $this->then('Jasny\iterable_filter', $matcher);
+        return $this->then('Ipl\iterable_filter', $matcher);
     }
 
     /**
@@ -37,7 +37,7 @@ trait FilteringTrait
      */
     public function cleanup()
     {
-        return $this->then('Jasny\iterable_cleanup');
+        return $this->then('Ipl\iterable_cleanup');
     }
 
     /**
@@ -48,7 +48,7 @@ trait FilteringTrait
      */
     public function unique(?callable $grouper = null)
     {
-        return $this->then('Jasny\iterable_unique', $grouper);
+        return $this->then('Ipl\iterable_unique', $grouper);
     }
 
     /**
@@ -59,7 +59,7 @@ trait FilteringTrait
      */
     public function uniqueKeys()
     {
-        return $this->then('Jasny\iterable_unique', function($value, $key) {
+        return $this->then('Ipl\iterable_unique', function($value, $key) {
             return $key;
         });
     }
@@ -72,7 +72,7 @@ trait FilteringTrait
      */
     public function limit(int $size)
     {
-        return $this->then('Jasny\iterable_slice', 0, $size);
+        return $this->then('Ipl\iterable_slice', 0, $size);
     }
 
     /**
@@ -84,7 +84,7 @@ trait FilteringTrait
      */
     public function slice(int $offset, ?int $size = null)
     {
-        return $this->then('Jasny\iterable_slice', $offset, $size);
+        return $this->then('Ipl\iterable_slice', $offset, $size);
     }
 
 
@@ -99,6 +99,6 @@ trait FilteringTrait
      */
     public function expectType($type, string $message = null)
     {
-        return $this->then('Jasny\iterable_expect_type', $type, \UnexpectedValueException::class, $message);
+        return $this->then('Ipl\iterable_expect_type', $type, \UnexpectedValueException::class, $message);
     }
 }

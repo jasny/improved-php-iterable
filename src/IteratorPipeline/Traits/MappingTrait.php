@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Ipl\IteratorPipeline\Traits;
 
 use Ipl\IteratorPipeline\Pipeline;
-use Jasny\Iterator\CombineIterator;
+use Ipl\Iterator\CombineIterator;
 
 /**
  * Mapping and projection methods for iterator pipeline
@@ -30,7 +30,7 @@ trait MappingTrait
      */
     public function map(callable $callback)
     {
-        return $this->then('Jasny\iterable_map', $callback);
+        return $this->then('Ipl\iterable_map', $callback);
     }
 
     /**
@@ -41,7 +41,7 @@ trait MappingTrait
      */
     public function mapKeys(callable $callback)
     {
-        return $this->then('Jasny\iterable_map_keys', $callback);
+        return $this->then('Ipl\iterable_map_keys', $callback);
     }
 
     /**
@@ -53,7 +53,7 @@ trait MappingTrait
      */
     public function apply(callable $callback)
     {
-        return $this->then('Jasny\iterable_apply', $callback);
+        return $this->then('Ipl\iterable_apply', $callback);
     }
 
     /**
@@ -64,7 +64,7 @@ trait MappingTrait
      */
     public function group(callable $grouping)
     {
-        return $this->then('Jasny\iterable_group', $grouping);
+        return $this->then('Ipl\iterable_group', $grouping);
     }
 
     /**
@@ -74,7 +74,7 @@ trait MappingTrait
      */
     public function flatten()
     {
-        return $this->then('Jasny\iterable_flatten');
+        return $this->then('Ipl\iterable_flatten');
     }
 
 
@@ -88,7 +88,7 @@ trait MappingTrait
      */
     public function column($valueColumn, $keyColumn = null)
     {
-        return $this->then('Jasny\iterable_column', $valueColumn, $keyColumn);
+        return $this->then('Ipl\iterable_column', $valueColumn, $keyColumn);
     }
 
     /**
@@ -100,7 +100,7 @@ trait MappingTrait
      */
     public function project(array $mapping)
     {
-        return $this->then('Jasny\iterable_project', $mapping);
+        return $this->then('Ipl\iterable_project', $mapping);
     }
 
     /**
@@ -111,7 +111,7 @@ trait MappingTrait
      */
     public function reshape(array $columns)
     {
-        return $this->then('Jasny\iterable_reshape', $columns);
+        return $this->then('Ipl\iterable_reshape', $columns);
     }
 
 
@@ -122,7 +122,7 @@ trait MappingTrait
      */
     public function values()
     {
-        return $this->then('Jasny\iterable_values');
+        return $this->then('Ipl\iterable_values');
     }
 
     /**
@@ -132,7 +132,7 @@ trait MappingTrait
      */
     public function keys()
     {
-        return $this->then('Jasny\iterable_keys');
+        return $this->then('Ipl\iterable_keys');
     }
 
     /**
@@ -157,6 +157,6 @@ trait MappingTrait
      */
     public function flip()
     {
-        return $this->then('Jasny\iterable_flip');
+        return $this->then('Ipl\iterable_flip');
     }
 }

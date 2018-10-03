@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ipl\PipelineIterator\Tests;
+namespace Ipl\Tests\IteratorPipeline;
 
 use Ipl\IteratorPipeline\Pipeline;
 use Ipl\IteratorPipeline\PipelineBuilder;

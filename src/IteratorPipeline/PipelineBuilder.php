@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ipl\IteratorPipeline;
 
-use Jasny\Iterator\CombineIterator;
+use Ipl\Iterator\CombineIterator;
 use Ipl\IteratorPipeline\Traits\FilteringTrait;
 use Ipl\IteratorPipeline\Traits\MappingTrait;
 use Ipl\IteratorPipeline\Traits\SortingTrait;
