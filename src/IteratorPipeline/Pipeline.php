@@ -78,6 +78,17 @@ class Pipeline implements \IteratorAggregate
         return i\iterable_to_array($this->iterable, true);
     }
 
+    /**
+     * Traverse over the iterator, not capturing the values.
+     * This is particularly useful after `apply()`.
+     *
+     * @return void
+     */
+    public function walk(): void
+    {
+        i\iterable_walk($this->iterable);
+    }
+
 
     /**
      * Factory method

@@ -91,6 +91,23 @@ class PipelineTest extends TestCase
         $this->assertEquals($expected, iterator_to_array($iterator, true));
     }
 
+    public function testWalk()
+    {
+        $objects = ['foo' => new \stdClass(), 'bar' => new \stdClass(), 'qux' => new \stdClass()];
+
+        $pipeline = new Pipeline($objects);
+        $pipeline
+            ->apply(function($value, $key) {
+                $value->key = $key;
+            })
+            ->walk();
+
+        $this->assertAttributeEquals('foo', 'key', $objects['foo']);
+        $this->assertAttributeEquals('bar', 'key', $objects['bar']);
+        $this->assertAttributeEquals('qux', 'key', $objects['qux']);
+    }
+
+
     /**
      * @dataProvider provider
      */

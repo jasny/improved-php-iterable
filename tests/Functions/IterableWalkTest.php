@@ -41,7 +41,6 @@ class IterableWalkTest extends TestCase
     {
         $iterator = iterable_apply($values, function($value, $key) {
             $value->key = $key;
-            return 10; // Should be ignored
         });
 
         $this->assertObjectNotHasAttribute('key', $objects['foo']);

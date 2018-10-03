@@ -60,8 +60,9 @@ The library supports the procedural and object-oriented programming paradigm.
 #### Other methods
 
 **General**
-* [`getIterator(): Iterator`](#getiterator)
-* [`toArray(): array`](#toarray)
+* [`getIterator()`](#getiterator)
+* [`toArray()`](#toarray)
+* [`walk()`](walk)
 
 **Finding**
 * [`first([bool $required])`](#first)
@@ -179,7 +180,7 @@ $result = $unique($values);
 ### getIterator
 
 The Pipeline implements the [`IteratorAggregate`](https://php.net/iteratoraggregate) interface. This means it's
-traversable. Alternatively you can use `getIterator`.
+traversable. Alternatively you can use `getIterator()`.
 
 ### toArray
 
@@ -190,6 +191,17 @@ Pipeline::with(["one", "two", "three"])
     ->toArray();
 ```
 
+### walk
+
+Traverse over the iterator, not capturing the values. This is particularly useful after `apply()`.
+
+```php
+Pipeline::with($objects)
+    ->apply(function($object, $key) {
+        $object->type = $key;
+    })
+    ->walk();
+```
 
 ## Mapping
 
