@@ -98,7 +98,7 @@ class Pipeline implements \IteratorAggregate
      */
     final public static function with(iterable $iterable): self
     {
-        return new static($iterable);
+        return $iterable instanceof static ? $iterable : new static($iterable);
     }
 
     /**

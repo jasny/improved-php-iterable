@@ -119,6 +119,15 @@ class PipelineTest extends TestCase
         $this->assertAttributeSame($values, 'iterable', $pipeline);
     }
 
+    public function testWithSelf()
+    {
+        $input = new Pipeline([]);
+        $pipeline = Pipeline::with($input);
+
+        $this->assertInstanceOf(Pipeline::class, $pipeline);
+        $this->assertSame($input, $pipeline);
+    }
+
     public function testBuild()
     {
         $builder = Pipeline::build();
