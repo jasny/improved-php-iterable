@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Ipl\IteratorPipeline;
 
+use Ipl as i;
 use Ipl\Iterator\CombineIterator;
 use Ipl\IteratorPipeline\Traits\FilteringTrait;
 use Ipl\IteratorPipeline\Traits\MappingTrait;
 use Ipl\IteratorPipeline\Traits\SortingTrait;
-use function Ipl\iterable_to_array;
 
 /**
  * The `PipelineBuilder` can be used to create a blueprint for pipelines.
@@ -35,7 +35,12 @@ class PipelineBuilder
     public function then(callable $callback, ...$args): self
     {
         $copy = clone $this;
-        $copy->steps[] = [$callback, $args];
+
+        if ($callback instanceof self) {
+            $copy->steps = array_merge($this->steps, $callback->steps);
+        } else {
+            $copy->steps[] = [$callback, $args];
+        }
 
         return $copy;
     }
@@ -81,6 +86,6 @@ class PipelineBuilder
             return new CombineIterator($keys, $values);
         };
 
-        return $this->then($combine, iterable_to_array($keys));
+        return $this->then($combine, i\iterable_to_array($keys));
     }
 }

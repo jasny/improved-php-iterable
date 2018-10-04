@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ipl\Tests\IteratorPipeline;
 
 use Ipl\IteratorPipeline\PipelineBuilder;
+use Ipl\Tests\LazyExecutionIteratorTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,6 +13,8 @@ use PHPUnit\Framework\TestCase;
  */
 class PipelineBuilderTest extends TestCase
 {
+    use LazyExecutionIteratorTrait;
+
     public function test()
     {
         $builder = new PipelineBuilder();
@@ -62,5 +65,29 @@ class PipelineBuilderTest extends TestCase
 
         $result = $roman(range(1, 10));
         $this->assertEquals(['I' => 1, 'II' => 2, 'III' => 3, 'IV' => 4, 'V' => 5], $result);
+    }
+
+    public function testThenSelf()
+    {
+        $first = (new PipelineBuilder())->unique()->values();
+        $second = (new PipelineBuilder())->map(function($value) {
+            return ucwords($value);
+        });
+
+        $titles = $first->then($second);
+
+        $result = $titles(['one foo', 'two foo', 'three foo', 'one foo', 'four foo']);
+
+        $this->assertEquals(['One Foo', 'Two Foo', 'Three Foo', 'Four Foo'], $result);
+    }
+
+    public function testThenSelfLazy()
+    {
+        $iterable = $this->createLazyExecutionIterator();
+
+        $first = (new PipelineBuilder())->apply(function() {});
+        $second = (new PipelineBuilder())->apply(function() {});
+
+        $first->then($second)->with($iterable)->values();
     }
 }

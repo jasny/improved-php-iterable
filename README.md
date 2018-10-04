@@ -174,6 +174,20 @@ $unique = Pipeline::build()
 $result = $unique($values);
 ```
 
+The `then()` method can be used to combine two pipeline builder.
+
+```php
+use Ipl\IteratorPipeline\Pipeline;
+
+$first = Pipeline::build()->unique()->values();
+$second = Pipeline::build()->map(function($value) {
+    return ucwords($value);
+});
+
+$titles = $first->then($second);
+
+$result = $titles($values);
+```
 
 ## Method reference
 
