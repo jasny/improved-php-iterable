@@ -22,7 +22,7 @@ The library supports the procedural and object-oriented programming paradigm.
 
 ## Installation
 
-    composer require jasny/iterator-pipeline
+    composer require ipl/iterable
 
 ## Functions
 
