@@ -5,8 +5,8 @@
 [![Build Status](https://travis-ci.org/improved-php-library/iterable.svg?branch=master)](https://travis-ci.org/improved-php-library/iterable)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/improved-php-library/iterable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/improved-php-library/iterable/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/improved-php-library/iterable/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/improved-php-library/iterable/?branch=master)
-[![Packagist Stable Version](https://img.shields.io/packagist/v/improved-php-library/iterable.svg)](https://packagist.org/packages/improved-php-library/iterable)
-[![Packagist License](https://img.shields.io/packagist/l/improved-php-library/iterable.svg)](https://packagist.org/packages/improved-php-library/iterable)
+[![Packagist Stable Version](https://img.shields.io/packagist/v/ipl/iterable.svg)](https://packagist.org/packages/ipl/iterable)
+[![Packagist License](https://img.shields.io/packagist/l/ipl/iterable.svg)](https://packagist.org/packages/ipl/iterable)
 
 Functional-style operations, such as map-reduce transformations on arrays, [iterators](https://php.net/iterator) and
 other [traversable](https://php.net/traversable) objects.
