@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\IteratorPipeline\Traits;
+namespace Improved\Tests\IteratorPipeline\Traits;
 
-use Ipl\IteratorPipeline\Pipeline;
+use Improved\IteratorPipeline\Pipeline;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Ipl\IteratorPipeline\Traits\SortingTrait
+ * @covers \Improved\IteratorPipeline\Traits\SortingTrait
  */
 class SortingTraitTest extends TestCase
 {

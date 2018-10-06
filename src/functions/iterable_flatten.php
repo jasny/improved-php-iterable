@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ipl;
+namespace Improved;
 
 /**
  * Walk through all sub-iterables (array, Iterator or IteratorAggregate) and concatenate them.

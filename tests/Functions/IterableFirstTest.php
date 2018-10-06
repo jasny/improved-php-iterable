@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_first;
+use function Improved\iterable_first;
 
 /**
- * @covers \Ipl\iterable_first
+ * @covers \Improved\iterable_first
  */
 class IterableFirstTest extends TestCase
 {

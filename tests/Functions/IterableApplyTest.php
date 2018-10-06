@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\LazyExecutionIteratorTrait;
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\LazyExecutionIteratorTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_apply;
+use function Improved\iterable_apply;
 
 /**
- * @covers \Ipl\iterable_apply
+ * @covers \Improved\iterable_apply
  */
 class IterableApplyTest extends TestCase
 {

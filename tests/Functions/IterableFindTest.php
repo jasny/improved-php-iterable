@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_find;
+use function Improved\iterable_find;
 
 /**
- * @covers \Ipl\iterable_find
+ * @covers \Improved\iterable_find
  */
 class IterableFindTest extends TestCase
 {

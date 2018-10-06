@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\LazyExecutionIteratorTrait;
+use Improved\Tests\LazyExecutionIteratorTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_expect_type;
+use function Improved\iterable_expect_type;
 
 /**
- * @covers \Ipl\iterable_expect_type
+ * @covers \Improved\iterable_expect_type
  */
 class IterableExpectTypeTest extends TestCase
 {

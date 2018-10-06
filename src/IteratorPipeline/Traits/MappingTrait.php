@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ipl\IteratorPipeline\Traits;
+namespace Improved\IteratorPipeline\Traits;
 
-use Ipl as i;
-use Ipl\Iterator\CombineIterator;
+use Improved as i;
+use Improved\Iterator\CombineIterator;
 
 /**
  * Mapping and projection methods for iterator pipeline

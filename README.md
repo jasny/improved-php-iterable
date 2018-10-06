@@ -1,12 +1,12 @@
 ![improved PHP library](https://user-images.githubusercontent.com/100821/46372249-e5eb7500-c68a-11e8-801a-2ee57da3e5e3.png)
 
-# IPL iterable
+# Improved Iterable
 
 [![Build Status](https://travis-ci.org/improved-php-library/iterable.svg?branch=master)](https://travis-ci.org/improved-php-library/iterable)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/improved-php-library/iterable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/improved-php-library/iterable/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/improved-php-library/iterable/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/improved-php-library/iterable/?branch=master)
-[![Packagist Stable Version](https://img.shields.io/packagist/v/ipl/iterable.svg)](https://packagist.org/packages/ipl/iterable)
-[![Packagist License](https://img.shields.io/packagist/l/ipl/iterable.svg)](https://packagist.org/packages/ipl/iterable)
+[![Packagist Stable Version](https://img.shields.io/packagist/v/improved/iterable.svg)](https://packagist.org/packages/improved/iterable)
+[![Packagist License](https://img.shields.io/packagist/l/improved/iterable.svg)](https://packagist.org/packages/improved/iterable)
 
 Functional-style operations, such as map-reduce transformations on arrays, [iterators](https://php.net/iterator) and
 other [traversable](https://php.net/traversable) objects.
@@ -22,9 +22,9 @@ The library supports the procedural and object-oriented programming paradigm.
 
 ## Installation
 
-    composer require ipl/iterable
+    composer require improved/iterable
 
-## Functions
+## Methods
 
 #### Chainable methods
 
@@ -80,11 +80,11 @@ The library supports the procedural and object-oriented programming paradigm.
 
 ## Example
 
-All functions and objects are in the `Ipl` namespace. Either alias the namespace as `i` or import each function
+All functions and objects are in the `Improved` namespace. Either alias the namespace as `i` or import each function
 individually.
 
 ```php
-use Ipl as i;
+use Improved as i;
 
 $filteredValues = i\iterable_filter($values, function($value) {
    return is_int($value) && $value > 10;
@@ -104,7 +104,7 @@ $result = i\iterable_to_array($firstValues);
 Alternatively use the iterator pipeline.
 
 ```php
-use Ipl\IteratorPipeline\Pipeline;
+use Improved\IteratorPipeline\Pipeline;
 
 $result = Pipeline::with($values)
     ->filter(function($value) {
@@ -126,7 +126,7 @@ This library provides Utility methods for creating streams.
 `new`.
 
 ```php
-use Ipl\IteratorPipeline\Pipeline;
+use Improved\IteratorPipeline\Pipeline;
 
 Pipeline::with([
     new Person("Max", 18),
@@ -148,7 +148,7 @@ The `PipelineBuilder` can be used to create a blueprint for pipelines. The build
 The static `Pipeline::build()` method can be used as syntax sugar to create a builder.
 
 ```php
-use Ipl\IteratorPipeline\Pipeline;
+use Improved\IteratorPipeline\Pipeline;
 
 $blueprint = Pipeline::build()
     ->expectType('string')
@@ -165,7 +165,7 @@ A `PipelineBuilder` is an immutable object, each method call creates a new copy 
 Alternatively the pipeline builder can be invoked, which creates a pipeline and calls `toArray()` on it.
 
 ```php
-use Ipl\IteratorPipeline\Pipeline;
+use Improved\IteratorPipeline\Pipeline;
 
 $unique = Pipeline::build()
     ->unique()
@@ -177,7 +177,7 @@ $result = $unique($values);
 The `then()` method can be used to combine two pipeline builder.
 
 ```php
-use Ipl\IteratorPipeline\Pipeline;
+use Improved\IteratorPipeline\Pipeline;
 
 $first = Pipeline::build()->unique()->values();
 $second = Pipeline::build()->map(function($value) {

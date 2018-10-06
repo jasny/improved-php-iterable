@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\IteratorPipeline;
+namespace Improved\Tests\IteratorPipeline;
 
-use Ipl\IteratorPipeline\PipelineBuilder;
-use Ipl\Tests\LazyExecutionIteratorTrait;
+use Improved\IteratorPipeline\PipelineBuilder;
+use Improved\Tests\LazyExecutionIteratorTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Ipl\IteratorPipeline\PipelineBuilder
+ * @covers \Improved\IteratorPipeline\PipelineBuilder
  */
 class PipelineBuilderTest extends TestCase
 {

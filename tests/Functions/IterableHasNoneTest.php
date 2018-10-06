@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_has_none;
+use function Improved\iterable_has_none;
 use function Jasny\str_contains;
 
 /**
- * @covers \Ipl\iterable_has_none
+ * @covers \Improved\iterable_has_none
  */
 class IterableHasNoneTest extends TestCase
 {

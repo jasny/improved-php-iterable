@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\IteratorPipeline;
+namespace Improved\Tests\IteratorPipeline;
 
-use Ipl\IteratorPipeline\Pipeline;
-use Ipl\IteratorPipeline\PipelineBuilder;
+use Improved\IteratorPipeline\Pipeline;
+use Improved\IteratorPipeline\PipelineBuilder;
 use Jasny\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Ipl\IteratorPipeline\Pipeline
+ * @covers \Improved\IteratorPipeline\Pipeline
  */
 class PipelineTest extends TestCase
 {

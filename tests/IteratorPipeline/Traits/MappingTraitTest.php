@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\IteratorPipeline\Traits;
+namespace Improved\Tests\IteratorPipeline\Traits;
 
-use Ipl\IteratorPipeline\Pipeline;
+use Improved\IteratorPipeline\Pipeline;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Ipl\IteratorPipeline\Traits\MappingTrait
+ * @covers \Improved\IteratorPipeline\Traits\MappingTrait
  */
 class MappingTraitTest extends TestCase
 {

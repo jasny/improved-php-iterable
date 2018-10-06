@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\LazyExecutionIteratorTrait;
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\LazyExecutionIteratorTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_sort;
+use function Improved\iterable_sort;
 
 /**
- * @covers \Ipl\iterable_sort
+ * @covers \Improved\iterable_sort
  */
 class IterableSortTest extends TestCase
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Iterator;
+namespace Improved\Tests\Iterator;
 
-use Ipl\Iterator\CombineIterator;
-use Ipl\Tests\LazyExecutionIteratorTrait;
+use Improved\Iterator\CombineIterator;
+use Improved\Tests\LazyExecutionIteratorTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Ipl\Iterator\CombineIterator
+ * @covers \Improved\Iterator\CombineIterator
  */
 class CombineIteratorTest extends TestCase
 {

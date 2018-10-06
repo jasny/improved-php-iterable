@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_reduce;
+use function Improved\iterable_reduce;
 
 /**
- * @covers \Ipl\iterable_reduce
+ * @covers \Improved\iterable_reduce
  */
 class IterableReduceTest extends TestCase
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_has_all;
+use function Improved\iterable_has_all;
 use function Jasny\str_contains;
 
 /**
- * @covers \Ipl\iterable_has_all
+ * @covers \Improved\iterable_has_all
  */
 class IterableHasAllTest extends TestCase
 {

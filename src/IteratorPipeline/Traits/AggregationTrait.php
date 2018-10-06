@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ipl\IteratorPipeline\Traits;
+namespace Improved\IteratorPipeline\Traits;
 
-use Ipl as i;
+use Improved as i;
 
 /**
  * Pipeline aggregation methods.

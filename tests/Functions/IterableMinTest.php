@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_min;
+use function Improved\iterable_min;
 
 /**
- * @covers \Ipl\iterable_min
+ * @covers \Improved\iterable_min
  */
 class IterableMinTest extends TestCase
 {

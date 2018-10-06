@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_concat;
+use function Improved\iterable_concat;
 
 /**
- * @covers \Ipl\iterable_concat
+ * @covers \Improved\iterable_concat
  */
 class IterableConcatTest extends TestCase
 {

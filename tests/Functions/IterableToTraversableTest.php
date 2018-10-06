@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_to_traversable;
+use function Improved\iterable_to_traversable;
 
 /**
- * @covers \Ipl\iterable_to_traversable
+ * @covers \Improved\iterable_to_traversable
  */
 class IterableToTraversableTest extends TestCase
 {

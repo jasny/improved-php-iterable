@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Iterator;
+namespace Improved\Iterator;
 
-use function Ipl\iterable_to_iterator;
+use function Improved\iterable_to_iterator;
 
 /**
  * Iterator through keys and values, where key may be any type.

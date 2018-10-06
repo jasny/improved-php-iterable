@@ -1,5 +1,5 @@
 {
-    "name": "ipl/iterable",
+    "name": "improved/iterable",
     "description": "Functions to interact with arrays, iterators and other traversable objects",
     "license": "MIT",
     "type": "library",
@@ -23,8 +23,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Ipl\\Iterator\\": "src/Iterator/",
-            "Ipl\\IteratorPipeline\\": "src/IteratorPipeline/"
+            "Improved\\Iterator\\": "src/Iterator/",
+            "Improved\\IteratorPipeline\\": "src/IteratorPipeline/"
         },
         "files": [
             "src/functions-const.php",
@@ -68,11 +68,11 @@
         ]
     },
     "provides": {
-        "ext-ipl_iterable": "*"
+        "ext-improved_iterable": "*"
     },
     "autoload-dev": {
         "psr-4": {
-            "Ipl\\Tests\\": "tests/"
+            "Improved\\Tests\\": "tests/"
         }
     },
     "scripts": {

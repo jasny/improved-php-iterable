@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\LazyExecutionIteratorTrait;
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\LazyExecutionIteratorTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_keys;
+use function Improved\iterable_keys;
 
 /**
- * @covers \Ipl\iterable_keys
+ * @covers \Improved\iterable_keys
  */
 class IterableKeysTest extends TestCase
 {

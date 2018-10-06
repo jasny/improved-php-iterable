@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ipl\IteratorPipeline;
+namespace Improved\IteratorPipeline;
 
-use Ipl as i;
+use Improved as i;
 use function Jasny\expect_type;
 
 /**

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Ipl\IteratorPipeline;
+namespace Improved\IteratorPipeline;
 
-use Ipl as i;
-use Ipl\Iterator\CombineIterator;
-use Ipl\IteratorPipeline\Traits\FilteringTrait;
-use Ipl\IteratorPipeline\Traits\MappingTrait;
-use Ipl\IteratorPipeline\Traits\SortingTrait;
+use Improved as i;
+use Improved\Iterator\CombineIterator;
+use Improved\IteratorPipeline\Traits\FilteringTrait;
+use Improved\IteratorPipeline\Traits\MappingTrait;
+use Improved\IteratorPipeline\Traits\SortingTrait;
 
 /**
  * The `PipelineBuilder` can be used to create a blueprint for pipelines.

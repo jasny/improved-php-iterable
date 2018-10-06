@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests;
+namespace Improved\Tests;
 
 use PHPUnit\Framework\MockObject\MockObject;
 

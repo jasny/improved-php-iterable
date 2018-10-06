@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_separate;
+use function Improved\iterable_separate;
 
 /**
- * @covers \Ipl\iterable_separate
+ * @covers \Improved\iterable_separate
  */
 class IterableSeparateTest extends TestCase
 {

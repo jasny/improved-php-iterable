@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_max;
+use function Improved\iterable_max;
 
 /**
- * @covers \Ipl\iterable_max
+ * @covers \Improved\iterable_max
  */
 class IterableMaxTest extends TestCase
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ipl\Tests\Functions;
+namespace Improved\Tests\Functions;
 
-use Ipl\Tests\ProvideIterablesTrait;
+use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
-use function Ipl\iterable_sum;
+use function Improved\iterable_sum;
 
 /**
- * @covers \Ipl\iterable_sum
+ * @covers \Improved\iterable_sum
  */
 class IterableSumTest extends TestCase
 {
