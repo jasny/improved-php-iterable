@@ -1,6 +1,6 @@
 ![improved PHP library](https://user-images.githubusercontent.com/100821/46372249-e5eb7500-c68a-11e8-801a-2ee57da3e5e3.png)
 
-# Improved Iterable - PHP extension
+# iterable - PHP extension
 
 [![Build Status](https://travis-ci.org/improved-php-library/iterable.svg?branch=master)](https://travis-ci.org/improved-php-library/iterable)
 [![Build status](https://ci.appveyor.com/api/projects/status/TODO/branch/master?svg=true)](https://ci.appveyor.com/project/improved-php-library/iterable/branch/master)
