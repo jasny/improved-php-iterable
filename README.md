@@ -251,22 +251,14 @@ Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
 
 Map the key of each element to a new key using a callback function.
 
+The second argument of the callback is the value and second is the key.
+
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
-    ->mapKeys(function(string $key): string {
+    ->mapKeys(function(string $value, string $key): string {
         return subst($key, 0, 1);
     })
     ->toArray(); // ['a' => 'green', 'b' => 'blue', 'c' => 'red']
-```
-
-The second argument of the callback is the **value**. _This is different to for other callbacks._
-
-```php
-Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
-    ->map(function(string $key, string $value): string {
-        return "{$key} ({$value})";
-    })
-    ->toArray(); // ['apple (green)' => 'green', 'berry (blue)' => 'blue', 'cherry (red)' => 'red']
 ```
 
 ### apply

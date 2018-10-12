@@ -27,7 +27,7 @@ class IterableMapKeysTest extends TestCase
      */
     public function test($values)
     {
-        $iterator = iterable_map_keys($values, function($key) {
+        $iterator = iterable_map_keys($values, function($value, $key) {
             return str_repeat('*', $key);
         });
 
@@ -53,7 +53,7 @@ class IterableMapKeysTest extends TestCase
      */
     public function testKeyValue($values)
     {
-        $iterator = iterable_map_keys($values, function($key, $value) {
+        $iterator = iterable_map_keys($values, function($value, $key) {
             return "$key-$value";
         });
 

@@ -30,7 +30,7 @@ class MappingTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['one' => 'uno', 'two' => 'dos', 'three' => 'tres']);
 
-        $ret = $pipeline->mapKeys(function($key, $value) {
+        $ret = $pipeline->mapKeys(function($value, $key) {
             return "$key:$value";
         });
 

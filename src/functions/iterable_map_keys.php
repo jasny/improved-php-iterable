@@ -14,6 +14,6 @@ namespace Improved;
 function iterable_map_keys(iterable $iterable, callable $callback): \Generator
 {
     foreach ($iterable as $key => $value) {
-        yield call_user_func($callback, $key, $value) => $value;
+        yield call_user_func($callback, $value, $key) => $value;
     }
 }
