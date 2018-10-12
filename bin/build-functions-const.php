@@ -1,5 +1,8 @@
 <?php
 
+// File might be broken, so clear before autoload
+file_put_contents(dirname(__DIR__) . '/src/functions-const.php', '');
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 const FUNCTION_PREFIX = 'iterable_';
@@ -16,7 +19,7 @@ foreach ($userFunctions as $function) {
 $code = ["<?php\n\n/** @ignoreFile */\n// phpcs:ignoreFile\n\ndeclare(strict_types=1);\n\nnamespace Improved;\n"];
 
 foreach ($functions as $function) {
-    $fnName = substr($function, 4);
+    $fnName = substr($function, strlen('improved\\'));
     $code[] = "/** @internal */\n" . sprintf('const %1$s = "Improved\\\\%1$s";', $fnName);
 }
 

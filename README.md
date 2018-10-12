@@ -32,7 +32,7 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`map(callable $callback)`](#map)
 * [`mapKeys(callable $callback)`](#mapkeys)
 * [`apply(callable $callback)`](#apply)
-* [`then(callable $callback)`](#then)
+* [`then(callable $callback, mixed ...$args)`](#then)
 * [`group(callable $callback)`](#group)
 * [`flatten()`](#flatten)
 * [`column(int|string|null $valueColumn[, int|string|null $keyColumn])`](#column)
@@ -68,6 +68,7 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`first([bool $required])`](#first)
 * [`last([bool $required])`](#last)
 * [`find(callable $matcher)`](#find)
+* [`findKey(callable $matcher)`](#findkey)
 * [`min([callable $compare])`](#min)
 * [`max([callable $compare])`](#max)
 
@@ -77,6 +78,11 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`sum(): int|float`](#sum)
 * [`average(): int|float`](#average)
 * [`concat([string $glue]): string`](#concat)
+
+#### Builder methods
+
+* [`stub(string $name)`](#stub)
+* [`unstub(string $name, callable callable, mixed ...$args)`](#stub)
 
 ## Example
 
@@ -763,6 +769,27 @@ Pipeline::with(["one" => "uno", "two" => "dos", "three" => "tres"])
     }); // "dos"
 ```
 
+### findKey
+
+Find the first element that matches a condition and return the key (rather than the value). Returns `null` if no element
+is found.
+
+```php
+Pipeline::with(["I" => "one", "II" => "two", "III" => "three"])
+    ->find(function(string $value): bool {
+        return substr($value, 0, 1) === 't';
+    }); // "II"
+```
+
+It's possible to use the key in this callable.
+
+```php
+Pipeline::with(["one" => "uno", "two" => "dos", "three" => "tres"])
+    ->find(function(string $value, string $key): bool {
+        return substr($key, 0, 1) === 't';
+    }); // "two"
+```
+
 ### hasAny
 
 Check if any element matches the given condition.
@@ -892,3 +919,24 @@ This is comparable to [implode](https://php.net/implode) on normal arrays.
 Pipeline::with(["hello", "sweet", "world"])
     ->concat(" - "); // "hello - sweet - world"
 ```
+
+### stub
+
+The `stub()` method a stub step, which does nothing but can be replaced later using `unstub()`.
+
+    PipelineBuilder stub(string name)
+    PipelineBuilder unstub(string name, callable $callable, mixed ...$args) 
+
+_These methods only exists in the pipeline builder._
+
+```php
+$blueprint = Pipeline::build()
+    ->expectType('string')
+    ->stub('process');
+    ->sort();
+    
+// Later
+$pipeline = $blueprint
+    ->unstub('process', i\iterable_map, i\function_partial(i\string_convert_case, ___, i\STRING_UPPERCASE)));
+```
+

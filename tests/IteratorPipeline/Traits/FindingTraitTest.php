@@ -60,6 +60,18 @@ class FindingTraitTest extends TestCase
         $this->assertEquals('two', $result);
     }
 
+    public function testFindKey()
+    {
+        $pipeline = new Pipeline(['I' => 'one', 'II' => 'two', 'III' => 'three']);
+
+        $result = $pipeline->findKey(function($value) {
+            return $value[0] === 't';
+        });
+
+        $this->assertEquals('II', $result);
+    }
+
+
     public function testHasAny()
     {
         $pipeline = new Pipeline(['one', 'two', 'three']);

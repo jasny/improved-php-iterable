@@ -53,6 +53,19 @@ trait FindingTrait
     }
 
     /**
+     * Get the first value that matches a condition and return the key.
+     * Returns null if no element is found.
+     *
+     * @param callable $matcher
+     * @return mixed
+     */
+    public function findKey(callable $matcher)
+    {
+        return i\iterable_find_key($this->iterable, $matcher);
+    }
+
+
+    /**
      * Check if any element matches the condition.
      *
      * @param callable $matcher

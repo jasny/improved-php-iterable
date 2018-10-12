@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Improved\Tests\IteratorPipeline;
 
+use Improved as i;
+use Improved\IteratorPipeline\Pipeline;
 use Improved\IteratorPipeline\PipelineBuilder;
 use Improved\Tests\LazyExecutionIteratorTrait;
+use Jasny\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Improved\IteratorPipeline\PipelineBuilder
+ * @covers \Improved\IteratorPipeline\PipelineBuilder\Stub
  */
 class PipelineBuilderTest extends TestCase
 {
@@ -28,16 +32,17 @@ class PipelineBuilderTest extends TestCase
             ->values()
             ->limit(3);
 
-        $result1 = $blueprint
-            ->with(['two' => 'India', 'one' => 'Bravo', 'four' => 'Zulu', 'three' => 'Papa', 'not' => 'Bravo'])
-            ->toArray();
+        $pipeline1 = $blueprint
+            ->with(['two' => 'India', 'one' => 'Bravo', 'four' => 'Zulu', 'three' => 'Papa', 'not' => 'Bravo']);
+        $this->assertInstanceOf(Pipeline::class, $pipeline1);
 
+        $result1 = $pipeline1->toArray();
         $this->assertEquals(['one:Bravo', 'two:India', 'three:Papa'], $result1);
 
-        $result2 = $blueprint
-            ->with([34, 15, 46, 1, 44, 1, 15, 92])
-            ->toArray();
+        $pipeline2 = $blueprint->with([34, 15, 46, 1, 44, 1, 15, 92]);
+        $this->assertInstanceOf(Pipeline::class, $pipeline1);
 
+        $result2 = $pipeline2->toArray();
         $this->assertEquals(['3:1', '1:15', '0:34'], $result2);
     }
 
@@ -51,6 +56,61 @@ class PipelineBuilderTest extends TestCase
         $result2 = $unique([34, 15, 46, 1, 44, 1, 15, 92]);
         $this->assertEquals([34, 15, 46, 1, 44, 92], $result2);
     }
+
+    public function testStub()
+    {
+        $blueprint = (new PipelineBuilder())
+            ->unique()
+            ->sort(\SORT_REGULAR)
+            ->stub('process')
+            ->values()
+            ->limit(3);
+
+        $result1 = $blueprint
+            ->with(['two' => 'India', 'one' => 'Bravo', 'four' => 'Zulu', 'three' => 'Papa', 'not' => 'Bravo'])
+            ->toArray();
+        $this->assertEquals(['Bravo', 'India', 'Papa'], $result1);
+
+        $build = $blueprint
+            ->unstub('process', i\iterable_map, function($value, $key) {
+                return "$key:$value";
+            });
+        $this->assertNotSame($blueprint, $build);
+
+        $result2 = $build
+            ->with(['two' => 'India', 'one' => 'Bravo', 'four' => 'Zulu', 'three' => 'Papa', 'not' => 'Bravo'])
+            ->toArray();
+
+        $this->assertEquals(['one:Bravo', 'two:India', 'three:Papa'], $result2);
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage Pipeline builder already has 'process' stub
+     */
+    public function testStubDuplicate()
+    {
+        $blueprint = (new PipelineBuilder())
+            ->sort(\SORT_REGULAR)
+            ->stub('process')
+            ->values();
+
+        $blueprint->stub('process');
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage Pipeline builder doesn't have 'process' stub
+     */
+    public function testStubUnknown()
+    {
+        $blueprint = (new PipelineBuilder())
+            ->sort(\SORT_REGULAR)
+            ->values();
+
+        $blueprint->unstub('process', function() {});
+    }
+
 
     public function testSetKeys()
     {
