@@ -111,6 +111,20 @@ class PipelineBuilderTest extends TestCase
         $blueprint->unstub('process', function() {});
     }
 
+    public function testThenPipeline()
+    {
+        $subpipe = new class([9, 8, 7]) extends Pipeline { };
+
+        $builder = (new PipelineBuilder())
+            ->then(function() use($subpipe) {
+                return $subpipe;
+            });
+
+        $pipeline = $builder->with([1, 2, 3]);
+
+        // then() returns subpipe
+        $this->assertSame($subpipe, $pipeline);
+    }
 
     public function testSetKeys()
     {

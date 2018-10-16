@@ -103,7 +103,7 @@ class PipelineBuilder
         $pipeline = new Pipeline($iterable);
 
         foreach ($this->steps as [$callback, $args]) {
-            $pipeline->then($callback, ...$args);
+            $pipeline = $pipeline->then($callback, ...$args);
         }
 
         return $pipeline;
