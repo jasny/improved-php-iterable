@@ -12,11 +12,8 @@ Functional-style operations, such as map-reduce transformations on arrays, [iter
 other [traversable](https://php.net/traversable) objects.
 
 These functions are different from their `array_*` counterparts, as they work with any kind of iterable rather than just
-arrays.
-
-Functions that do no aggregate to a single value, return a [`Generator`](http://php.net/generator) by using the `yield`
-syntax. This means you use these functions to add logic, without traversing (looping) through the values. PHP 7.2+ is
-highly optimized to work with Generators increasing performance and saving memory.
+arrays. If you're not familiar with Iterators and Generators in PHP, please first read paragraph
+"[What are iterators?](#what-are-iterators)".
 
 The library supports the procedural and object-oriented programming paradigm.
 
@@ -194,6 +191,67 @@ $titles = $first->then($second);
 
 $result = $titles($values);
 ```
+
+### Custom Pipeline class
+
+A `Pipeline` is not an immutable object, unlike the `PipelineBuilder`. Only the `iterable` returned from latest step is
+relevant and kept by the pipeline. As such, you can extend the `Pipeline` class and use that any chainable method,
+without the object changing.
+
+However is a step returns a `Pipeline` object (including any object that extends the pipeline), the `then` method will
+return that object instead of `$this`. This can be used to inject a custom class later in a pipe or in a pipeline
+builder.
+
+```php
+use Improved\IteratorPipeline\Pipeline;
+
+class MyPipeline extends Pipeline
+{
+    function product()
+    {
+        $product = 1;
+        
+        foreach ($this->iterable as $value) {
+            $product *= $value;
+        }
+        
+        return $product;
+    }
+}
+```
+
+##### Starting with your custom class
+
+```php
+$product = (new MyPipeline)->column('amount')->product();
+```
+
+##### In an existing pipeline
+
+```php
+$pipeline = (new Pipeline)->column('amount');
+
+$product = $pipeline 
+    ->then(function(iterable $iterable) {
+        return new MyPipeline($iterable);
+    })
+    ->product();
+``` 
+
+##### In a pipeline builder
+
+```php
+$builder = (new PipelineBuilder)
+    ->then(function(iterable $iterable) {
+        return new MyPipeline($iterable);
+    })
+    ->column('amount')
+    ->product();
+```
+
+This is the only way to get a `PipelineBuilder` to return a custom `Pipeline` class without also creating a custom
+`PipelineBuilder`. 
+
 
 ## Method reference
 
@@ -932,3 +990,194 @@ $pipeline = $blueprint
     ->unstub('process', i\iterable_map, i\function_partial(i\string_convert_case, ___, i\STRING_UPPERCASE)));
 ```
 
+## What are iterators?
+
+Iterators are traversable objects. That means that when you use them in a `foreach` loop, you're not looping through
+the properties of the object. Instead the `current()`, `key()` and `valid()` methods are called each time we go through
+the loop.
+
+The `current()` method gives the current value, the `key()` method gives the current key and the `valid()` method
+checks if we're should continue looping.
+  
+In the following example we extend `IteratorIterator` to overwrite the `current()` class.
+
+```php
+use Improved as i;
+
+class UpperIterator extends IteratorIterator
+{
+    public function current()
+    {
+        return i\string_case_convert(parent::current(), i\STRING_UPPERCASE);
+    }
+};
+
+class NoSpaceIterator extends IteratorIterator
+{
+    public function current()
+    {
+        return i\string_replace(parent::current(), " ", "");
+    }
+};
+
+$data = get_some_data();
+$iterator = new NoSpaceIterator(new UpperIterator(new ArrayIterator($data)));
+```
+
+At this point nothing is executed. Neither `string_case_convert` or `string_replace`. Only once we loop, these functions
+are called.
+
+```php
+foreach ($iterator as $cleanValue) {
+    echo $cleanValue;
+}
+```
+
+This will be the same as doing
+
+```php
+foreach ($data as $value) {
+    $upperValue = i\string_case_convert($value, i\STRING_UPPERCASE);
+    $cleanValue = i\string_replace($upper, " ", "");
+    
+    echo $cleanValue;
+}
+```
+
+### Difference to working with arrays
+
+When working with arrays, we tend to loop through them for each operation. Look at `array_map`
+
+```php
+$upperData = array_map(function($value) {
+    return i\string_case_convert($value, i\STRING_UPPERCASE);
+}, $data);
+
+$cleanData = array_map(function($value) {
+    return i\string_replace($value, i\STRING_UPPERCASE);
+}, $upperData);
+
+foreach ($cleanData as $cleanValue) {
+    echo $cleanValue;
+}
+```
+
+Which is similar to
+
+```php
+$upperData = [];
+$cleanData = [];
+
+foreach ($data as $value) {
+    $upperData[] = i\string_case_convert($value, i\STRING_UPPERCASE);
+}
+
+foreach ($upperData as $upperValue) {
+    $cleanData[] = i\string_replace($upperValue, i\STRING_UPPERCASE);
+}
+
+foreach ($cleanData as $cleanValue) {
+    echo $cleanValue;
+}
+```
+
+Of course we could combine these operators an apply them in a simple loop without the use of iterators. However this
+couples all that logic. If a method returns all values in upper case, a second and unrelated method (in a different
+class) might remove the spaces. For iterators this doesn't matter.
+
+### Iterator keys
+
+With iterators, the key doesn't need to be a string or integer, but can be any type and doesn't need to be unique.
+
+It can very convenient to make the key an array or object and keeping the value a scalar. As such you can do link
+operations like case conversion, etc. Another application is to group child objects per parent object.
+
+### Generators
+
+[Generators](http://php.net/generator) are special iterators which are automatically created by PHP when you use the
+`yield` syntax. 
+
+```php
+function iterable_first_word(iterable $values): Generator
+{
+    foreach ($values as $key => $value) {
+        $word = i\string_before($value, " ");
+    
+        yield $key => $word;
+    }
+}
+```
+
+PHP 7.2+ is highly optimized to work with generators increasing performance and saving memory. This makes generators
+preferable to custom iterators, which can be slow.
+
+#### Unexpected generator behaviour
+
+If you add a `return` statement, the function will still return a Generator object. You can get that result with the
+`Generator->getReturn()` method, but this is typically not what's intended.
+
+```php
+function get_values(iterable $values)
+{
+    if (is_array($values)) {
+        return array_values($values);
+    }
+
+    foreach ($values as $value) {
+        yield $value;
+    }
+}
+```
+
+The following code will not work as intended. It will not return an array, but always a `Generator` object.
+
+Also note that the none of the code in the `get_values` function will execute until the we start the loop
+
+```php
+function iterable_first_word(iterable $values): Generator
+{
+    var_dump($values);
+
+    foreach ($values as $key => $value) {
+        yield $key => i\string_before($value, " ");
+    }
+}
+
+$words = iterable_first_word($values);
+
+// Nothing is outputted yet
+
+foreach ($words as $word) { // Now we get the var_dump() as the function is executed till yield 
+    // ...
+}
+
+```
+
+### Forward-only iterators
+
+Some iterators, including generators, are forward-only iterators, meaning you can only loop through them once.
+
+```php
+function numbers_to($count) {
+    for ($i = 1; $i <= $count; $i++) {
+        yield $i;
+    }
+}
+
+$oneToTen = numbers_to(10);
+
+foreach ($oneToTen as $number) {
+    echo $number;
+}
+
+// The following loop will cause an error to be thrown.
+
+foreach ($oneToTen as $number) {
+    foo($number);
+}
+```
+
+This has consequences when using
+the `iterable_` functions and `Pipeline` objects. Though this can be overcome using a `PipelineBuilder`. 
+
+_**And now you know :-)**_

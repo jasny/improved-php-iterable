@@ -39,7 +39,7 @@ class Pipeline implements \IteratorAggregate
      *
      * @param callable $callback
      * @param mixed    ...$args
-     * @return $this
+     * @return self
      */
     public function then(callable $callback, ...$args): self
     {
@@ -54,7 +54,7 @@ class Pipeline implements \IteratorAggregate
 
         $this->iterable = $next;
 
-        return $this;
+        return $next instanceof Pipeline ? $next : $this;
     }
 
 

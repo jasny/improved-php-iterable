@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Improved\Tests\IteratorPipeline;
 
+use Improved as i;
 use Improved\IteratorPipeline\Pipeline;
 use Improved\IteratorPipeline\PipelineBuilder;
 use Jasny\TestHelper;
@@ -30,6 +31,23 @@ class PipelineTest extends TestCase
         $this->assertSame($pipeline, $ret);
 
         $this->assertAttributeSame($next, 'iterable', $pipeline);
+    }
+
+    public function testThenPipeline()
+    {
+        $mainpipe = new Pipeline([1, 2, 3]);
+        $subpipe = new class([9, 8, 7]) extends Pipeline { };
+
+        $pipeline = $mainpipe->then(function() use($subpipe) {
+            return $subpipe;
+        });
+
+        // then() returns subpipe
+        $this->assertSame($subpipe, $pipeline);
+
+        // But also sets mainpipe step
+        $result = i\iterable_to_array($mainpipe);
+        $this->assertEquals([9, 8, 7], $result);
     }
 
     /**
