@@ -30,6 +30,10 @@ function iterable_sort(iterable $iterable, $compare, bool $preserveKeys = false)
         ? iterable_separate($iterable)
         : ['keys' => null, 'values' => is_array($iterable) ? $iterable : iterator_to_array($iterable, false)];
 
+    if (!is_array($values)) {
+        throw new \UnexpectedValueException("Values should be an array");
+    }
+
     isset($comparator)
         ? uasort($values, $comparator)
         : asort($values, $flags);

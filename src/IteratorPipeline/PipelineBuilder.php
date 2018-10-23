@@ -56,7 +56,7 @@ class PipelineBuilder
      */
     public function stub(string $name): self
     {
-        $hasStub = i\iterable_has_any($this->steps, function($step) use ($name) {
+        $hasStub = i\iterable_has_any($this->steps, function ($step) use ($name) {
             return $step[0] instanceof Stub && $step[0]->getName() === $name;
         });
 
@@ -77,7 +77,7 @@ class PipelineBuilder
      */
     public function unstub(string $name, callable $callable, ...$args): self
     {
-        $index = i\iterable_find_key($this->steps, function($step) use ($name) {
+        $index = i\iterable_find_key($this->steps, function ($step) use ($name) {
             return $step[0] instanceof Stub && $step[0]->getName() === $name;
         });
 

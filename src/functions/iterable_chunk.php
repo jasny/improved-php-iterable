@@ -31,4 +31,4 @@ function _iterable_chunk_generate(\Iterator $iterator, int $size): \Generator
 
         $iterator->next();
     }
-};
+}
