@@ -12,6 +12,8 @@ const iterable_apply = "Improved\\iterable_apply";
 /** @internal */
 const iterable_average = "Improved\\iterable_average";
 /** @internal */
+const iterable_chunk = "Improved\\iterable_chunk";
+/** @internal */
 const iterable_cleanup = "Improved\\iterable_cleanup";
 /** @internal */
 const iterable_column = "Improved\\iterable_column";

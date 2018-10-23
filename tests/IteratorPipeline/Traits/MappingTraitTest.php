@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Improved\Tests\IteratorPipeline\Traits;
 
+use function Improved\iterable_to_array;
 use Improved\IteratorPipeline\Pipeline;
 use PHPUnit\Framework\TestCase;
 
@@ -67,6 +68,22 @@ class MappingTraitTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+
+    public function testChunk()
+    {
+        $pipeline = new Pipeline(array_fill(0, 45, null));
+
+        $lengths = [];
+        $ret = $pipeline->chunk(10);
+
+        foreach ($ret as $chunk) {
+            $lengths[] = count(iterable_to_array($chunk));
+        }
+
+        $this->assertSame($pipeline, $ret);
+
+        $this->assertEquals([10, 10, 10, 10, 5], $lengths);
+    }
 
     public function testGroup()
     {

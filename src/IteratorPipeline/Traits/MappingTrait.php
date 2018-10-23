@@ -57,6 +57,17 @@ trait MappingTrait
     }
 
     /**
+     * Divide iterable into chunks of specified size.
+     *
+     * @param int $size
+     * @return static
+     */
+    public function chunk(int $size)
+    {
+        return $this->then(i\iterable_chunk, $size);
+    }
+
+    /**
      * Group elements of an iterator, with the group name as key and an array of elements as value.
      *
      * @param callable $grouping

@@ -30,6 +30,7 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`mapKeys(callable $callback)`](#mapkeys)
 * [`apply(callable $callback)`](#apply)
 * [`then(callable $callback, mixed ...$args)`](#then)
+* [`chunk(int $size)`](#chunk)
 * [`group(callable $callback)`](#group)
 * [`flatten()`](#flatten)
 * [`column(int|string|null $valueColumn[, int|string|null $keyColumn])`](#column)
@@ -360,6 +361,23 @@ Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
         return new MyCustomIterator($values);
     });
 ```
+
+### chunk
+
+Divide iterable into chunks of specified size.
+
+```php
+Pipeline::with(['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'])
+    ->chunk(4);
+    
+// <iterator>[
+//     <iterator>['I', 'II', 'III', 'IV'],
+//     <iterator>['V', 'VI', 'VII', 'VIII'],
+//     <iterator>['IX', 'X']
+// ]
+```
+
+Chunks are iterators rather than arrays. Keys are preserved.
 
 ### group
 
