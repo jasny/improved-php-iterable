@@ -111,6 +111,19 @@ class MappingTraitTest extends TestCase
         $this->assertEquals(['one', 'two', 'three', 'four'], $result);
     }
 
+    public function testFlattenPreserveKeys()
+    {
+        $values = ['a' => ['I' => 'one', 'II' =>'two'], 'b' => 'three', 'c' => [], 'd' => ['****' => 'four']];
+        $pipeline = new Pipeline($values);
+
+        $ret = $pipeline->flatten(true);
+        $this->assertSame($pipeline, $ret);
+
+        $result = $pipeline->toArray();
+
+        $this->assertEquals(['I' => 'one', 'II' => 'two', 'b' => 'three', '****' => 'four'], $result);
+    }
+
     public function testColumn()
     {
         $rows = [

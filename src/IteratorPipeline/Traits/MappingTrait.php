@@ -81,11 +81,12 @@ trait MappingTrait
     /**
      * Walk through all sub-iterables and concatenate them.
      *
+     * @param bool $preserveKeys
      * @return static
      */
-    public function flatten()
+    public function flatten(bool $preserveKeys = false)
     {
-        return $this->then(i\iterable_flatten);
+        return $this->then(i\iterable_flatten, $preserveKeys);
     }
 
 
