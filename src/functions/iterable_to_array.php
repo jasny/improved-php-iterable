@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use Improved\IteratorPipeline\Pipeline;
 use function Jasny\get_type_description;
 
 /**
@@ -18,13 +19,15 @@ function iterable_to_array(iterable $iterable, ?bool $preserveKeys = null): arra
     switch (true) {
         case is_array($iterable):
             break;
-        case is_object($iterable) && method_exists($iterable, 'toArray'):
+        case is_object($iterable) && !$iterable instanceof Pipeline && method_exists($iterable, 'toArray'):
             $iterable = $iterable->toArray();
             break;
         case is_object($iterable) && method_exists($iterable, 'getArrayCopy'):
             $iterable = $iterable->getArrayCopy();
             break;
 
+        case $iterable instanceof \IteratorAggregate:
+            return iterable_to_array($iterable->getIterator(), $preserveKeys); // recursion
         case $iterable instanceof \Traversable:
             return iterator_to_array($iterable, $preserveKeys === true);
 

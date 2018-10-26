@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
+use Improved\IteratorPipeline\Pipeline;
 use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
 use function Improved\iterable_to_array;
@@ -13,7 +14,21 @@ use function Improved\iterable_to_array;
  */
 class IterableToArrayTest extends TestCase
 {
-    use ProvideIterablesTrait;
+    use ProvideIterablesTrait {
+        provideIterables as private _provideIterables;
+    }
+
+    public function provideIterables(array $values, $tricky = false, $fixedArray = true)
+    {
+        $iterables = $this->_provideIterables($values, $tricky, $fixedArray);
+
+        $iterables[] = [
+            Pipeline::with(['one' => 'I', 'two' => 'II', 'three' => 'III'])->flip(),
+            ['I' => 'one', 'II' => 'two', 'III' => 'three']
+        ];
+
+        return $iterables;
+    }
 
     public function provider()
     {
@@ -32,7 +47,7 @@ class IterableToArrayTest extends TestCase
     {
         $result = iterable_to_array($values);
 
-        if ($values instanceof \Generator) {
+        if ($values instanceof \Generator || $values instanceof Pipeline) {
             $expected = array_values($expected);
         }
 
