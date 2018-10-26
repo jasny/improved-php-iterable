@@ -91,6 +91,17 @@ trait MappingTrait
 
 
     /**
+     * Set all values of the iterable.
+     *
+     * @param mixed $value
+     * @return static
+     */
+    public function fill($value)
+    {
+        return $this->then(i\iterable_fill, $value);
+    }
+
+    /**
      * Return the values from a single column / property.
      * Create key/value pairs by specifying the key.
      *

@@ -24,6 +24,8 @@ const iterable_count = "Improved\\iterable_count";
 /** @internal */
 const iterable_expect_type = "Improved\\iterable_expect_type";
 /** @internal */
+const iterable_fill = "Improved\\iterable_fill";
+/** @internal */
 const iterable_filter = "Improved\\iterable_filter";
 /** @internal */
 const iterable_find = "Improved\\iterable_find";

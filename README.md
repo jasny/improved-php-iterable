@@ -33,6 +33,7 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`chunk(int $size)`](#chunk)
 * [`group(callable $callback)`](#group)
 * [`flatten()`](#flatten)
+* [`fill(mixed $value)`](#fill)
 * [`column(int|string|null $valueColumn[, int|string|null $keyColumn])`](#column)
 * [`project(array $mapping)`](#project)
 * [`reshape(array $columns)`](#reshape)
@@ -425,6 +426,21 @@ Pipeline::with($groups)
 By default the keys are dropped, replaces by an incrementing counter (so as an numeric array). By passing `true` as
 second parameters, the keys are remained.
 
+### fill
+
+Set all values of the iterable. Don't touch the keys.
+
+This can be used in combination with `flip` to something similar to `array_fill_keys`.
+
+```php
+$fields = ['foo', 'bar', 'qux'];
+
+Pipeline::with($fields)
+    ->flip()
+    ->fill(42)
+    ->toArray(); // ['foo' => 42, 'bar' => 42, 'qux' => 42]
+```
+
 ### column
 
 Return the values from a single column / property. Each element should be an array or object.
@@ -731,6 +747,16 @@ Pipeline::with($values)
     ->toArray();
 ```
 
+Instead of a message, a `Trowable` object may be passed, this is either an `Exception` or `Error`.
+
+```php
+Pipeline::with($values)
+    ->expectType('int', new \TypeError("Value for element '%s' should be an integer, %s given"))
+    ->toArray();
+```
+
+_The `Throwable` object will never be thrown, instead the class and message will be used. Other properties of the
+`Throwable` are ignored._
 
 ## Sorting
 

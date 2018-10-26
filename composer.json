@@ -36,6 +36,7 @@
             "src/functions/iterable_concat.php",
             "src/functions/iterable_count.php",
             "src/functions/iterable_expect_type.php",
+            "src/functions/iterable_fill.php",
             "src/functions/iterable_filter.php",
             "src/functions/iterable_find.php",
             "src/functions/iterable_find_key.php",
@@ -84,6 +85,7 @@
             "phpcs -p src"
         ],
         "build": [
+            "composer dump-autoload -o",
             "php bin/build-functions-const.php"
         ]
     },
