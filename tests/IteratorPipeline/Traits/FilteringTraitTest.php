@@ -144,4 +144,18 @@ class FilteringTraitTest extends TestCase
 
         $pipeline->toArray();
     }
+
+    /**
+     * @expectedException \TypeError
+     * @expectedExceptionMessage integer should be string
+     */
+    public function testExpectTypeCustomError()
+    {
+        $pipeline = new Pipeline(['foo', 20, 'bar']);
+
+        $ret = $pipeline->expectType('string', new \TypeError('%s should be %s'));
+        $this->assertSame($pipeline, $ret);
+
+        $pipeline->toArray();
+    }
 }

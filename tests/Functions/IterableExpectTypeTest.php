@@ -77,6 +77,33 @@ class IterableExpectTypeTest extends TestCase
     }
 
     /**
+     * @expectedException \UnexpectedValueException
+     * @expectedExceptionMessage FOO BOO stdClass object WOO
+     */
+    public function testTypeErrorMessage()
+    {
+        $values = [new \stdClass()];
+
+        $message = "FOO BOO %s WOO";
+        $iterator = iterable_expect_type($values, 'string', $message);
+
+        iterator_to_array($iterator);
+    }
+
+    /**
+     * @expectedException \TypeError
+     * @expectedExceptionMessage Expected all elements to be of type string, stdClass object given
+     */
+    public function testTypeErrorThrowable()
+    {
+        $values = [new \stdClass()];
+
+        $iterator = iterable_expect_type($values, 'string', new \TypeError());
+
+        iterator_to_array($iterator);
+    }
+
+    /**
      * @expectedException \TypeError
      * @expectedExceptionMessage FOO BOO stdClass object WOO
      */
@@ -85,10 +112,11 @@ class IterableExpectTypeTest extends TestCase
         $values = [new \stdClass()];
 
         $message = "FOO BOO %s WOO";
-        $iterator = iterable_expect_type($values, 'string', \TypeError::class, $message);
+        $iterator = iterable_expect_type($values, 'string', new \TypeError($message));
 
         iterator_to_array($iterator);
     }
+
 
     public function testEmpty()
     {

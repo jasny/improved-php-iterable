@@ -94,13 +94,13 @@ trait FilteringTrait
      * Validate that a value has a specific type.
      * @see https://github.com/jasny/php-functions#expect_type
      *
-     * @param string|string[] $type
-     * @param string|null     $message
+     * @param string|string[]        $type
+     * @param string|\Throwable|null $error
      * @return static
      * @throws \UnexpectedValueException
      */
-    public function expectType($type, string $message = null)
+    public function expectType($type, $error = null)
     {
-        return $this->then(i\iterable_expect_type, $type, \UnexpectedValueException::class, $message);
+        return $this->then(i\iterable_expect_type, $type, $error);
     }
 }
