@@ -1,10 +1,7 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
-use Improved\Tests\LazyExecutionIteratorTrait;
 use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\TestCase;
 use function Improved\iterable_average;

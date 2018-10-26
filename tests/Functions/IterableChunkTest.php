@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
@@ -11,6 +9,7 @@ use function Improved\iterable_chunk;
 
 /**
  * @covers \Improved\iterable_chunk
+ * @covers \Improved\_iterable_chunk_generate
  */
 class IterableChunkTest extends TestCase
 {
@@ -34,7 +33,8 @@ class IterableChunkTest extends TestCase
 
         foreach ($iterator as $chunk) {
             $lenght = 0;
-            foreach ($chunk as $item) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
+            foreach ($chunk as $_) {
                 $lenght++;
             }
             $lenghts[] = $lenght;

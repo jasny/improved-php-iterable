@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved;
 
@@ -23,6 +21,7 @@ function iterable_to_array(iterable $iterable, ?bool $preserveKeys = null): arra
             $iterable = $iterable->toArray();
             break;
         case is_object($iterable) && method_exists($iterable, 'getArrayCopy'):
+            /** @var \ArrayObject $iterable  Duck typing */
             $iterable = $iterable->getArrayCopy();
             break;
 

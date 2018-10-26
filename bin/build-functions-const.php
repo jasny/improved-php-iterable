@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // File might be broken, so clear before autoload
 file_put_contents(dirname(__DIR__) . '/src/functions-const.php', '');
@@ -16,11 +16,11 @@ foreach ($userFunctions as $function) {
     }
 }
 
-$code = ["<?php\n\n/** @ignoreFile */\n// phpcs:ignoreFile\n\ndeclare(strict_types=1);\n\nnamespace Improved;\n"];
+$code = ["<?php declare(strict_types=1);\n\n/** @ignoreFile */\n// phpcs:ignoreFile\n\nnamespace Improved;\n"];
 
 foreach ($functions as $function) {
     $fnName = substr($function, strlen('improved\\'));
-    $code[] = "/** @internal */\n" . sprintf('const %1$s = "Improved\\\\%1$s";', $fnName);
+    $code[] = "/** @ignore */\n" . sprintf('const %1$s = "Improved\\\\%1$s";', $fnName);
 }
 
 file_put_contents(dirname(__DIR__) . '/src/functions-const.php', join("\n", $code) . "\n");

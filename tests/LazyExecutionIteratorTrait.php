@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests;
 
@@ -12,8 +10,7 @@ trait LazyExecutionIteratorTrait
      * Returns a test double for the specified class.
      *
      * @param string|string[] $originalClassName
-     *
-     * @throws Exception
+     * @throws \Exception
      * @throws \InvalidArgumentException
      */
     abstract protected function createMock($originalClassName): MockObject;

@@ -1,10 +1,9 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
 use Improved\Tests\ProvideIterablesTrait;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use function Improved\iterable_has_all;
 use function Jasny\str_contains;
@@ -66,6 +65,7 @@ class IterableHasAllTest extends TestCase
 
     public function testNoWalk()
     {
+        /** @var \Iterator|MockObject $iterator */
         $iterator = $this->createMock(\Iterator::class);
         $iterator->expects($this->any())->method('valid')->willReturn(true);
         $iterator->expects($this->exactly(2))->method('current')

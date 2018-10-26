@@ -1,9 +1,11 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\IteratorPipeline\PipelineBuilder;
 
+/**
+ * A stub for a step in the pipeline builder.
+ * @internal
+ */
 class Stub
 {
     /**

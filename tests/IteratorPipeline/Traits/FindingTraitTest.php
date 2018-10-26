@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\IteratorPipeline\Traits;
 
@@ -123,7 +121,7 @@ class FindingTraitTest extends TestCase
         $pipeline = new Pipeline([99, 24, -7, -337, 122]);
 
         $result = $pipeline->min();
-        return $this->assertEquals(-337, $result);
+        $this->assertEquals(-337, $result);
     }
 
     public function testMinCallback()
@@ -133,7 +131,7 @@ class FindingTraitTest extends TestCase
         $result = $pipeline->min(function($a, $b) {
             return abs($a) <=> abs($b);
         });
-        return $this->assertEquals(-7, $result);
+        $this->assertEquals(-7, $result);
     }
 
     public function testMax()
@@ -141,7 +139,7 @@ class FindingTraitTest extends TestCase
         $pipeline = new Pipeline([99, 24, -7, -337, 122]);
 
         $result = $pipeline->max();
-        return $this->assertEquals(122, $result);
+        $this->assertEquals(122, $result);
     }
 
     public function testMaxCallback()
@@ -151,6 +149,6 @@ class FindingTraitTest extends TestCase
         $result = $pipeline->max(function($a, $b) {
             return abs($a) <=> abs($b);
         });
-        return $this->assertEquals(-337, $result);
+        $this->assertEquals(-337, $result);
     }
 }

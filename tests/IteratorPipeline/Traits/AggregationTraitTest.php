@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\IteratorPipeline\Traits;
 
@@ -28,7 +26,7 @@ class AggregationTraitTest extends TestCase
             return $product * $value;
         }, 1);
 
-        return $this->assertSame(42, $result);
+        $this->assertSame(42, $result);
     }
 
     public function testSum()
@@ -36,7 +34,7 @@ class AggregationTraitTest extends TestCase
         $pipeline = new Pipeline([2, 3, 7]);
 
         $result = $pipeline->sum();
-        return $this->assertSame(12, $result);
+        $this->assertSame(12, $result);
     }
 
     public function testAverage()
@@ -44,7 +42,7 @@ class AggregationTraitTest extends TestCase
         $pipeline = new Pipeline([2, 3, 7]);
 
         $result = $pipeline->average();
-        return $this->assertSame(4.0, $result);
+        $this->assertSame(4.0, $result);
     }
 
 

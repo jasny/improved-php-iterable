@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
@@ -46,7 +44,7 @@ class IterableKeysTest extends TestCase
 
         $generate = function($keys) {
             foreach ($keys as $key) {
-                yield $key => null;
+                yield ($key) => 1;
             }
         };
 

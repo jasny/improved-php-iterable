@@ -1,11 +1,8 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved;
 
 use function Jasny\expect_type;
-use function Jasny\array_join_pretty;
 
 /**
  * Check the type of iterator elements.

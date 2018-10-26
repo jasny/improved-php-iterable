@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\IteratorPipeline\Traits;
 
@@ -68,7 +66,7 @@ class SortingTraitTest extends TestCase
 
         $ret = $pipeline->sortKeys(function(string $a, string $b): int {
             return (strlen($a) <=> strlen($b)) ?: ($a <=> $b);
-        }, false);
+        });
 
         $this->assertSame($pipeline, $ret);
 

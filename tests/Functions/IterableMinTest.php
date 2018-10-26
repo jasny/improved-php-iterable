@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
@@ -79,7 +77,7 @@ class IterableMinTest extends TestCase
     /**
      * @dataProvider negativeProvider
      */
-    public function testAbs($values, $expected)
+    public function testAbs($values)
     {
         $result = iterable_min($values, function($a, $b) {
             return abs($a) <=> abs($b);

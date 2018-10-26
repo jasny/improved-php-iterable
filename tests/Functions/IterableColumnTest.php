@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
@@ -11,7 +9,7 @@ use function Improved\iterable_column;
 /**
  * @covers \Improved\iterable_column
  */
-class IterableColumntTest extends TestCase
+class IterableColumnTest extends TestCase
 {
     use LazyExecutionIteratorTrait;
 

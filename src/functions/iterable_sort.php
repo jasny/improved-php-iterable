@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved;
 
@@ -28,10 +26,10 @@ function iterable_sort(iterable $iterable, $compare, bool $preserveKeys = false)
 
     ['keys' => $keys, 'values' => $values] = $preserveKeys
         ? iterable_separate($iterable)
-        : ['keys' => null, 'values' => is_array($iterable) ? $iterable : iterator_to_array($iterable, false)];
+        : ['keys' => null, 'values' => iterable_to_array($iterable, false)];
 
     if (!is_array($values)) {
-        throw new \UnexpectedValueException("Values should be an array");
+        throw new \UnexpectedValueException("Values should be an array"); // @codeCoverageIgnore
     }
 
     isset($comparator)

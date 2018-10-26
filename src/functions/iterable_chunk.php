@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved;
 
@@ -22,7 +20,12 @@ function iterable_chunk(iterable $iterable, int $size): \Generator
 }
 
 /**
+ * @noinspection PhpFunctionNamingConventionInspection
  * @internal
+ *
+ * @param \Iterator $iterator
+ * @param int       $size
+ * @return \Generator
  */
 function _iterable_chunk_generate(\Iterator $iterator, int $size): \Generator
 {

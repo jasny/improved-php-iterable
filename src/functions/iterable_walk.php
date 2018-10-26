@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved;
 
@@ -17,6 +15,8 @@ function iterable_walk(iterable $iterable): void
         return; // No point walking over an array
     }
 
-    foreach ($iterable as $value) {
+    /** @noinspection ALL */
+    foreach ($iterable as $_) {
+        // nop
     }
 }

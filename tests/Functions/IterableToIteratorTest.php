@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
@@ -11,7 +9,7 @@ use function Improved\iterable_to_iterator;
 /**
  * @covers \Improved\iterable_to_iterator
  */
-class IterableToIterableTest extends TestCase
+class IterableToIteratorTest extends TestCase
 {
     use ProvideIterablesTrait;
 

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\IteratorPipeline;
 
@@ -8,7 +6,6 @@ use Improved as i;
 use Improved\IteratorPipeline\Pipeline;
 use Improved\IteratorPipeline\PipelineBuilder;
 use Improved\Tests\LazyExecutionIteratorTrait;
-use Jasny\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**

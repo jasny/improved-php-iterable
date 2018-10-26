@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
@@ -42,7 +40,7 @@ class IterableFlipTest extends TestCase
 
     public function testNotUnique()
     {
-        $values = ['foo' => 'one', 'bar' => 'two', 'qux' => 'three', 'foo' => 'four'];
+        $values = ['foo' => 'one', 'bar' => 'two', 'qux' => 'three', 'woo' => 'one'];
 
         $iterator = iterable_flip($values);
 

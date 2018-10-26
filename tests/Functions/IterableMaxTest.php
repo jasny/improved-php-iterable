@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved\Tests\Functions;
 
@@ -62,7 +60,7 @@ class IterableMaxTest extends TestCase
     /**
      * @dataProvider intProvider
      */
-    public function testAbs($values, $expected)
+    public function testAbs($values)
     {
         $result = iterable_max($values, function($a, $b) {
             return abs($a) <=> abs($b);

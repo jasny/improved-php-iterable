@@ -61,7 +61,7 @@ The library supports the procedural and object-oriented programming paradigm.
 **General**
 * [`getIterator()`](#getiterator)
 * [`toArray()`](#toarray)
-* [`walk()`](walk)
+* [`walk()`](#walk)
 
 **Finding**
 * [`first([bool $required])`](#first)
@@ -762,7 +762,7 @@ _The `Throwable` object will never be thrown, instead the class and message will
 
 Sorting requires traversing through the iterator to index all elements.
 
-### sorted
+### sort
 
 Create an iterator with sorted elements.
 
@@ -784,7 +784,7 @@ Pipeline::with(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
 
 The callback must return < 0 if str1 is less than str2; > 0 if str1 is greater than str2, and 0 if they are equal.
 
-### sortedByKeys
+### sortKeys
 
 Create an iterator with sorted elements by key.
 

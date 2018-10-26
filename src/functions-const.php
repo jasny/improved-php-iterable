@@ -1,89 +1,87 @@
-<?php
+<?php declare(strict_types=1);
 
 /** @ignoreFile */
 // phpcs:ignoreFile
 
-declare(strict_types=1);
-
 namespace Improved;
 
-/** @internal */
+/** @ignore */
 const iterable_apply = "Improved\\iterable_apply";
-/** @internal */
+/** @ignore */
 const iterable_average = "Improved\\iterable_average";
-/** @internal */
+/** @ignore */
 const iterable_chunk = "Improved\\iterable_chunk";
-/** @internal */
+/** @ignore */
 const iterable_cleanup = "Improved\\iterable_cleanup";
-/** @internal */
+/** @ignore */
 const iterable_column = "Improved\\iterable_column";
-/** @internal */
+/** @ignore */
 const iterable_concat = "Improved\\iterable_concat";
-/** @internal */
+/** @ignore */
 const iterable_count = "Improved\\iterable_count";
-/** @internal */
+/** @ignore */
 const iterable_expect_type = "Improved\\iterable_expect_type";
-/** @internal */
+/** @ignore */
 const iterable_fill = "Improved\\iterable_fill";
-/** @internal */
+/** @ignore */
 const iterable_filter = "Improved\\iterable_filter";
-/** @internal */
+/** @ignore */
 const iterable_find = "Improved\\iterable_find";
-/** @internal */
+/** @ignore */
 const iterable_find_key = "Improved\\iterable_find_key";
-/** @internal */
+/** @ignore */
 const iterable_first = "Improved\\iterable_first";
-/** @internal */
+/** @ignore */
 const iterable_flatten = "Improved\\iterable_flatten";
-/** @internal */
+/** @ignore */
 const iterable_flip = "Improved\\iterable_flip";
-/** @internal */
+/** @ignore */
 const iterable_group = "Improved\\iterable_group";
-/** @internal */
+/** @ignore */
 const iterable_has_all = "Improved\\iterable_has_all";
-/** @internal */
+/** @ignore */
 const iterable_has_any = "Improved\\iterable_has_any";
-/** @internal */
+/** @ignore */
 const iterable_has_none = "Improved\\iterable_has_none";
-/** @internal */
+/** @ignore */
 const iterable_keys = "Improved\\iterable_keys";
-/** @internal */
+/** @ignore */
 const iterable_last = "Improved\\iterable_last";
-/** @internal */
+/** @ignore */
 const iterable_map_keys = "Improved\\iterable_map_keys";
-/** @internal */
+/** @ignore */
 const iterable_map = "Improved\\iterable_map";
-/** @internal */
+/** @ignore */
 const iterable_max = "Improved\\iterable_max";
-/** @internal */
+/** @ignore */
 const iterable_min = "Improved\\iterable_min";
-/** @internal */
+/** @ignore */
 const iterable_project = "Improved\\iterable_project";
-/** @internal */
+/** @ignore */
 const iterable_reduce = "Improved\\iterable_reduce";
-/** @internal */
+/** @ignore */
 const iterable_reshape = "Improved\\iterable_reshape";
-/** @internal */
+/** @ignore */
 const iterable_reverse = "Improved\\iterable_reverse";
-/** @internal */
+/** @ignore */
 const iterable_separate = "Improved\\iterable_separate";
-/** @internal */
+/** @ignore */
 const iterable_slice = "Improved\\iterable_slice";
-/** @internal */
+/** @ignore */
 const iterable_sort_keys = "Improved\\iterable_sort_keys";
-/** @internal */
+/** @ignore */
 const iterable_sort = "Improved\\iterable_sort";
-/** @internal */
+/** @ignore */
 const iterable_sum = "Improved\\iterable_sum";
-/** @internal */
+/** @ignore */
 const iterable_to_array = "Improved\\iterable_to_array";
-/** @internal */
+/** @ignore */
 const iterable_to_iterator = "Improved\\iterable_to_iterator";
-/** @internal */
+/** @ignore */
 const iterable_to_traversable = "Improved\\iterable_to_traversable";
-/** @internal */
+/** @ignore */
 const iterable_unique = "Improved\\iterable_unique";
-/** @internal */
+/** @ignore */
 const iterable_values = "Improved\\iterable_values";
-/** @internal */
+/** @ignore */
 const iterable_walk = "Improved\\iterable_walk";

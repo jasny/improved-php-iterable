@@ -1,10 +1,6 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Improved;
-
-use Improved\Iterator\CombineIterator;
 
 /**
  * Reverse order of elements of an iterable.
