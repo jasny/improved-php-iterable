@@ -11,27 +11,18 @@ namespace Improved;
  */
 function iterable_chunk(iterable $iterable, int $size): \Generator
 {
+    $generate = function(\Iterator $iterator, int $size): \Generator {
+        for ($i = 0; $i < $size && $iterator->valid(); $i++) {
+            yield $iterator->key() => $iterator->current();
+
+            $iterator->next();
+        }
+    };
+
     $iterator = iterable_to_iterator($iterable);
     $iterator->rewind();
 
     while ($iterator->valid()) {
-        yield _iterable_chunk_generate($iterator, $size);
-    }
-}
-
-/**
- * @noinspection PhpFunctionNamingConventionInspection
- * @internal
- *
- * @param \Iterator $iterator
- * @param int       $size
- * @return \Generator
- */
-function _iterable_chunk_generate(\Iterator $iterator, int $size): \Generator
-{
-    for ($i = 0; $i < $size && $iterator->valid(); $i++) {
-        yield $iterator->key() => $iterator->current();
-
-        $iterator->next();
+        yield $generate($iterator, $size);
     }
 }
