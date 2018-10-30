@@ -10,6 +10,16 @@ use Improved as i;
 trait TypeHandlingTrait
 {
     /**
+     * Define the next step via a callback that returns an array or Traversable object.
+     *
+     * @param callable $callback
+     * @param mixed    ...$args
+     * @return static
+     */
+    abstract public function then(callable $callback, ...$args);
+
+
+    /**
      * Validate that a value has a specific type.
      * @deprecated
      *
