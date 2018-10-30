@@ -3,7 +3,6 @@
 namespace Improved\IteratorPipeline;
 
 use Improved as i;
-use function Jasny\expect_type;
 
 /**
  * Functional-style operations, such as map-reduce transformations on arrays and iterators.
@@ -14,6 +13,7 @@ class Pipeline implements \IteratorAggregate
     use Traits\MappingTrait;
     use Traits\FilteringTrait;
     use Traits\SortingTrait;
+    use Traits\TypeHandlingTrait;
     use Traits\FindingTrait;
     use Traits\AggregationTrait;
 
@@ -41,18 +41,13 @@ class Pipeline implements \IteratorAggregate
      */
     public function then(callable $callback, ...$args): self
     {
-        $next = $callback($this->iterable, ...$args);
-
-        expect_type(
-            $next,
+        $this->iterable = i\type_check(
+            $callback($this->iterable, ...$args),
             'iterable',
-            \UnexpectedValueException::class,
-            "Expected an array or Traversable, %s returned"
+            new \UnexpectedValueException("Expected step to return an array or Traversable, %s returned")
         );
 
-        $this->iterable = $next;
-
-        return $next instanceof Pipeline ? $next : $this;
+        return $this->iterable instanceof Pipeline ? $this->iterable : $this;
     }
 
 

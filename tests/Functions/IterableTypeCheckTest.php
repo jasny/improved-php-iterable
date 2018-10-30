@@ -4,12 +4,12 @@ namespace Improved\Tests\Functions;
 
 use Improved\Tests\LazyExecutionIteratorTrait;
 use PHPUnit\Framework\TestCase;
-use function Improved\iterable_expect_type;
+use function Improved\iterable_type_check;
 
 /**
- * @covers \Improved\iterable_expect_type
+ * @covers \Improved\iterable_type_check
  */
-class IterableExpectTypeTest extends TestCase
+class IterableTypeCheckTest extends TestCase
 {
     use LazyExecutionIteratorTrait;
 
@@ -29,7 +29,7 @@ class IterableExpectTypeTest extends TestCase
      */
     public function test(array $values, $type)
     {
-        $iterator = iterable_expect_type($values, $type);
+        $iterator = iterable_type_check($values, $type);
         $result = iterator_to_array($iterator);
 
         $this->assertSame($values, $result); // Untouched
@@ -42,75 +42,48 @@ class IterableExpectTypeTest extends TestCase
     {
         $inner = new \ArrayIterator($values);
 
-        $iterator = iterable_expect_type($inner, $type);
+        $iterator = iterable_type_check($inner, $type);
         $result = iterator_to_array($iterator);
 
         $this->assertSame($values, $result); // Untouched
     }
 
     /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected all elements to be of type string, int(1) given
+     * @expectedException \TypeError
+     * @expectedExceptionMessage Expected string, int(1) given; index int(0)
      */
     public function testFirstInvalid()
     {
         $values = [1, 'hello'];
 
-        $iterator = iterable_expect_type($values, 'string');
+        $iterator = iterable_type_check($values, 'string');
 
         iterator_to_array($iterator);
     }
 
     /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected all elements to be of type integer, string(5) "hello" given
+     * @expectedException \TypeError
+     * @expectedExceptionMessage Expected integer, string(5) "hello" given; index int(1)
      */
     public function testSecondInvalid()
     {
         $values = [1, 'hello'];
 
-        $iterator = iterable_expect_type($values, 'integer');
+        $iterator = iterable_type_check($values, 'integer');
 
         iterator_to_array($iterator);
     }
 
     /**
      * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage FOO BOO instance of stdClass WOO
+     * @expectedExceptionMessage instance of stdClass - int(0) - string or null
      */
-    public function testTypeErrorMessage()
+    public function testTypeThrowable()
     {
         $values = [new \stdClass()];
 
-        $message = "FOO BOO %s WOO";
-        $iterator = iterable_expect_type($values, 'string', $message);
-
-        iterator_to_array($iterator);
-    }
-
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage Expected string, instance of stdClass given
-     */
-    public function testTypeErrorThrowable()
-    {
-        $values = [new \stdClass()];
-
-        $iterator = iterable_expect_type($values, 'string', new \TypeError());
-
-        iterator_to_array($iterator);
-    }
-
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage FOO BOO instance of stdClass WOO
-     */
-    public function testTypeError()
-    {
-        $values = [new \stdClass()];
-
-        $message = "FOO BOO %s WOO";
-        $iterator = iterable_expect_type($values, 'string', new \TypeError($message));
+        $message = '%s - %s - %s';
+        $iterator = iterable_type_check($values, '?string', new \UnexpectedValueException($message));
 
         iterator_to_array($iterator);
     }
@@ -118,7 +91,7 @@ class IterableExpectTypeTest extends TestCase
 
     public function testEmpty()
     {
-        $iterator = iterable_expect_type(new \EmptyIterator(), 'int');
+        $iterator = iterable_type_check(new \EmptyIterator(), 'int');
 
         $result = iterator_to_array($iterator);
 
@@ -132,7 +105,7 @@ class IterableExpectTypeTest extends TestCase
     {
         $iterator = $this->createLazyExecutionIterator();
 
-        iterable_expect_type($iterator, 'int');
+        iterable_type_check($iterator, 'int');
 
         $this->assertTrue(true, "No warning");
     }

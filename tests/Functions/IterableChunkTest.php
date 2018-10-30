@@ -9,7 +9,6 @@ use function Improved\iterable_chunk;
 
 /**
  * @covers \Improved\iterable_chunk
- * @covers \Improved\_iterable_chunk_generate
  */
 class IterableChunkTest extends TestCase
 {

@@ -1,0 +1,51 @@
+<?php declare(strict_types=1);
+
+namespace Improved\IteratorPipeline\Traits;
+
+use Improved as i;
+
+/**
+ * Type handling methods for iterator pipeline.
+ */
+trait TypeHandlingTrait
+{
+    /**
+     * Validate that a value has a specific type.
+     * @deprecated
+     *
+     * @param string|string[]        $type
+     * @param string|\Throwable|null $error
+     * @return static
+     * @throws \UnexpectedValueException
+     */
+    public function expectType($type, $error = null)
+    {
+        return $this->then(i\iterable_expect_type, $type, $error);
+    }
+
+    /**
+     * Validate that a value has a specific type.
+     *
+     * @param string|string[] $type
+     * @param \Throwable|null $throwable
+     * @return static
+     * @throws \UnexpectedValueException
+     */
+    public function typeCheck($type, ?\Throwable $throwable = null)
+    {
+        return $this->then(i\iterable_type_check, $type, $throwable);
+    }
+
+    /**
+     * Cast a value to the specific type or throw an error.
+     *
+     * @param string                 $type
+     * @param string|\Throwable|null $throwable
+     * @return static
+     * @throws \UnexpectedValueException
+     */
+    public function typeCast(string $type, ?\Throwable $throwable = null)
+    {
+        return $this->then(i\iterable_type_cast, $type, $throwable);
+    }
+}

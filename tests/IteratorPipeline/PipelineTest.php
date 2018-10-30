@@ -50,7 +50,7 @@ class PipelineTest extends TestCase
 
     /**
      * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected an array or Traversable, stdClass object returned
+     * @expectedExceptionMessage Expected step to return an array or Traversable, instance of stdClass returned
      */
     public function testThenUnexpectedValue()
     {

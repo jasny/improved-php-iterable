@@ -6,7 +6,6 @@ use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use function Improved\iterable_has_none;
-use function Jasny\str_contains;
 
 /**
  * @covers \Improved\iterable_has_none
@@ -26,7 +25,7 @@ class IterableHasNoneTest extends TestCase
     public function testTrue($values)
     {
         $result = iterable_has_none($values, function($value) {
-            return str_contains($value, 'X');
+            return strpos($value, 'X') !== false;
         });
 
         $this->assertTrue($result);

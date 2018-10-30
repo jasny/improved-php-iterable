@@ -49,12 +49,15 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`uniqueKeys()`](#uniquekeys)
 * [`limit(int $size)`](#limit)
 * [`slice(int $offset[, int $size])`](#slice)
-* [`expectType(string|array $type[, string $message])`](#expecttype)
 
 **Sorting**
 * [`sort([int|callable $compare[, bool $preserveKeys]])`](#sort)
 * [`sortKeys([int|callable $compare])`](#sortkeys)
 * [`reverse()`](#reverse)
+
+**Type handling**
+* [`typeCheck(string|string[] $type[, \Throwable $error])`](#typecheck)
+* [`typeCast(array $type[, \Throwable $error])`](#typecast)
 
 #### Other methods
 
@@ -156,7 +159,7 @@ The static `Pipeline::build()` method can be used as syntax sugar to create a bu
 use Improved\IteratorPipeline\Pipeline;
 
 $blueprint = Pipeline::build()
-    ->expectType('string')
+    ->checkType('string')
     ->filter(function(string $value): bool) {
         strlen($value) > 10;
     });
@@ -727,37 +730,6 @@ Pipeline::with([3, 2, 2, 3, 7, 3, 6, 5])
     ->toArray(); // [3, 7]
 ```
 
-### expectType
-
-Validate that a value has a specific type using [`expect_type`](https://github.com/jasny/php-functions#expect_type).
-Throws an [`UnexpectedValueException`](https://php.net/unexpectedvalueexception).
-
-```php
-Pipeline::with($values)
-    ->expectType('int')
-    ->toArray();
-```
-
-An alternative message may be specified as second argument, where the first `%s` is replaced by the key and the second
-`%s` (or `%2$s`) by the type.
-
-```php
-Pipeline::with($values)
-    ->expectType('int', "Value for element '%s' should be an integer, %s given")
-    ->toArray();
-```
-
-Instead of a message, a `Trowable` object may be passed, this is either an `Exception` or `Error`.
-
-```php
-Pipeline::with($values)
-    ->expectType('int', new \TypeError("Value for element '%s' should be an integer, %s given"))
-    ->toArray();
-```
-
-_The `Throwable` object will never be thrown, instead the class and message will be used. Other properties of the
-`Throwable` are ignored._
-
 ## Sorting
 
 Sorting requires traversing through the iterator to index all elements.
@@ -818,6 +790,63 @@ Pipeline::with(range(5, 10))
     ->toArray(); // [5 => 10, 4 => 9, 3 => 8, 2 => 7, 1 => 6, 0 => 5]
 ```
 
+## Type handling
+
+### typeCheck
+
+Validate that a value has a specific type using [`type_check`](https://github.com/improved-php-library/type#type_check).
+A [`TypeError`](https://php.net/typeerror) is thrown if any element of the iterable doesn't match the type.
+
+```php
+Pipeline::with($values)
+    ->typeCheck(['int', 'float'])
+    ->toArray();
+```
+
+As type you may specific any PHP type, a pseudo types like `iterable` or `callable`, as class name or a resource type.
+For resources use the resource type, plus "resource", eg `"stream resource"`. 
+
+As second argument, a `Throwable` object may be passed, this is either an `Exception` or `Error`.
+
+The error message may contain up to three sprintf place holders. The first `%s` is replaced with the type of the value.
+The second is used for the description of the key. The third is typically not needed, but when specified is
+replaced with the given type(s).
+
+```php
+Pipeline::with($values)
+    ->expectType('int', new \UnexpectedValue('Element %2$s should be an integer, %1$s given'))
+    ->toArray();
+```
+
+A question mark can be added to a class to accept null, eg `"?string"` is similar to using `["string", "null"]`.
+
+### typeCast
+
+Cast a value to the specific type. This method uses
+[`type_cast`](https://github.com/improved-php-library/type#type_cast).
+
+| from     | to                    |                                          |
+|----------|-----------------------|------------------------------------------|
+| `string` | `int`                 | only numeric strings and < `PHP_INT_MAX` |
+| `string` | `float`               | only numeric strings                     |
+| `int`    | `bool`                | only 0 or 1                              |
+| `int`    | `float`               |                                          |
+| `int`    | `string`              |                                          |
+| `float`  | `int`                 | if float < `PHP_INT_MAX`                 |
+| `float`  | `string`              |                                          |
+| `bool`   | `int`                 |                                          |
+| `array`  | `object` \ `stdClass` | if array has no numeric keys             |
+| `object` | `string`              | if only has `__toString()` method        |
+| `object` | `array` \ `iterable`  | only `stdClass` objects                  |
+| `null`   | any scalar            |                                          |
+| `null`   | `array`               |                                          |
+| `null`   | `object` \ `stdClass` |                                          |
+
+If the value can't be cast, a [`TypeError`](https://php.net/typeerror) is thrown. Similar to `typeCheck()` a `Throwable`
+with a message may be passed as second argument.
+
+In contrary `typeCheck`, only one type may be specified. A question mark can be added to a class to accept null, eg
+`?string` will try to cast everything to a string except `null`.
 
 ## Finding
 

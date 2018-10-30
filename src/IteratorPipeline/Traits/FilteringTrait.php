@@ -86,19 +86,4 @@ trait FilteringTrait
     {
         return $this->then(i\iterable_slice, $offset, $size);
     }
-
-
-    /**
-     * Validate that a value has a specific type.
-     * @see https://github.com/jasny/php-functions#expect_type
-     *
-     * @param string|string[]        $type
-     * @param string|\Throwable|null $error
-     * @return static
-     * @throws \UnexpectedValueException
-     */
-    public function expectType($type, $error = null)
-    {
-        return $this->then(i\iterable_expect_type, $type, $error);
-    }
 }

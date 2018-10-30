@@ -2,8 +2,6 @@
 
 namespace Improved;
 
-use function Jasny\expect_type;
-
 /**
  * Sort all elements of an iterator based on the key.
  *
@@ -13,12 +11,7 @@ use function Jasny\expect_type;
  */
 function iterable_sort_keys(iterable $iterable, $compare): \Generator
 {
-    expect_type(
-        $compare,
-        ['callable', 'int'],
-        \TypeError::class,
-        "Expected comparator to be a callable or integer, %s given"
-    );
+    type_check($compare, ['callable', 'int'], new \TypeError("Expected compare to be callable or integer, %s given"));
 
     $comparator = is_int($compare) ? null : $compare;
     $flags = is_int($compare) ? $compare : 0;

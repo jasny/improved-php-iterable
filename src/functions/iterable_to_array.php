@@ -3,7 +3,6 @@
 namespace Improved;
 
 use Improved\IteratorPipeline\Pipeline;
-use function Jasny\get_type_description;
 
 /**
  * Convert any iterable to an array.
@@ -32,8 +31,7 @@ function iterable_to_array(iterable $iterable, ?bool $preserveKeys = null): arra
 
         default:
             // @codeCoverageIgnoreStart
-            $type = get_type_description($iterable);
-            throw new \InvalidArgumentException("Unknown iterable: $type");
+            throw new \InvalidArgumentException("Unknown iterable: " . type_describe($iterable));
             // @codeCoverageIgnoreEnd
     }
 

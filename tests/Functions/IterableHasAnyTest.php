@@ -6,7 +6,6 @@ use Improved\Tests\ProvideIterablesTrait;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use function Improved\iterable_has_any;
-use function Jasny\str_contains;
 
 /**
  * @covers \Improved\iterable_has_any
@@ -38,7 +37,7 @@ class IterableHasAnyTest extends TestCase
     public function testFalse($values)
     {
         $result = iterable_has_any($values, function($value) {
-            return str_contains($value, 'X');
+            return strpos($value, 'X') !== false;
         });
 
         $this->assertFalse($result);

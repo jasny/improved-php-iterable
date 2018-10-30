@@ -80,6 +80,10 @@ const iterable_to_iterator = "Improved\\iterable_to_iterator";
 /** @ignore */
 const iterable_to_traversable = "Improved\\iterable_to_traversable";
 /** @ignore */
+const iterable_type_check = "Improved\\iterable_type_check";
+/** @ignore */
+const iterable_type_cast = "Improved\\iterable_type_cast";
+/** @ignore */
 const iterable_unique = "Improved\\iterable_unique";
 /** @ignore */
 const iterable_values = "Improved\\iterable_values";
