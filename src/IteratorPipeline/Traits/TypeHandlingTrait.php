@@ -16,7 +16,6 @@ trait TypeHandlingTrait
      * @param string|string[]        $type
      * @param string|\Throwable|null $error
      * @return static
-     * @throws \UnexpectedValueException
      */
     public function expectType($type, $error = null)
     {
@@ -29,7 +28,6 @@ trait TypeHandlingTrait
      * @param string|string[] $type
      * @param \Throwable|null $throwable
      * @return static
-     * @throws \UnexpectedValueException
      */
     public function typeCheck($type, ?\Throwable $throwable = null)
     {
@@ -39,10 +37,9 @@ trait TypeHandlingTrait
     /**
      * Cast a value to the specific type or throw an error.
      *
-     * @param string                 $type
-     * @param string|\Throwable|null $throwable
+     * @param string          $type
+     * @param \Throwable|null $throwable
      * @return static
-     * @throws \UnexpectedValueException
      */
     public function typeCast(string $type, ?\Throwable $throwable = null)
     {
