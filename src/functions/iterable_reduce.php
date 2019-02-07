@@ -15,7 +15,7 @@ function iterable_reduce(iterable $iterable, callable $callback, $initial = null
     $result = $initial;
 
     foreach ($iterable as $key => $value) {
-        $result = call_user_func($callback, $result, $value);
+        $result = call_user_func($callback, $result, $value, $key);
     }
 
     return $result;

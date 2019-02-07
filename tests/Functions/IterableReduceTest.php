@@ -30,6 +30,23 @@ class IterableReduceTest extends TestCase
         $this->assertEquals(24, $result);
     }
 
+    public function keyProvider()
+    {
+        return $this->provideIterables(['I' => 'one', 'II' => 'two', 'III' => 'three'], false, false);
+    }
+
+    /**
+     * @dataProvider keyProvider
+     */
+    public function testWithKeys($values)
+    {
+        $result = iterable_reduce($values, function ($list, $value, $key) {
+            return $list . sprintf('{%s:%s}', $key, $value);
+        }, '');
+
+        $this->assertEquals('{I:one}{II:two}{III:three}', $result);
+    }
+
     public function testEmpty()
     {
         $result = iterable_reduce(new \EmptyIterator(), function () {

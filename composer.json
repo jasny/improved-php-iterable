@@ -19,7 +19,8 @@
         "improved/type": "dev-master"
     },
     "require-dev": {
-        "jasny/php-code-quality": "~2.3"
+        "jasny/php-code-quality": "~2.3",
+        "phpstan/phpstan": "dev-master as 0.11.0"
     },
     "autoload": {
         "psr-4": {

@@ -1014,6 +1014,15 @@ Pipeline::with([2, 3, 4])
     }, 1); // 24
 ```
 
+The third argument is the key
+
+```php
+Pipeline::with(['I' => 'one, 'II' => 'two', 'III' => 'three'])
+    ->reduce(function(string $list, string $value, string $key): string {
+        return $list . sprintf("{%s:%s}", $key, $value);
+    }, ''); // "{I:one}{II:two}{III:three}"
+```
+
 ### sum
 
 Calculate the sum of a numbers. If no elements are present, the result is 0.
@@ -1029,7 +1038,7 @@ Calculate the arithmetic mean. If no elements are present, the result is `NAN`.
 
 ```php
 Pipeline::with([2, 8, 4, 12]))
-    ->average; // 6.5
+    ->average(); // 6.5
 ```
 
 ### concat

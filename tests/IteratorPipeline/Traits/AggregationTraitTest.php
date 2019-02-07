@@ -29,6 +29,17 @@ class AggregationTraitTest extends TestCase
         $this->assertSame(42, $result);
     }
 
+    public function testReduceWithKey()
+    {
+        $pipeline = new Pipeline(['I' => 'one', 'II' => 'two', 'III' => 'three']);
+
+        $result = $pipeline->reduce(function ($list, $value, $key) {
+            return $list . sprintf('{%s:%s}', $key, $value);
+        }, '');
+
+        $this->assertEquals('{I:one}{II:two}{III:three}', $result);
+    }
+
     public function testSum()
     {
         $pipeline = new Pipeline([2, 3, 7]);
