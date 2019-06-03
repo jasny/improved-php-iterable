@@ -6,11 +6,13 @@
 namespace Improved;
 
 /** @ignore */
+const iterable_after = "Improved\\iterable_after";
+/** @ignore */
 const iterable_apply = "Improved\\iterable_apply";
 /** @ignore */
 const iterable_average = "Improved\\iterable_average";
 /** @ignore */
-const iterable_chunk = "Improved\\iterable_chunk";
+const iterable_before = "Improved\\iterable_before";
 /** @ignore */
 const iterable_cleanup = "Improved\\iterable_cleanup";
 /** @ignore */

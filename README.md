@@ -49,6 +49,8 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`uniqueKeys()`](#uniquekeys)
 * [`limit(int $size)`](#limit)
 * [`slice(int $offset[, int $size])`](#slice)
+* [`before(callable $matcher[, bool $include])`](#before)
+* [`after(callable $matcher[, bool $include])`](#after)
 
 **Sorting**
 * [`sort([int|callable $compare[, bool $preserveKeys]])`](#sort)
@@ -621,7 +623,7 @@ Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apric
 Filter out `null` values or `null` keys from iterable.
 
 ```php
-Pipeline::with(['one', 'two', null, 'four', 'null])
+Pipeline::with(['one', 'two', null, 'four', null])
     ->cleanup()
     ->toArray();
 
@@ -728,6 +730,70 @@ You may also specify a limit.
 Pipeline::with([3, 2, 2, 3, 7, 3, 6, 5])
     ->slice(3, 2)
     ->toArray(); // [3, 7]
+```
+
+### before
+
+Get elements until a match is found.
+
+```php
+Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
+    ->before(function($value, $key) {
+        return $value === 'red';
+    })
+    ->toArray(); // ['apple' => 'green']
+```
+
+The seconds argument is the key.
+
+```php
+Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
+    ->before(function($value, $key) {
+        return $key === 'berry';
+    })
+    ->toArray(); // ['apple' => 'green']
+```
+
+Optionally the matched value can be included in the result
+
+```php
+Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
+    ->before(function($value) {
+        return $value === 'red';
+    })
+    ->toArray(); // ['apple' => 'green', 'berry' => 'red']
+```
+
+### after
+
+Get elements after a match is found.
+
+```php
+Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
+    ->before(function($value, $key) {
+        return $value === 'red';
+    })
+    ->toArray(); // ['cherry' => 'red', 'apricot' => 'orange']
+```
+
+The seconds argument is the key.
+
+```php
+Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
+    ->before(function($value, $key) {
+        return $key === 'berry';
+    })
+    ->toArray(); // ['cherry' => 'red', 'apricot' => 'orange']
+```
+
+Optionally the matched value can be included in the result
+
+```php
+Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
+    ->before(function($value) {
+        return $value === 'red';
+    })
+    ->toArray(); // ['berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange']
 ```
 
 ## Sorting

@@ -86,4 +86,28 @@ trait FilteringTrait
     {
         return $this->then(i\iterable_slice, $offset, $size);
     }
+
+    /**
+     * Get elements until a match is found.
+     *
+     * @param callable $matcher
+     * @param bool     $include
+     * @return static
+     */
+    public function before(callable $matcher, bool $include = false)
+    {
+        return $this->then(i\iterable_before, $matcher, $include);
+    }
+
+    /**
+     * Get elements after a match is found.
+     *
+     * @param callable $matcher
+     * @param bool     $include
+     * @return static
+     */
+    public function after(callable $matcher, bool $include = false)
+    {
+        return $this->then(i\iterable_after, $matcher, $include);
+    }
 }

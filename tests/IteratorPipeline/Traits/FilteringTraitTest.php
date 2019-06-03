@@ -103,6 +103,62 @@ class FilteringTraitTest extends TestCase
         $this->assertEquals([2 => 'berry', 3 => 'apricot', 4 => 'banana'], $pipeline->toArray());
     }
 
+    public function testBefore()
+    {
+        $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
+
+        $ret = $pipeline->before(function($value) {
+            return $value === 'apricot';
+        });
+
+        $this->assertSame($pipeline, $ret);
+
+        $expected = ['apple', 'pear', 'berry'];
+        $this->assertEquals($expected, $pipeline->toArray());
+    }
+
+    public function testBeforeInclude()
+    {
+        $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
+
+        $ret = $pipeline->before(function($value) {
+            return $value === 'apricot';
+        }, true);
+
+        $this->assertSame($pipeline, $ret);
+
+        $expected = ['apple', 'pear', 'berry', 'apricot'];
+        $this->assertEquals($expected, $pipeline->toArray());
+    }
+
+    public function testAfter()
+    {
+        $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
+
+        $ret = $pipeline->after(function($value) {
+            return $value === 'berry';
+        }, true);
+
+        $this->assertSame($pipeline, $ret);
+
+        $expected = [2 => 'berry', 'apricot', 'banana', 'cherry'];
+        $this->assertEquals($expected, $pipeline->toArray());
+    }
+
+    public function testAfterInclude()
+    {
+        $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
+
+        $ret = $pipeline->after(function($value) {
+            return $value === 'berry';
+        });
+
+        $this->assertSame($pipeline, $ret);
+
+        $expected = [3 => 'apricot', 'banana', 'cherry'];
+        $this->assertEquals($expected, $pipeline->toArray());
+    }
+
 
     public function testExpectType()
     {

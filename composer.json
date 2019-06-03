@@ -29,9 +29,11 @@
         },
         "files": [
             "src/functions-const.php",
+            "src/functions/iterable_after.php",
             "src/functions/iterable_apply.php",
             "src/functions/iterable_average.php",
-            "src/functions/iterable_chunk.php",
+            "src/functions/iterable_after.php",
+            "src/functions/iterable_before.php",
             "src/functions/iterable_cleanup.php",
             "src/functions/iterable_column.php",
             "src/functions/iterable_concat.php",
