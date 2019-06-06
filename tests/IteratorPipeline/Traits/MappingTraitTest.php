@@ -122,6 +122,30 @@ class MappingTraitTest extends TestCase
         $this->assertEquals(['I' => 'one', 'II' => 'two', 'b' => 'three', '****' => 'four'], $result);
     }
 
+    public function testUnwind()
+    {
+        $values = [
+            ['ref' => 'a', 'numbers' => ['I' => 'one', 'II' =>'two']],
+            ['ref' => 'b', 'numbers' =>  'three'],
+            ['ref' => 'c', 'numbers' => []]
+        ];
+        $pipeline = new Pipeline($values);
+
+        $ret = $pipeline->unwind('numbers', 'nrkey');
+        $this->assertSame($pipeline, $ret);
+
+        $result = $pipeline->toArray();
+
+        $expected = [
+            ['ref' => 'a', 'numbers' => 'one', 'nrkey' => 'I'],
+            ['ref' => 'a', 'numbers' => 'two', 'nrkey' => 'II'],
+            ['ref' => 'b', 'numbers' => 'three'],
+            ['ref' => 'c', 'numbers' => null, 'nrkey' => null],
+        ];
+
+        $this->assertEquals($expected, $result);
+    }
+
 
     public function testFill()
     {

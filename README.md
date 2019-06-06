@@ -32,6 +32,7 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`then(callable $callback, mixed ...$args)`](#then)
 * [`chunk(int $size)`](#chunk)
 * [`group(callable $callback)`](#group)
+* [`unwind(int|string $column[, int|string|null $mapKey[, bool $preserveKeys]])`](#unwind)
 * [`flatten()`](#flatten)
 * [`fill(mixed $value)`](#fill)
 * [`column(int|string|null $valueColumn[, int|string|null $keyColumn])`](#column)
@@ -431,6 +432,48 @@ Pipeline::with($groups)
 By default the keys are dropped, replaces by an incrementing counter (so as an numeric array). By passing `true` as
 second parameters, the keys are remained.
 
+### unwind
+
+Deconstruct an iterable property/item for each element. The result is one element for each item in the iterable
+property. You must specify which column to unwind.
+
+```php
+$elements = [
+    ['ref' => 'a', 'numbers' => ['I' => 'one', 'II' => 'two']],
+    ['ref' => 'b', 'numbers' => 'three'],
+    ['ref' => 'c', 'numbers' => []]
+];
+
+Pipeline::with($elements)
+    ->unwind('numbers')
+    ->toArray();
+    
+// [
+//     ['ref' => 'a', 'numbers' => 'one'],
+//     ['ref' => 'a', 'numbers' => 'two'],
+//     ['ref' => 'b', 'numbers' => 'three'],
+//     ['ref' => 'c', 'numbers' => null]
+// ]
+```
+
+The second argument is optional, taking a column name to add each key to the element. 
+
+```php
+Pipeline::with($elements)
+    ->unwind('numbers', 'nrkey')
+    ->toArray();
+    
+// [
+//     ['ref' => 'a', 'numbers' => 'one', 'nrkey' => 'I'],
+//     ['ref' => 'a', 'numbers' => 'two', 'nrkey' => 'II],
+//     ['ref' => 'b', 'numbers' => 'three', 'nrkey' => null],
+//     ['ref' => 'c', 'numbers' => null, 'nrkey' => null]
+// ]
+```
+
+By default each new element of the resulting iterator is a numeric sequence. To preverse the keys, pass `true` as third
+argument. Beware that this will result in duplicate keys.
+
 ### fill
 
 Set all values of the iterable. Don't touch the keys.
@@ -516,7 +559,7 @@ numeric array.
 
 Reshape each element of an iterator, adding or removing properties or keys.
 
-The method takes an rray with the column name as key. The value may be a boolean, specifying if th column should
+The method takes an array with the column name as key. The value may be a boolean, specifying if th column should
 remain or be removed. Alternatively the column may be a string or int, renaming the column name (key).
 
 Columns that are not specified are untouched. This has the same effect as `'column' => true`.

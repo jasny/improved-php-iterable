@@ -3,7 +3,7 @@
 namespace Improved;
 
 /**
- * Walk through all sub-iterables (array, Iterator or IteratorAggregate) and concatenate them.
+ * Walk through all sub-iterables (array, Iterator or IteratorAggregate) and combine them.
  *
  * @param iterable $iterable
  * @param bool     $preserveKeys

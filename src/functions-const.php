@@ -14,6 +14,8 @@ const iterable_average = "Improved\\iterable_average";
 /** @ignore */
 const iterable_before = "Improved\\iterable_before";
 /** @ignore */
+const iterable_chunk = "Improved\\iterable_chunk";
+/** @ignore */
 const iterable_cleanup = "Improved\\iterable_cleanup";
 /** @ignore */
 const iterable_column = "Improved\\iterable_column";
@@ -87,6 +89,8 @@ const iterable_type_check = "Improved\\iterable_type_check";
 const iterable_type_cast = "Improved\\iterable_type_cast";
 /** @ignore */
 const iterable_unique = "Improved\\iterable_unique";
+/** @ignore */
+const iterable_unwind = "Improved\\iterable_unwind";
 /** @ignore */
 const iterable_values = "Improved\\iterable_values";
 /** @ignore */

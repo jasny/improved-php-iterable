@@ -87,6 +87,19 @@ trait MappingTrait
         return $this->then(i\iterable_flatten, $preserveKeys);
     }
 
+    /**
+     * Deconstruct an iterable property/item for each element. The result is one element for each item in the iterable
+     * property.
+     *
+     * @param string      $column
+     * @param string|null $mapKey        The name of a new property to hold the array index of the element
+     * @param bool        $preserveKeys  Preserve the keys of the iterable (will result in duplicate keys)
+     * @return static
+     */
+    public function unwind(string $column, ?string $mapKey = null, bool $preserveKeys = false)
+    {
+        return $this->then(i\iterable_unwind, $column, $mapKey, $preserveKeys);
+    }
 
     /**
      * Set all values of the iterable.
