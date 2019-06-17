@@ -13,7 +13,7 @@ use function Improved\iterable_unwind;
 /**
  * @covers \Improved\iterable_unwind
  */
-class IterableFlattenTest extends TestCase
+class IterableUnwindTest extends TestCase
 {
     use ProvideIterablesTrait;
     use LazyExecutionIteratorTrait;
