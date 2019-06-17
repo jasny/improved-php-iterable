@@ -23,13 +23,18 @@ The library supports the procedural and object-oriented programming paradigm.
 
 ## Methods
 
+#### General methods
+* [`then(callable $callback, mixed ...$args)`](#then)
+* [`getIterator()`](#getiterator)
+* [`toArray()`](#toarray)
+* [`walk()`](#walk)
+
 #### Chainable methods
 
 **Mapping**
 * [`map(callable $callback)`](#map)
 * [`mapKeys(callable $callback)`](#mapkeys)
 * [`apply(callable $callback)`](#apply)
-* [`then(callable $callback, mixed ...$args)`](#then)
 * [`chunk(int $size)`](#chunk)
 * [`group(callable $callback)`](#group)
 * [`unwind(int|string $column[, int|string|null $mapKey[, bool $preserveKeys]])`](#unwind)
@@ -63,11 +68,6 @@ The library supports the procedural and object-oriented programming paradigm.
 * [`typeCast(array $type[, \Throwable $error])`](#typecast)
 
 #### Other methods
-
-**General**
-* [`getIterator()`](#getiterator)
-* [`toArray()`](#toarray)
-* [`walk()`](#walk)
 
 **Finding**
 * [`first([bool $required])`](#first)
@@ -263,6 +263,29 @@ This is the only way to get a `PipelineBuilder` to return a custom `Pipeline` cl
 
 ## Method reference
 
+### then
+
+The `then()` method defines a new step in the pipeline. As argument it takes a callback that must return a `Generator` or other `Traversable`.
+
+```php
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
+    ->then(function(\Traversable $values): \Generator {
+        foreach ($values as $key => $value) {
+            yield $key[0] => "$value $key";
+        }
+    })
+    ->toArray(); // ['a' => 'green apple', 'b' => 'blue berry', 'c' => 'red cherry']
+```
+
+It may be used to apply a custom (outer) iterator.
+
+```php
+Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
+    ->then(function(\Traversable $values): \Iterator {
+        return new MyCustomIterator($values);
+    });
+```
+
 ### getIterator
 
 The Pipeline implements the [`IteratorAggregate`](https://php.net/iteratoraggregate) interface. This means it's
@@ -344,29 +367,6 @@ Pipeline::with($persons)
         $value->role = $key;
     })
     ->toArray();
-```
-
-### then
-
-The `then()` method can be used for callback that returns a `Generator` or other `Traversable`.
-
-```php
-Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
-    ->then(function(\Traversable $values): \Generator {
-        foreach ($values as $key => $value) {
-            yield $key[0] => "$value $key";
-        }
-    })
-    ->toArray(); // ['a' => 'green apple', 'b' => 'blue berry', 'c' => 'red cherry']
-```
-
-It may be used to apply a custom (outer) iterator.
-
-```php
-Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
-    ->then(function(\Traversable $values): \Iterator {
-        return new MyCustomIterator($values);
-    });
 ```
 
 ### chunk
