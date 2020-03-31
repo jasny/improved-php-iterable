@@ -1,5 +1,6 @@
-<?php /** @noinspection PhpInternalEntityUsedInspection */ declare(strict_types=1);
+<?php /** @noinspection PhpInternalEntityUsedInspection */
 
+declare(strict_types=1);
 
 namespace Improved\IteratorPipeline;
 

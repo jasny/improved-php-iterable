@@ -21,12 +21,11 @@ class TypeHandlingTraitTest extends TestCase
         $this->assertEquals(['foo', 'bar'], $result);
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage Expected string, int(20) given; index int(1)
-     */
     public function testTypeCheckDefaultMessage()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("Expected string, int(20) given; index int(1)");
+
         $pipeline = new Pipeline(['foo', 20, 'bar']);
 
         $ret = $pipeline->typeCheck('string');
@@ -35,12 +34,11 @@ class TypeHandlingTraitTest extends TestCase
         $pipeline->toArray();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage int(20) should be string for index int(1)
-     */
     public function testTypeCheckCustomError()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("int(20) should be string for index int(1)");
+
         $pipeline = new Pipeline(['foo', 20, 'bar']);
 
         $ret = $pipeline->typeCheck('string', new \InvalidArgumentException('%s should be %3$s for index %2$s'));
@@ -61,12 +59,11 @@ class TypeHandlingTraitTest extends TestCase
         $this->assertEquals(['foo', '20'], $result);
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage Unable to cast to string, bool(false) given; index int(1)
-     */
     public function testTypeCastDefaultMessage()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("Unable to cast to string, bool(false) given; index int(1)");
+
         $pipeline = new Pipeline(['foo', false, 'bar']);
 
         $ret = $pipeline->typeCast('string');
@@ -75,12 +72,11 @@ class TypeHandlingTraitTest extends TestCase
         $pipeline->toArray();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage bool(false) should be string for index int(1)
-     */
     public function testTypeCastCustomError()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("bool(false) should be string for index int(1)");
+
         $pipeline = new Pipeline(['foo', false, 'bar']);
 
         $ret = $pipeline->typeCast('string', new \InvalidArgumentException('%s should be %3$s for index %2$s'));
@@ -101,12 +97,11 @@ class TypeHandlingTraitTest extends TestCase
         $this->assertEquals(['foo', 'bar'], $result);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected all elements to be of type string, int(20) given
-     */
     public function testExpectTypeDefaultMessage()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("Expected all elements to be of type string, int(20) given");
+
         $pipeline = new Pipeline(['foo', 20, 'bar']);
 
         $ret = $pipeline->expectType('string');
@@ -115,12 +110,11 @@ class TypeHandlingTraitTest extends TestCase
         $pipeline->toArray();
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage int(20) should be string for index int(1)
-     */
     public function testExpectTypeCustomMessage()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("int(20) should be string for index int(1)");
+
         $pipeline = new Pipeline(['foo', 20, 'bar']);
 
         $ret = $pipeline->expectType('string', '%s should be %3$s for index %2$s');
@@ -129,12 +123,11 @@ class TypeHandlingTraitTest extends TestCase
         $pipeline->toArray();
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage int(20) should be string for index int(1)
-     */
     public function testExpectTypeCustomError()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("int(20) should be string for index int(1)");
+
         $pipeline = new Pipeline(['foo', 20, 'bar']);
 
         $ret = $pipeline->expectType('string', new \TypeError('%s should be %3$s for index %2$s'));

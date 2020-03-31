@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Improved\IteratorPipeline\Traits;
 
@@ -29,7 +31,7 @@ trait TypeHandlingTrait
      */
     public function expectType($type, $error = null)
     {
-        return $this->then(i\iterable_expect_type, $type, $error);
+        return $this->then("Improved\iterable_expect_type", $type, $error);
     }
 
     /**
@@ -41,7 +43,7 @@ trait TypeHandlingTrait
      */
     public function typeCheck($type, ?\Throwable $throwable = null)
     {
-        return $this->then(i\iterable_type_check, $type, $throwable);
+        return $this->then("Improved\iterable_type_check", $type, $throwable);
     }
 
     /**
@@ -53,6 +55,6 @@ trait TypeHandlingTrait
      */
     public function typeCast(string $type, ?\Throwable $throwable = null)
     {
-        return $this->then(i\iterable_type_cast, $type, $throwable);
+        return $this->then("Improved\iterable_type_cast", $type, $throwable);
     }
 }

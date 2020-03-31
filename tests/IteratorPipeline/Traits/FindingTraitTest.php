@@ -18,12 +18,11 @@ class FindingTraitTest extends TestCase
         $this->assertEquals('one', $result);
     }
 
-    /**
-     * @expectedException \RangeException
-     * @expectedExceptionMessage Unable to get first element; iterable is empty
-     */
     public function testFirstEmptyRequired()
     {
+        $this->expectException(\RangeException::class);
+        $this->expectExceptionMessage("Unable to get first element; iterable is empty");
+
         $pipeline = new Pipeline([]);
         $pipeline->first(true);
     }
@@ -36,12 +35,11 @@ class FindingTraitTest extends TestCase
         $this->assertEquals('three', $result);
     }
 
-    /**
-     * @expectedException \RangeException
-     * @expectedExceptionMessage Unable to get last element; iterable is empty
-     */
     public function testLastEmptyRequired()
     {
+        $this->expectException(\RangeException::class);
+        $this->expectExceptionMessage("Unable to get last element; iterable is empty");
+
         $pipeline = new Pipeline([]);
         $pipeline->last(true);
     }
@@ -51,7 +49,7 @@ class FindingTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['one', 'two', 'three']);
 
-        $result = $pipeline->find(function($value) {
+        $result = $pipeline->find(function ($value) {
             return $value[0] === 't';
         });
 
@@ -62,7 +60,7 @@ class FindingTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['I' => 'one', 'II' => 'two', 'III' => 'three']);
 
-        $result = $pipeline->findKey(function($value) {
+        $result = $pipeline->findKey(function ($value) {
             return $value[0] === 't';
         });
 
@@ -74,12 +72,12 @@ class FindingTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['one', 'two', 'three']);
 
-        $result1 = $pipeline->hasAny(function($value) {
+        $result1 = $pipeline->hasAny(function ($value) {
             return $value[0] === 't';
         });
         $this->assertTrue($result1);
 
-        $result2 = $pipeline->hasAny(function($value) {
+        $result2 = $pipeline->hasAny(function ($value) {
             return $value[0] === 'x';
         });
         $this->assertFalse($result2);
@@ -89,12 +87,12 @@ class FindingTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['one', 'two', 'three']);
 
-        $result1 = $pipeline->hasAll(function($value) {
+        $result1 = $pipeline->hasAll(function ($value) {
             return strlen($value) > 1;
         });
         $this->assertTrue($result1);
 
-        $result2 = $pipeline->hasAll(function($value) {
+        $result2 = $pipeline->hasAll(function ($value) {
             return $value[0] === 't';
         });
         $this->assertFalse($result2);
@@ -104,12 +102,12 @@ class FindingTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['one', 'two', 'three']);
 
-        $result1 = $pipeline->hasNone(function($value) {
+        $result1 = $pipeline->hasNone(function ($value) {
             return $value[0] === 't';
         });
         $this->assertFalse($result1);
 
-        $result2 = $pipeline->hasNone(function($value) {
+        $result2 = $pipeline->hasNone(function ($value) {
             return $value[0] === 'x';
         });
         $this->assertTrue($result2);
@@ -128,7 +126,7 @@ class FindingTraitTest extends TestCase
     {
         $pipeline = new Pipeline([99, 24, -7, -337, 122]);
 
-        $result = $pipeline->min(function($a, $b) {
+        $result = $pipeline->min(function ($a, $b) {
             return abs($a) <=> abs($b);
         });
         $this->assertEquals(-7, $result);
@@ -146,7 +144,7 @@ class FindingTraitTest extends TestCase
     {
         $pipeline = new Pipeline([99, 24, -7, -337, 122]);
 
-        $result = $pipeline->max(function($a, $b) {
+        $result = $pipeline->max(function ($a, $b) {
             return abs($a) <=> abs($b);
         });
         $this->assertEquals(-337, $result);

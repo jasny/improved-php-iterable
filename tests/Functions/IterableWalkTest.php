@@ -25,10 +25,10 @@ class IterableWalkTest extends TestCase
         }
 
         return [
-            [$sets[0], $sets[0]],
-            [new \ArrayIterator($sets[1]), $sets[1]],
-            [new \ArrayObject($sets[2]), $sets[2]],
-            [$this->generateAssoc($sets[3]), $sets[3]]
+            'array'         => [$sets[0], $sets[0]],
+            'ArrayIterator' => [new \ArrayIterator($sets[1]), $sets[1]],
+            'ArrayObject'   => [new \ArrayObject($sets[2]), $sets[2]],
+            'yield'         => [$this->generateAssoc($sets[3]), $sets[3]]
         ];
     }
 
@@ -37,7 +37,7 @@ class IterableWalkTest extends TestCase
      */
     public function test($values, $objects)
     {
-        $iterator = iterable_apply($values, function($value, $key) {
+        $iterator = iterable_apply($values, function ($value, $key) {
             $value->key = $key;
         });
 
@@ -45,9 +45,9 @@ class IterableWalkTest extends TestCase
 
         iterable_walk($iterator);
 
-        $this->assertAttributeEquals('foo', 'key', $objects['foo']);
-        $this->assertAttributeEquals('bar', 'key', $objects['bar']);
-        $this->assertAttributeEquals('qux', 'key', $objects['qux']);
+        $this->assertEquals('foo', $objects['foo']->key);
+        $this->assertEquals('bar', $objects['bar']->key);
+        $this->assertEquals('qux', $objects['qux']->key);
     }
 
     /**

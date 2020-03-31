@@ -1,8 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Improved\IteratorPipeline\Traits;
-
-use Improved as i;
 
 /**
  * Filtering methods for iterator pipeline.
@@ -27,7 +27,7 @@ trait FilteringTrait
      */
     public function filter(callable $matcher)
     {
-        return $this->then(i\iterable_filter, $matcher);
+        return $this->then("Improved\iterable_filter", $matcher);
     }
 
     /**
@@ -37,7 +37,7 @@ trait FilteringTrait
      */
     public function cleanup()
     {
-        return $this->then(i\iterable_cleanup);
+        return $this->then("Improved\iterable_cleanup");
     }
 
     /**
@@ -48,7 +48,7 @@ trait FilteringTrait
      */
     public function unique(?callable $grouper = null)
     {
-        return $this->then(i\iterable_unique, $grouper);
+        return $this->then("Improved\iterable_unique", $grouper);
     }
 
     /**
@@ -59,7 +59,7 @@ trait FilteringTrait
      */
     public function uniqueKeys()
     {
-        return $this->then(i\iterable_unique, function ($value, $key) {
+        return $this->then("Improved\iterable_unique", function ($value, $key) {
             return $key;
         });
     }
@@ -72,7 +72,7 @@ trait FilteringTrait
      */
     public function limit(int $size)
     {
-        return $this->then(i\iterable_slice, 0, $size);
+        return $this->then("Improved\iterable_slice", 0, $size);
     }
 
     /**
@@ -84,7 +84,7 @@ trait FilteringTrait
      */
     public function slice(int $offset, ?int $size = null)
     {
-        return $this->then(i\iterable_slice, $offset, $size);
+        return $this->then("Improved\iterable_slice", $offset, $size);
     }
 
     /**
@@ -96,7 +96,7 @@ trait FilteringTrait
      */
     public function before(callable $matcher, bool $include = false)
     {
-        return $this->then(i\iterable_before, $matcher, $include);
+        return $this->then("Improved\iterable_before", $matcher, $include);
     }
 
     /**
@@ -108,6 +108,6 @@ trait FilteringTrait
      */
     public function after(callable $matcher, bool $include = false)
     {
-        return $this->then(i\iterable_after, $matcher, $include);
+        return $this->then("Improved\iterable_after", $matcher, $include);
     }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Improved\IteratorPipeline\Traits;
 
@@ -28,7 +30,7 @@ trait MappingTrait
      */
     public function map(callable $callback)
     {
-        return $this->then(i\iterable_map, $callback);
+        return $this->then("Improved\iterable_map", $callback);
     }
 
     /**
@@ -39,7 +41,7 @@ trait MappingTrait
      */
     public function mapKeys(callable $callback)
     {
-        return $this->then(i\iterable_map_keys, $callback);
+        return $this->then("Improved\iterable_map_keys", $callback);
     }
 
     /**
@@ -51,7 +53,7 @@ trait MappingTrait
      */
     public function apply(callable $callback)
     {
-        return $this->then(i\iterable_apply, $callback);
+        return $this->then("Improved\iterable_apply", $callback);
     }
 
     /**
@@ -62,7 +64,7 @@ trait MappingTrait
      */
     public function chunk(int $size)
     {
-        return $this->then(i\iterable_chunk, $size);
+        return $this->then("Improved\iterable_chunk", $size);
     }
 
     /**
@@ -73,7 +75,7 @@ trait MappingTrait
      */
     public function group(callable $grouping)
     {
-        return $this->then(i\iterable_group, $grouping);
+        return $this->then("Improved\iterable_group", $grouping);
     }
 
     /**
@@ -84,7 +86,7 @@ trait MappingTrait
      */
     public function flatten(bool $preserveKeys = false)
     {
-        return $this->then(i\iterable_flatten, $preserveKeys);
+        return $this->then("Improved\iterable_flatten", $preserveKeys);
     }
 
     /**
@@ -98,7 +100,7 @@ trait MappingTrait
      */
     public function unwind(string $column, ?string $mapKey = null, bool $preserveKeys = false)
     {
-        return $this->then(i\iterable_unwind, $column, $mapKey, $preserveKeys);
+        return $this->then("Improved\iterable_unwind", $column, $mapKey, $preserveKeys);
     }
 
     /**
@@ -109,7 +111,7 @@ trait MappingTrait
      */
     public function fill($value)
     {
-        return $this->then(i\iterable_fill, $value);
+        return $this->then("Improved\iterable_fill", $value);
     }
 
     /**
@@ -122,7 +124,7 @@ trait MappingTrait
      */
     public function column($valueColumn, $keyColumn = null)
     {
-        return $this->then(i\iterable_column, $valueColumn, $keyColumn);
+        return $this->then("Improved\iterable_column", $valueColumn, $keyColumn);
     }
 
     /**
@@ -134,7 +136,7 @@ trait MappingTrait
      */
     public function project(array $mapping)
     {
-        return $this->then(i\iterable_project, $mapping);
+        return $this->then("Improved\iterable_project", $mapping);
     }
 
     /**
@@ -145,7 +147,7 @@ trait MappingTrait
      */
     public function reshape(array $columns)
     {
-        return $this->then(i\iterable_reshape, $columns);
+        return $this->then("Improved\iterable_reshape", $columns);
     }
 
 
@@ -156,7 +158,7 @@ trait MappingTrait
      */
     public function values()
     {
-        return $this->then(i\iterable_values);
+        return $this->then("Improved\iterable_values");
     }
 
     /**
@@ -166,7 +168,7 @@ trait MappingTrait
      */
     public function keys()
     {
-        return $this->then(i\iterable_keys);
+        return $this->then("Improved\iterable_keys");
     }
 
     /**
@@ -191,6 +193,6 @@ trait MappingTrait
      */
     public function flip()
     {
-        return $this->then(i\iterable_flip);
+        return $this->then("Improved\iterable_flip");
     }
 }

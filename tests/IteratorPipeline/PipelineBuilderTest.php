@@ -23,7 +23,7 @@ class PipelineBuilderTest extends TestCase
         $blueprint = $builder
             ->unique()
             ->sort(\SORT_REGULAR)
-            ->map(function($value, $key) {
+            ->map(function ($value, $key) {
                 return "$key:$value";
             })
             ->values()
@@ -69,7 +69,7 @@ class PipelineBuilderTest extends TestCase
         $this->assertEquals(['Bravo', 'India', 'Papa'], $result1);
 
         $build = $blueprint
-            ->unstub('process', i\iterable_map, function($value, $key) {
+            ->unstub('process', 'Improved\iterable_map', function ($value, $key) {
                 return "$key:$value";
             });
         $this->assertNotSame($blueprint, $build);
@@ -81,12 +81,11 @@ class PipelineBuilderTest extends TestCase
         $this->assertEquals(['one:Bravo', 'two:India', 'three:Papa'], $result2);
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Pipeline builder already has 'process' stub
-     */
     public function testStubDuplicate()
     {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage("Pipeline builder already has 'process' stub");
+
         $blueprint = (new PipelineBuilder())
             ->sort(\SORT_REGULAR)
             ->stub('process')
@@ -95,25 +94,24 @@ class PipelineBuilderTest extends TestCase
         $blueprint->stub('process');
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Pipeline builder doesn't have 'process' stub
-     */
     public function testStubUnknown()
     {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage("Pipeline builder doesn't have 'process' stub");
+
         $blueprint = (new PipelineBuilder())
             ->sort(\SORT_REGULAR)
             ->values();
 
-        $blueprint->unstub('process', function() {});
+        $blueprint->unstub('process', function () {});
     }
 
     public function testThenPipeline()
     {
-        $subpipe = new class([9, 8, 7]) extends Pipeline { };
+        $subpipe = new class ([9, 8, 7]) extends Pipeline { };
 
         $builder = (new PipelineBuilder())
-            ->then(function() use($subpipe) {
+            ->then(function () use ($subpipe) {
                 return $subpipe;
             });
 
@@ -125,7 +123,7 @@ class PipelineBuilderTest extends TestCase
 
     public function testSetKeys()
     {
-        $generator = function($keys) {
+        $generator = function ($keys) {
             foreach ($keys as $index => $key) {
                 yield $key => $index;
             }
@@ -141,7 +139,7 @@ class PipelineBuilderTest extends TestCase
     public function testThenSelf()
     {
         $first = (new PipelineBuilder())->unique()->values();
-        $second = (new PipelineBuilder())->map(function($value) {
+        $second = (new PipelineBuilder())->map(function ($value) {
             return ucwords($value);
         });
 

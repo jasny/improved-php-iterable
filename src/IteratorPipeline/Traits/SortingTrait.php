@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Improved\IteratorPipeline\Traits;
 
@@ -28,7 +30,7 @@ trait SortingTrait
      */
     public function sort($compare, bool $preserveKeys = true)
     {
-        return $this->then(i\iterable_sort, $compare, $preserveKeys);
+        return $this->then("Improved\iterable_sort", $compare, $preserveKeys);
     }
 
     /**
@@ -39,7 +41,7 @@ trait SortingTrait
      */
     public function sortKeys($compare)
     {
-        return $this->then(i\iterable_sort_keys, $compare);
+        return $this->then("Improved\iterable_sort_keys", $compare);
     }
 
     /**
@@ -49,6 +51,6 @@ trait SortingTrait
      */
     public function reverse()
     {
-        return $this->then(i\iterable_reverse);
+        return $this->then("Improved\iterable_reverse");
     }
 }

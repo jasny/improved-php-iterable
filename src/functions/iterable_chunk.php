@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Improved;
 
@@ -11,7 +13,7 @@ namespace Improved;
  */
 function iterable_chunk(iterable $iterable, int $size): \Generator
 {
-    $generate = function(\Iterator $iterator, int $size): \Generator {
+    $generate = function (\Iterator $iterator, int $size): \Generator {
         for ($i = 0; $i < $size && $iterator->valid(); $i++) {
             yield $iterator->key() => $iterator->current();
 

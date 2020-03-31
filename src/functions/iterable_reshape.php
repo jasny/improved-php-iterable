@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpVariableVariableInspection */ declare(strict_types=1);
+<?php /** @noinspection PhpVariableVariableInspection */
+
+declare(strict_types=1);
 
 namespace Improved;
 

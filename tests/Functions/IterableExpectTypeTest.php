@@ -48,12 +48,11 @@ class IterableExpectTypeTest extends TestCase
         $this->assertSame($values, $result); // Untouched
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected all elements to be of type string, int(1) given
-     */
     public function testFirstInvalid()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("Expected all elements to be of type string, int(1) given");
+
         $values = [1, 'hello'];
 
         $iterator = iterable_expect_type($values, 'string');
@@ -61,12 +60,11 @@ class IterableExpectTypeTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected all elements to be of type integer, string(5) "hello" given
-     */
     public function testSecondInvalid()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("Expected all elements to be of type integer, string(5) \"hello\" given");
+
         $values = [1, 'hello'];
 
         $iterator = iterable_expect_type($values, 'integer');
@@ -74,12 +72,11 @@ class IterableExpectTypeTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage FOO BOO instance of stdClass WOO
-     */
     public function testTypeErrorMessage()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("FOO BOO instance of stdClass WOO");
+
         $values = [new \stdClass()];
 
         $message = "FOO BOO %s WOO";
@@ -88,12 +85,11 @@ class IterableExpectTypeTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage Expected string, instance of stdClass given
-     */
     public function testTypeErrorThrowable()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("Expected string, instance of stdClass given");
+
         $values = [new \stdClass()];
 
         $iterator = iterable_expect_type($values, 'string', new \TypeError());
@@ -101,12 +97,11 @@ class IterableExpectTypeTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage FOO BOO instance of stdClass WOO
-     */
     public function testTypeError()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("FOO BOO instance of stdClass WOO");
+
         $values = [new \stdClass()];
 
         $message = "FOO BOO %s WOO";

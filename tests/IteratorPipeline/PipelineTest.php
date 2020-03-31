@@ -5,7 +5,7 @@ namespace Improved\Tests\IteratorPipeline;
 use Improved as i;
 use Improved\IteratorPipeline\Pipeline;
 use Improved\IteratorPipeline\PipelineBuilder;
-use Jasny\TestHelper;
+use Jasny\PHPUnit\CallbackMockTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,8 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PipelineTest extends TestCase
 {
-    use TestHelper;
-
+    use CallbackMockTrait;
 
     public function testThen()
     {
@@ -28,15 +27,15 @@ class PipelineTest extends TestCase
         $ret = $pipeline->then($callback, 'foo', 42);
         $this->assertSame($pipeline, $ret);
 
-        $this->assertAttributeSame($next, 'iterable', $pipeline);
+        $this->assertSame($next, $pipeline->getIterator());
     }
 
     public function testThenPipeline()
     {
         $mainpipe = new Pipeline([1, 2, 3]);
-        $subpipe = new class([9, 8, 7]) extends Pipeline { };
+        $subpipe = new class ([9, 8, 7]) extends Pipeline { };
 
-        $pipeline = $mainpipe->then(function() use($subpipe) {
+        $pipeline = $mainpipe->then(function () use ($subpipe) {
             return $subpipe;
         });
 
@@ -48,15 +47,14 @@ class PipelineTest extends TestCase
         $this->assertEquals([9, 8, 7], $result);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected step to return an array or Traversable, instance of stdClass returned
-     */
     public function testThenUnexpectedValue()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("Expected step to return an array or Traversable, instance of stdClass returned");
+
         $pipeline = new Pipeline(['a']);
 
-        $pipeline->then(function() {
+        $pipeline->then(function () {
             return (object)[];
         });
     }
@@ -64,7 +62,7 @@ class PipelineTest extends TestCase
 
     public function provider()
     {
-        $generator = function($values) {
+        $generator = function ($values) {
             foreach ($values as $key => $value) {
                 yield $key => $value;
             }
@@ -73,10 +71,10 @@ class PipelineTest extends TestCase
         $values = ['one' => 'uno', 'two' => 'dos', 'three' => 'tres'];
 
         $tests = [
-            [$values, $values],
-            [new \ArrayIterator($values), $values],
-            [new \ArrayObject($values), $values],
-            [$generator($values), $values]
+            'array'         => [$values, $values],
+            'ArrayIterator' => [new \ArrayIterator($values), $values],
+            'ArrayObject'   => [new \ArrayObject($values), $values],
+            'yield'         => [$generator($values), $values],
         ];
 
         return $tests;
@@ -113,26 +111,26 @@ class PipelineTest extends TestCase
 
         $pipeline = new Pipeline($objects);
         $pipeline
-            ->apply(function($value, $key) {
+            ->apply(function ($value, $key) {
                 $value->key = $key;
             })
             ->walk();
 
-        $this->assertAttributeEquals('foo', 'key', $objects['foo']);
-        $this->assertAttributeEquals('bar', 'key', $objects['bar']);
-        $this->assertAttributeEquals('qux', 'key', $objects['qux']);
+        $this->assertEquals('foo', $objects['foo']->key);
+        $this->assertEquals('bar', $objects['bar']->key);
+        $this->assertEquals('qux', $objects['qux']->key);
     }
 
 
     /**
      * @dataProvider provider
      */
-    public function testWith($values)
+    public function testWith($values, $expected)
     {
         $pipeline = Pipeline::with($values);
         $this->assertInstanceOf(Pipeline::class, $pipeline);
 
-        $this->assertAttributeSame($values, 'iterable', $pipeline);
+        $this->assertEquals($expected, iterator_to_array($pipeline, true));
     }
 
     public function testWithSelf()

@@ -28,7 +28,6 @@
             "Improved\\IteratorPipeline\\": "src/IteratorPipeline/"
         },
         "files": [
-            "src/functions-const.php",
             "src/functions/iterable_after.php",
             "src/functions/iterable_apply.php",
             "src/functions/iterable_average.php",

@@ -49,12 +49,11 @@ class IterableTypeCastTest extends TestCase
         $this->assertSame($expected ?? $values, $result);
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage Unable to cast to string, bool(true) given; index int(2)
-     */
     public function testFirstInvalid()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("Unable to cast to string, bool(true) given; index int(2)");
+
         $values = [1, 'hello', true];
 
         $iterator = iterable_type_cast($values, 'string');
@@ -62,12 +61,11 @@ class IterableTypeCastTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage Unable to cast to integer, string(5) "hello" given; index int(1)
-     */
     public function testSecondInvalid()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("Unable to cast to integer, string(5) \"hello\" given; index int(1)");
+
         $values = [1, 'hello', true];
 
         $iterator = iterable_type_cast($values, 'integer');
@@ -75,12 +73,11 @@ class IterableTypeCastTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage instance of stdClass - int(0) - string
-     */
     public function testTypeThrowable()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("instance of stdClass - int(0) - string");
+
         $values = [new \stdClass()];
 
         $message = '%s - %s - %s';

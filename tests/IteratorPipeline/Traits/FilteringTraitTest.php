@@ -14,7 +14,7 @@ class FilteringTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
 
-        $ret = $pipeline->filter(function($value, $key) {
+        $ret = $pipeline->filter(function ($value, $key) {
             return $key === 1 || $value[0] === 'a';
         });
 
@@ -53,7 +53,7 @@ class FilteringTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
 
-        $ret = $pipeline->unique(function($value) {
+        $ret = $pipeline->unique(function ($value) {
             return $value[0];
         });
 
@@ -107,7 +107,7 @@ class FilteringTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
 
-        $ret = $pipeline->before(function($value) {
+        $ret = $pipeline->before(function ($value) {
             return $value === 'apricot';
         });
 
@@ -121,7 +121,7 @@ class FilteringTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
 
-        $ret = $pipeline->before(function($value) {
+        $ret = $pipeline->before(function ($value) {
             return $value === 'apricot';
         }, true);
 
@@ -135,7 +135,7 @@ class FilteringTraitTest extends TestCase
     {
         $pipeline = new Pipeline(['apple', 'pear', 'berry', 'apricot', 'banana', 'cherry']);
 
-        $ret = $pipeline->after(function($value) {
+        $ret = $pipeline->after(function ($value) {
             return $value === 'berry';
         }, true);
 
@@ -171,12 +171,11 @@ class FilteringTraitTest extends TestCase
         $this->assertEquals(['foo', 'bar'], $result);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Expected all elements to be of type string, int(20) given
-     */
     public function testExpectTypeDefaultMessage()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("Expected all elements to be of type string, int(20) given");
+
         $pipeline = new Pipeline(['foo', 20, 'bar']);
 
         $ret = $pipeline->expectType('string');
@@ -185,12 +184,11 @@ class FilteringTraitTest extends TestCase
         $pipeline->toArray();
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage int(20) should be string for index int(1)
-     */
     public function testExpectTypeCustomMessage()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("int(20) should be string for index int(1)");
+
         $pipeline = new Pipeline(['foo', 20, 'bar']);
 
         $ret = $pipeline->expectType('string', '%s should be %3$s for index %2$s');
@@ -199,12 +197,11 @@ class FilteringTraitTest extends TestCase
         $pipeline->toArray();
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage int(20) should be string for index int(1)
-     */
     public function testExpectTypeCustomError()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("int(20) should be string for index int(1)");
+
         $pipeline = new Pipeline(['foo', 20, 'bar']);
 
         $ret = $pipeline->expectType('string', new \TypeError('%s should be %3$s for index %2$s'));

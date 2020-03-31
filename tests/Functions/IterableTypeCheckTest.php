@@ -48,12 +48,11 @@ class IterableTypeCheckTest extends TestCase
         $this->assertSame($values, $result); // Untouched
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage Expected string, int(1) given; index int(0)
-     */
     public function testFirstInvalid()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("Expected string, int(1) given; index int(0)");
+
         $values = [1, 'hello'];
 
         $iterator = iterable_type_check($values, 'string');
@@ -61,12 +60,11 @@ class IterableTypeCheckTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * @expectedException \TypeError
-     * @expectedExceptionMessage Expected integer, string(5) "hello" given; index int(1)
-     */
     public function testSecondInvalid()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage("Expected integer, string(5) \"hello\" given; index int(1)");
+
         $values = [1, 'hello'];
 
         $iterator = iterable_type_check($values, 'integer');
@@ -74,12 +72,11 @@ class IterableTypeCheckTest extends TestCase
         iterator_to_array($iterator);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage instance of stdClass - int(0) - string or null
-     */
     public function testTypeThrowable()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("instance of stdClass - int(0) - string or null");
+
         $values = [new \stdClass()];
 
         $message = '%s - %s - %s';
