@@ -19,8 +19,8 @@
         "improved/type": "~0.1.0"
     },
     "require-dev": {
-        "jasny/php-code-quality": "~2.3",
-        "phpstan/phpstan": "~0.11.0"
+        "jasny/php-code-quality": "~2.6.0 || ~2.7.0",
+        "phpstan/phpstan": "~0.12.0"
     },
     "autoload": {
         "psr-4": {

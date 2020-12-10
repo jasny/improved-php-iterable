@@ -13,7 +13,7 @@ trait LazyExecutionIteratorTrait
      * @throws \Exception
      * @throws \InvalidArgumentException
      */
-    abstract protected function createMock($originalClassName): MockObject;
+    abstract protected function createMock(string $originalClassName): MockObject;
 
     /**
      * Create an Iterator mock that fails when traversing.
