@@ -2,7 +2,7 @@
 
 # iterable
 
-[![Build Status](https://travis-ci.org/improved-php-library/iterable.svg?branch=master)](https://travis-ci.org/improved-php-library/iterable)
+![PHP](https://github.com/improved-php-library/iterable/workflows/PHP/badge.svg)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/improved-php-library/iterable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/improved-php-library/iterable/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/improved-php-library/iterable/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/improved-php-library/iterable/?branch=master)
 [![Packagist Stable Version](https://img.shields.io/packagist/v/improved/iterable.svg)](https://packagist.org/packages/improved/iterable)
