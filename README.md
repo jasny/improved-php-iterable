@@ -849,7 +849,7 @@ Create an iterator with sorted elements.
 
 ```php
 Pipeline::with(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
-    ->sorted()
+    ->sort()
     ->toArray(); // ["Alpha", "Beta", "Charlie", "Delta", "Echo", "Foxtrot"]
 ```
 
@@ -857,7 +857,7 @@ Instead of using the default sorting, a callback may be passed as user defined c
 
 ```php
 Pipeline::with(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
-    ->sorted(function($a, $b): int {
+    ->sort(function($a, $b): int {
         return strlen($a) <=> strlen($b) ?: $a <=> $b;
     })
     ->toArray(); // ["Echo", "Alpha", "Bravo", "Delta", "Charlie", "Foxtrot"]
@@ -871,7 +871,7 @@ Create an iterator with sorted elements by key.
 
 ```php
 Pipeline::with(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
-    ->sortedByKeys()
+    ->sortKeys()
     ->toArray();
     
 // ["Alpha" => "one", "Bravo" => "two", "Charlie" => "three", "Delta" => "four"]
@@ -881,7 +881,7 @@ A callback may be passed as user defined comparison function.
 
 ```php
 Pipeline::with(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
-    ->sortedByKeys(function($a, $b): int {
+    ->sortKeys(function($a, $b): int {
         return strlen($a) <=> strlen($b) ?: $a <=> $b;
     })
     ->toArray(); 
