@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use Generator;
+
 /**
  * Group elements of an array or iterator.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param callable $grouping
- * @return \Generator
+ * @return Generator
  */
-function iterable_group(iterable $iterable, callable $grouping): \Generator
+function iterable_group(iterable $iterable, callable $grouping): Generator
 {
     $groups = [];
     $values = [];

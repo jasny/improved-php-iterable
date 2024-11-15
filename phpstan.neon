@@ -2,14 +2,7 @@ parameters:
     level: 7
     paths:
         - src
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-        -
-            message: /Variable property access on/
-            paths:
-                - src/functions/iterable_column.php
-                - src/functions/iterable_project.php
-                - src/functions/iterable_reshape.php
-                - src/functions/iterable_unwind.php
-includes:
-  	- vendor/phpstan/phpstan-strict-rules/rules.neon
-
+        - /^Negated boolean expression is always true/

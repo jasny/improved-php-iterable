@@ -14,7 +14,7 @@ trait AggregationTrait
     /**
      * @var iterable
      */
-    protected $iterable;
+    protected iterable $iterable;
 
     /**
      * Count elements of an iterable.
@@ -33,7 +33,7 @@ trait AggregationTrait
      * @param mixed     $initial
      * @return mixed
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         return i\iterable_reduce($this->iterable, $callback, $initial);
     }

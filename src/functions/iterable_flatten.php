@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use Generator;
+
 /**
  * Walk through all sub-iterables (array, Iterator or IteratorAggregate) and combine them.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param bool     $preserveKeys
- * @return \Generator
+ * @return Generator
  */
-function iterable_flatten(iterable $iterable, bool $preserveKeys = false): \Generator
+function iterable_flatten(iterable $iterable, bool $preserveKeys = false): Generator
 {
     $counter = 0;
 

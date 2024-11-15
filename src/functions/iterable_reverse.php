@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use Generator;
+
 /**
  * Reverse order of elements of an iterable.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param bool     $preserveKeys
- * @return \Generator
+ * @return Generator
  */
-function iterable_reverse(iterable $iterable, bool $preserveKeys = false): \Generator
+function iterable_reverse(iterable $iterable, bool $preserveKeys = false): Generator
 {
     if (is_array($iterable)) {
         $values = array_reverse($iterable, $preserveKeys);

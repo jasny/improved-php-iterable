@@ -1,105 +1,103 @@
 {
-    "name": "improved/iterable",
-    "description": "Functions to interact with arrays, iterators and other traversable objects",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Arnold Daniels",
-            "email": "arnold@jasny.net",
-            "homepage": "http://www.jasny.net"
-        }
+  "name": "improved/iterable",
+  "description": "Functions to interact with arrays, iterators and other traversable objects",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Arnold Daniels",
+      "email": "arnold@jasny.net",
+      "homepage": "https://www.jasny.net"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/improved-php-library/iterable/issues",
+    "source": "https://github.com/improved-php-library/iterable"
+  },
+  "require": {
+    "php": ">=8.1.0",
+    "improved/type": "~0.1.0"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.12",
+    "phpunit/phpunit": ">= 10.5, < 12",
+    "squizlabs/php_codesniffer": "^3.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "Improved\\Iterator\\": "src/Iterator/",
+      "Improved\\IteratorPipeline\\": "src/IteratorPipeline/"
+    },
+    "files": [
+      "src/functions/iterable_after.php",
+      "src/functions/iterable_apply.php",
+      "src/functions/iterable_average.php",
+      "src/functions/iterable_after.php",
+      "src/functions/iterable_before.php",
+      "src/functions/iterable_chunk.php",
+      "src/functions/iterable_cleanup.php",
+      "src/functions/iterable_column.php",
+      "src/functions/iterable_concat.php",
+      "src/functions/iterable_count.php",
+      "src/functions/iterable_expect_type.php",
+      "src/functions/iterable_fill.php",
+      "src/functions/iterable_filter.php",
+      "src/functions/iterable_find.php",
+      "src/functions/iterable_find_key.php",
+      "src/functions/iterable_first.php",
+      "src/functions/iterable_flatten.php",
+      "src/functions/iterable_flip.php",
+      "src/functions/iterable_group.php",
+      "src/functions/iterable_has_all.php",
+      "src/functions/iterable_has_any.php",
+      "src/functions/iterable_has_none.php",
+      "src/functions/iterable_keys.php",
+      "src/functions/iterable_last.php",
+      "src/functions/iterable_map_keys.php",
+      "src/functions/iterable_map.php",
+      "src/functions/iterable_max.php",
+      "src/functions/iterable_min.php",
+      "src/functions/iterable_project.php",
+      "src/functions/iterable_reduce.php",
+      "src/functions/iterable_reshape.php",
+      "src/functions/iterable_reverse.php",
+      "src/functions/iterable_separate.php",
+      "src/functions/iterable_slice.php",
+      "src/functions/iterable_sort_keys.php",
+      "src/functions/iterable_sort.php",
+      "src/functions/iterable_sum.php",
+      "src/functions/iterable_to_array.php",
+      "src/functions/iterable_to_iterator.php",
+      "src/functions/iterable_to_traversable.php",
+      "src/functions/iterable_type_check.php",
+      "src/functions/iterable_type_cast.php",
+      "src/functions/iterable_unique.php",
+      "src/functions/iterable_unwind.php",
+      "src/functions/iterable_values.php",
+      "src/functions/iterable_walk.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Improved\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": [
+      "phpstan analyse",
+      "XDEBUG_MODE=coverage phpunit --testdox --colors=always --coverage-text",
+      "phpcs -p src"
     ],
-    "support": {
-        "issues": "https://github.com/improved-php-library/iterable/issues",
-        "source": "https://github.com/improved-php-library/iterable"
-    },
-    "require": {
-        "php": ">=7.2.0",
-        "improved/type": "~0.1.0"
-    },
-    "require-dev": {
-        "jasny/php-code-quality": "~2.6.0 || ~2.7.0",
-        "phpstan/phpstan": "~0.12.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Improved\\Iterator\\": "src/Iterator/",
-            "Improved\\IteratorPipeline\\": "src/IteratorPipeline/"
-        },
-        "files": [
-            "src/functions/iterable_after.php",
-            "src/functions/iterable_apply.php",
-            "src/functions/iterable_average.php",
-            "src/functions/iterable_after.php",
-            "src/functions/iterable_before.php",
-            "src/functions/iterable_chunk.php",
-            "src/functions/iterable_cleanup.php",
-            "src/functions/iterable_column.php",
-            "src/functions/iterable_concat.php",
-            "src/functions/iterable_count.php",
-            "src/functions/iterable_expect_type.php",
-            "src/functions/iterable_fill.php",
-            "src/functions/iterable_filter.php",
-            "src/functions/iterable_find.php",
-            "src/functions/iterable_find_key.php",
-            "src/functions/iterable_first.php",
-            "src/functions/iterable_flatten.php",
-            "src/functions/iterable_flip.php",
-            "src/functions/iterable_group.php",
-            "src/functions/iterable_has_all.php",
-            "src/functions/iterable_has_any.php",
-            "src/functions/iterable_has_none.php",
-            "src/functions/iterable_keys.php",
-            "src/functions/iterable_last.php",
-            "src/functions/iterable_map_keys.php",
-            "src/functions/iterable_map.php",
-            "src/functions/iterable_max.php",
-            "src/functions/iterable_min.php",
-            "src/functions/iterable_project.php",
-            "src/functions/iterable_reduce.php",
-            "src/functions/iterable_reshape.php",
-            "src/functions/iterable_reverse.php",
-            "src/functions/iterable_separate.php",
-            "src/functions/iterable_slice.php",
-            "src/functions/iterable_sort_keys.php",
-            "src/functions/iterable_sort.php",
-            "src/functions/iterable_sum.php",
-            "src/functions/iterable_to_array.php",
-            "src/functions/iterable_to_iterator.php",
-            "src/functions/iterable_to_traversable.php",
-            "src/functions/iterable_type_check.php",
-            "src/functions/iterable_type_cast.php",
-            "src/functions/iterable_unique.php",
-            "src/functions/iterable_unwind.php",
-            "src/functions/iterable_values.php",
-            "src/functions/iterable_walk.php"
-        ]
-    },
-    "provide": {
-        "ext-improved_iterable": "*"
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Improved\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "test": [
-            "phpstan analyse",
-            "phpunit",
-            "phpcs -p src"
-        ],
-        "build": [
-            "composer dump-autoload -o",
-            "php bin/build-functions-const.php"
-        ]
-    },
-    "config": {
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "optimize-autoloader": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "build": [
+      "composer dump-autoload -o",
+      "php bin/build-functions-const.php"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

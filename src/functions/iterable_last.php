@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use RangeException;
+
 /**
  * Get the last element of an iterable.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param bool     $required  Throw RangeException instead of returning null for empty iterable
  * @return mixed
  */
@@ -26,7 +28,7 @@ function iterable_last(iterable $iterable, bool $required = false)
     }
 
     if ($empty && $required) {
-        throw new \RangeException("Unable to get last element; iterable is empty");
+        throw new RangeException("Unable to get last element; iterable is empty");
     }
 
     return $last;

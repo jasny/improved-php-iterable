@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use Generator;
+use TypeError;
+
 /**
  * Sort all elements of an iterator based on the key.
  *
  * @param iterable     $iterable
  * @param callable|int $compare   SORT_* flag or callback comparator function
- * @return \Generator
+ * @return Generator
  */
-function iterable_sort_keys(iterable $iterable, $compare): \Generator
+function iterable_sort_keys(iterable $iterable, $compare): Generator
 {
-    type_check($compare, ['callable', 'int'], new \TypeError("Expected compare to be callable or integer, %s given"));
+    type_check($compare, ['callable', 'int'], new TypeError("Expected compare to be callable or integer, %s given"));
 
     $comparator = is_int($compare) ? null : $compare;
     $flags = is_int($compare) ? $compare : 0;

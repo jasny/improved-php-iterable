@@ -12,9 +12,9 @@ use Improved as i;
 trait FindingTrait
 {
     /**
-     * @var iterable
+     * @var iterable<mixed>
      */
-    protected $iterable;
+    protected iterable $iterable;
 
 
     /**
@@ -23,7 +23,7 @@ trait FindingTrait
      * @param bool $required  Throw RangeException instead of returning null for empty iterable
      * @return mixed
      */
-    public function first(bool $required = false)
+    public function first(bool $required = false): mixed
     {
         return i\iterable_first($this->iterable, $required);
     }
@@ -34,7 +34,7 @@ trait FindingTrait
      * @param bool $required  Throw RangeException instead of returning null for empty iterable
      * @return mixed
      */
-    public function last(bool $required = false)
+    public function last(bool $required = false): mixed
     {
         return i\iterable_last($this->iterable, $required);
     }
@@ -43,11 +43,8 @@ trait FindingTrait
     /**
      * Get the first value that matches a condition.
      * Returns null if no element is found.
-     *
-     * @param callable $matcher
-     * @return mixed
      */
-    public function find(callable $matcher)
+    public function find(callable $matcher): mixed
     {
         return i\iterable_find($this->iterable, $matcher);
     }
@@ -55,11 +52,8 @@ trait FindingTrait
     /**
      * Get the first value that matches a condition and return the key.
      * Returns null if no element is found.
-     *
-     * @param callable $matcher
-     * @return mixed
      */
-    public function findKey(callable $matcher)
+    public function findKey(callable $matcher): mixed
     {
         return i\iterable_find_key($this->iterable, $matcher);
     }
@@ -67,9 +61,6 @@ trait FindingTrait
 
     /**
      * Check if any element matches the condition.
-     *
-     * @param callable $matcher
-     * @return bool
      */
     public function hasAny(callable $matcher): bool
     {
@@ -78,9 +69,6 @@ trait FindingTrait
 
     /**
      * Check if all elements match the condition.
-     *
-     * @param callable $matcher
-     * @return bool
      */
     public function hasAll(callable $matcher): bool
     {
@@ -89,9 +77,6 @@ trait FindingTrait
 
     /**
      * Check that no elements match the condition.
-     *
-     * @param callable $matcher
-     * @return bool
      */
     public function hasNone(callable $matcher): bool
     {
@@ -106,7 +91,7 @@ trait FindingTrait
      * @param callable|null $compare
      * @return mixed
      */
-    public function min(?callable $compare = null)
+    public function min(?callable $compare = null): mixed
     {
         return i\iterable_min($this->iterable, $compare);
     }
@@ -118,7 +103,7 @@ trait FindingTrait
      * @param callable|null $compare
      * @return mixed
      */
-    public function max(?callable $compare = null)
+    public function max(?callable $compare = null): mixed
     {
         return i\iterable_max($this->iterable, $compare);
     }

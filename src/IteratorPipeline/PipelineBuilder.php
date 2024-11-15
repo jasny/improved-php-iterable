@@ -1,9 +1,12 @@
-<?php /** @noinspection PhpInternalEntityUsedInspection */
+<?php
+
+/** @noinspection PhpInternalEntityUsedInspection */
 
 declare(strict_types=1);
 
 namespace Improved\IteratorPipeline;
 
+use BadMethodCallException;
 use Improved as i;
 use Improved\Iterator\CombineIterator;
 use Improved\IteratorPipeline\PipelineBuilder\Stub;
@@ -21,10 +24,9 @@ class PipelineBuilder
     use SortingTrait;
 
     /**
-     * @var array
+     * @var array<array{callable, array<mixed>}>
      */
-    protected $steps = [];
-
+    protected array $steps = [];
 
     /**
      * Define the next step via a callback that returns an array or Traversable object.
@@ -50,18 +52,16 @@ class PipelineBuilder
     /**
      * Add a stub, which does nothing but can be replaced later.
      *
-     * @param string $name
-     * @return static
-     * @throw \BadMethodCallException if stub already exists
+     * @throws BadMethodCallException if stub already exists
      */
-    public function stub(string $name): self
+    public function stub(string $name): static
     {
         $hasStub = i\iterable_has_any($this->steps, function ($step) use ($name) {
             return $step[0] instanceof Stub && $step[0]->getName() === $name;
         });
 
         if ($hasStub) {
-            throw new \BadMethodCallException("Pipeline builder already has '$name' stub");
+            throw new BadMethodCallException("Pipeline builder already has '$name' stub");
         }
 
         return $this->then(new Stub($name));
@@ -69,20 +69,15 @@ class PipelineBuilder
 
     /**
      * Get a pipeline builder where a stub is replaced.
-     *
-     * @param string   $name
-     * @param callable $callable
-     * @param mixed    ...$args
-     * @return static
      */
-    public function unstub(string $name, callable $callable, ...$args): self
+    public function unstub(string $name, callable $callable, mixed ...$args): static
     {
         $index = i\iterable_find_key($this->steps, function ($step) use ($name) {
             return $step[0] instanceof Stub && $step[0]->getName() === $name;
         });
 
         if ($index === null) {
-            throw new \BadMethodCallException("Pipeline builder doesn't have '$name' stub");
+            throw new BadMethodCallException("Pipeline builder doesn't have '$name' stub");
         }
 
         $clone = clone $this;
@@ -95,7 +90,7 @@ class PipelineBuilder
     /**
      * Create a new pipeline
      *
-     * @param iterable $iterable
+     * @param iterable<mixed, mixed> $iterable
      * @return Pipeline
      */
     public function with(iterable $iterable): Pipeline
@@ -112,8 +107,8 @@ class PipelineBuilder
     /**
      * Invoke the builder.
      *
-     * @param iterable $iterable
-     * @return array
+     * @param iterable<mixed, mixed> $iterable
+     * @return array<mixed>
      */
     public function __invoke(iterable $iterable): array
     {
@@ -124,10 +119,10 @@ class PipelineBuilder
     /**
      * Use another iterator as keys and the current iterator as values.
      *
-     * @param iterable $keys  Keys will be turned into an array.
+     * @param iterable<mixed> $keys  Keys will be turned into an array.
      * @return static
      */
-    public function setKeys(iterable $keys)
+    public function setKeys(iterable $keys): static
     {
         $combine = function ($values, $keys) {
             return new CombineIterator($keys, $values);

@@ -4,28 +4,34 @@ declare(strict_types=1);
 
 namespace Improved\Iterator;
 
+use Iterator;
+
 use function Improved\iterable_to_iterator;
 
 /**
  * Iterator through keys and values, where key may be any type.
+ *
+ * @template TKey
+ * @template TValue
+ * @implements Iterator<TKey, TValue>
  */
-class CombineIterator implements \Iterator
+class CombineIterator implements Iterator
 {
     /**
-     * @var \Iterator
+     * @var Iterator<TKey>
      */
-    protected $keys;
+    protected Iterator $keys;
 
     /**
-     * @var \Iterator
+     * @var Iterator<TValue>
      */
-    protected $values;
+    protected Iterator $values;
 
     /**
      * Class constructor.
      *
-     * @param iterable $keys
-     * @param iterable $values
+     * @param iterable<TKey> $keys
+     * @param iterable<TValue> $values
      */
     public function __construct(iterable $keys, iterable $values)
     {
@@ -36,9 +42,9 @@ class CombineIterator implements \Iterator
     /**
      * Get the current value.
      *
-     * @return mixed
+     * @return TValue
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->values->current();
     }
@@ -46,17 +52,15 @@ class CombineIterator implements \Iterator
     /**
      * Get the current key.
      *
-     * @return mixed
+     * @return TKey
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->keys->current();
     }
 
     /**
      * Forward to the next element.
-     *
-     * @return void
      */
     public function next(): void
     {
@@ -66,8 +70,6 @@ class CombineIterator implements \Iterator
 
     /**
      * Checks if the iterator is valid.
-     *
-     * @return bool
      */
     public function valid(): bool
     {
@@ -76,8 +78,6 @@ class CombineIterator implements \Iterator
 
     /**
      * Checks if the iterator is valid.
-     *
-     * @return void
      */
     public function rewind(): void
     {

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use ArrayObject;
 use Improved\IteratorPipeline\Pipeline;
+use IteratorAggregate;
 
 /**
  * Convert any iterable to an array.
@@ -22,11 +24,11 @@ function iterable_to_array(iterable $iterable, ?bool $preserveKeys = null): arra
             $iterable = $iterable->toArray();
             break;
         case method_exists($iterable, 'getArrayCopy'):
-            /** @var \ArrayObject $iterable  Duck typing */
+            /** @var ArrayObject $iterable  Duck typing */
             $iterable = $iterable->getArrayCopy();
             break;
 
-        case $iterable instanceof \IteratorAggregate:
+        case $iterable instanceof IteratorAggregate:
             return iterable_to_array($iterable->getIterator(), $preserveKeys); // recursion
         default:
             return iterator_to_array($iterable, $preserveKeys === true);

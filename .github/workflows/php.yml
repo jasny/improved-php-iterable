@@ -12,14 +12,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.2, 7.3, 7.4, 8.0]
         include:
-          - php: 7.4
-            coverage: '--coverage-clover /tmp/clover.xml'
+          - php: 8.1
+            composer: '--prefer-lowest'
+            desc: "Lowest versions"
+          - php: 8.1
+          - php: 8.2
+            coverage: '--coverage-clover ./clover.xml'
+          - php: 8.3
     name: PHP ${{ matrix.php }} ${{ matrix.desc }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -30,25 +36,15 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
     - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer update --prefer-dist --no-progress --no-suggest
+      run: composer update --prefer-dist --no-progress ${{ matrix.composer }}
 
     - name: Run PHPUnit
       run: vendor/bin/phpunit ${{ matrix.coverage }}
 
-    - name: Upload coverage to Scrutinizer
+    - name: Upload Scrutinizer coverage
+      uses: sudo-bot/action-scrutinizer@latest
       if: ${{ matrix.coverage }}
-      run: >
-        wget https://scrutinizer-ci.com/ocular.phar -O "/tmp/ocular.phar" &&
-        php "/tmp/ocular.phar" code-coverage:upload --format=php-clover /tmp/clover.xml
+      with:
+        cli-args: "--format=php-clover ./clover.xml"
 

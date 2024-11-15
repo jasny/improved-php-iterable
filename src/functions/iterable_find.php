@@ -8,7 +8,7 @@ namespace Improved;
  * Get the first element that matches a condition.
  * Returns null if no element is found.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param callable $matcher
  * @return mixed
  */

@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use ArrayIterator;
+use Traversable;
+
 /**
  * Convert any iterable to a Traversable object (Iterator or IteratorAggregate).
  *
- * @param array|\Traversable $iterable
- * @return \Traversable
+ * @param array|Traversable $iterable
+ * @return Traversable
  */
-function iterable_to_traversable(iterable $iterable): \Traversable
+function iterable_to_traversable(iterable $iterable): Traversable
 {
-    return is_array($iterable) ? new \ArrayIterator($iterable) : $iterable;
+    return is_array($iterable) ? new ArrayIterator($iterable) : $iterable;
 }

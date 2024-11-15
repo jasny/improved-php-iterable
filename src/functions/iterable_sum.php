@@ -8,7 +8,7 @@ namespace Improved;
  * Calculate the sum of all numbers.
  * If no elements are present, the result is 0.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @return int|float
  */
 function iterable_sum(iterable $iterable)

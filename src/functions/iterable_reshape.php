@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use ArrayAccess;
+use DateTimeInterface;
+use Generator;
+
 /**
  * Reshape each element of an iterator, adding or removing properties or keys.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param array    $columns   Columns to show or hide
- * @return \Generator
+ * @return Generator
  */
-function iterable_reshape(iterable $iterable, array $columns): \Generator
+function iterable_reshape(iterable $iterable, array $columns): Generator
 {
     $change = array_filter($columns, function ($keep) {
         return !is_bool($keep);
@@ -48,9 +52,9 @@ function iterable_reshape(iterable $iterable, array $columns): \Generator
     };
 
     foreach ($iterable as $key => $value) {
-        if (is_array($value) || $value instanceof \ArrayAccess) {
+        if (is_array($value) || $value instanceof ArrayAccess) {
             $shapeArray($value);
-        } elseif (is_object($value) && !$value instanceof \DateTimeInterface) {
+        } elseif (is_object($value) && !$value instanceof DateTimeInterface) {
             $shapeObject($value);
         }
 

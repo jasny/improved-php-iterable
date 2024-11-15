@@ -97,16 +97,9 @@ individually.
 ```php
 use Improved as i;
 
-$filteredValues = i\iterable_filter($values, function($value) {
-   return is_int($value) && $value > 10;
-});
-
+$filteredValues = i\iterable_filter($values, fn($value) => is_int($value) && $value > 10);
 $uniqueValues = i\iterable_unique($filteredValues);
-
-$mappedValues = i\iterable_map($uniqueValues, function($value) {
-    return $value * $value - 1;
-});
-
+$mappedValues = i\iterable_map($uniqueValues, fn($value) => $value * $value - 1);
 $firstValues = i\iterable_slice($mappedValues, 0, 10);
 
 $result = i\iterable_to_array($firstValues);
@@ -118,13 +111,9 @@ Alternatively use the iterator pipeline.
 use Improved\IteratorPipeline\Pipeline;
 
 $result = Pipeline::with($values)
-    ->filter(function($value) {
-        return is_int($value) && $value < 10;
-    })
+    ->filter(fn($value) => is_int($value) && $value < 10)
     ->unique()
-    ->map(function($value) {
-        return $value * $value - 1;
-    })
+    ->map(fn($value) => $value * $value - 1)
     ->limit(10)
     ->toArray();
 ```
@@ -139,7 +128,7 @@ This library provides Utility methods for creating streams.
 ```php
 use Improved\IteratorPipeline\Pipeline;
 
-Pipeline::with([
+$people = Pipeline::with([
     new Person("Max", 18),
     new Person("Peter", 23),
     new Person("Pamela", 23)
@@ -163,9 +152,7 @@ use Improved\IteratorPipeline\Pipeline;
 
 $blueprint = Pipeline::build()
     ->checkType('string')
-    ->filter(function(string $value): bool) {
-        strlen($value) > 10;
-    });
+    ->filter(fn(string $value): bool => strlen($value) > 10);
     
 // later
 $pipeline = $blueprint->with($iterable);
@@ -191,9 +178,7 @@ The `then()` method can be used to combine two pipeline builder.
 use Improved\IteratorPipeline\Pipeline;
 
 $first = Pipeline::build()->unique()->values();
-$second = Pipeline::build()->map(function($value) {
-    return ucwords($value);
-});
+$second = Pipeline::build()->map(fn($value) => ucwords($value));
 
 $titles = $first->then($second);
 
@@ -206,7 +191,7 @@ A `Pipeline` is not an immutable object, unlike the `PipelineBuilder`. Only the 
 relevant and kept by the pipeline. As such, you can extend the `Pipeline` class and use that any chainable method,
 without the object changing.
 
-However is a step returns a `Pipeline` object (including any object that extends the pipeline), the `then` method will
+However, is a step returns a `Pipeline` object (including any object that extends the pipeline), the `then` method will
 return that object instead of `$this`. This can be used to inject a custom class later in a pipe or in a pipeline
 builder.
 
@@ -240,9 +225,7 @@ $product = (new MyPipeline)->column('amount')->product();
 $pipeline = (new Pipeline)->column('amount');
 
 $product = $pipeline 
-    ->then(function(iterable $iterable) {
-        return new MyPipeline($iterable);
-    })
+    ->then(fn(iterable $iterable) => new MyPipeline($iterable))
     ->product();
 ``` 
 
@@ -250,9 +233,7 @@ $product = $pipeline
 
 ```php
 $builder = (new PipelineBuilder)
-    ->then(function(iterable $iterable) {
-        return new MyPipeline($iterable);
-    })
+    ->then(fn(iterable $iterable) => new MyPipeline($iterable))
     ->column('amount')
     ->product();
 ```
@@ -265,7 +246,7 @@ This is the only way to get a `PipelineBuilder` to return a custom `Pipeline` cl
 
 ### then
 
-The `then()` method defines a new step in the pipeline. As argument it takes a callback that must return a `Generator` or other `Traversable`.
+The `then()` method defines a new step in the pipeline. As the argument, it takes a callback that must return a `Generator` or other `Traversable`.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
@@ -281,9 +262,7 @@ It may be used to apply a custom (outer) iterator.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
-    ->then(function(\Traversable $values): \Iterator {
-        return new MyCustomIterator($values);
-    });
+    ->then(fn(\Traversable $values) => new MyCustomIterator($values));
 ```
 
 ### getIterator
@@ -306,9 +285,7 @@ Traverse over the iterator, not capturing the values. This is particularly usefu
 
 ```php
 Pipeline::with($objects)
-    ->apply(function($object, $key) {
-        $object->type = $key;
-    })
+    ->apply(fn(object $object, mixed $key) => $object->type = $key)
     ->walk();
 ```
 
@@ -320,9 +297,7 @@ Map each element to a value using a callback function.
 
 ```php
 Pipeline::with([3, 2, 2, 3, 7, 3, 6, 5])
-    ->map(function(int $i): int {
-        return $i * $i;
-    })
+    ->map(function(int $i) => $i * $i)
     ->toArray(); // [9, 4, 4, 9, 49, 9, 36, 25]
 ```
 
@@ -330,9 +305,7 @@ The second argument of the callback is the key.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
-    ->map(function(string $value, string $key): string {
-        return "{$value} {$key}";
-    })
+    ->map(fn(string $value, string $key) => "{$value} {$key}")
     ->toArray(); // ['apple' => 'green apple', 'berry' => 'blue berry', 'cherry' => 'red cherry']
 ```
 
@@ -344,9 +317,7 @@ The second argument of the callback is the value and second is the key.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red'])
-    ->mapKeys(function(string $value, string $key): string {
-        return subst($key, 0, 1);
-    })
+    ->mapKeys(fn(string $value, string $key) => subst($key, 0, 1))
     ->toArray(); // ['a' => 'green', 'b' => 'blue', 'c' => 'red']
 ```
 
@@ -392,9 +363,7 @@ Group elements of an iterator, with the group name as key and an array of elemen
 
 ```php
 Pipeline::with(['apple', 'berry', 'cherry', 'apricot'])
-    ->group(function(string $value): string {
-        return $value[0];
-    })
+    ->group(fn(string $value) => $value[0])
     ->toArray();
     
 // ['a' => ['apple', 'apricot'], 'b' => ['berry'], 'c' => ['cherry']]
@@ -404,9 +373,7 @@ The second argument is the key.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'])
-    ->group(function(string $value, string $key): string {
-        return $key[0];
-    })
+    ->group(fn(string $value, string $key) => $key[0])
     ->toArray();
 
 // ['a' => ['apple' => 'green', 'apricot' => 'orange'], 'b' => ['berry' => 'blue'], 'c' => ['cherry' => 'red']]
@@ -429,7 +396,7 @@ Pipeline::with($groups)
     ->flatten()
     ->toArray(); // ['one', 'two', 'three', 'four', 'five', 'six', 'seven']
 ```
-By default the keys are dropped, replaces by an incrementing counter (so as an numeric array). By passing `true` as
+By default, the keys are dropped, replaces by an incrementing counter (so as a numeric array). By passing `true` as
 second parameters, the keys are remained.
 
 ### unwind
@@ -471,7 +438,7 @@ Pipeline::with($elements)
 // ]
 ```
 
-By default each new element of the resulting iterator is a numeric sequence. To preverse the keys, pass `true` as third
+By default, each new element of the resulting iterator is a numeric sequence. To preverse the keys, pass `true` as third
 argument. Beware that this will result in duplicate keys.
 
 ### fill
@@ -557,7 +524,7 @@ numeric array.
 
 ### reshape
 
-Reshape each element of an iterator, adding or removing properties or keys.
+Reshape each element of an iterator, renaming or removing properties or keys.
 
 The method takes an array with the column name as key. The value may be a boolean, specifying if th column should
 remain or be removed. Alternatively the column may be a string or int, renaming the column name (key).
@@ -707,19 +674,14 @@ All values are stored for reference. The callback function can also be used to s
 
 ```php
 Pipeline::with($persons)
-    ->unique(function(Person $value): int {
-        return hash('sha256', serialize($value));
-    });
-});
+    ->unique(fn(Person $value) => hash('sha256', serialize($value)));
 ```
 
 The seconds argument is the key.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red', 'apricot' => 'orange'])
-    ->unique(function(string $value, string $key): string {
-        return $key[0];
-    })
+    ->unique(fn(string $value, string $key) => $key[0])
     ->toArray(); // ['apple' => 'green', 'berry' => 'blue', 'cherry' => 'red']
 ```
 
@@ -781,9 +743,7 @@ Get elements until a match is found.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
-    ->before(function($value, $key) {
-        return $value === 'red';
-    })
+    ->before(fn($value, $key) => $value === 'red')
     ->toArray(); // ['apple' => 'green']
 ```
 
@@ -791,9 +751,7 @@ The seconds argument is the key.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
-    ->before(function($value, $key) {
-        return $key === 'berry';
-    })
+    ->before(fn($value, $key) => $key === 'berry')
     ->toArray(); // ['apple' => 'green']
 ```
 
@@ -801,9 +759,7 @@ Optionally the matched value can be included in the result
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
-    ->before(function($value) {
-        return $value === 'red';
-    })
+    ->before(fn($value) => $value === 'red')
     ->toArray(); // ['apple' => 'green', 'berry' => 'red']
 ```
 
@@ -813,9 +769,7 @@ Get elements after a match is found.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
-    ->before(function($value, $key) {
-        return $value === 'red';
-    })
+    ->before(fn($value, $key) => $value === 'red')
     ->toArray(); // ['cherry' => 'red', 'apricot' => 'orange']
 ```
 
@@ -823,9 +777,7 @@ The seconds argument is the key.
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
-    ->before(function($value, $key) {
-        return $key === 'berry';
-    })
+    ->before(fn($value, $key) => $key === 'berry')
     ->toArray(); // ['cherry' => 'red', 'apricot' => 'orange']
 ```
 
@@ -833,9 +785,7 @@ Optionally the matched value can be included in the result
 
 ```php
 Pipeline::with(['apple' => 'green', 'berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange'])
-    ->before(function($value) {
-        return $value === 'red';
-    })
+    ->before(fn($value) => $value === 'red')
     ->toArray(); // ['berry' => 'red', 'cherry' => 'red', 'apricot' => 'orange']
 ```
 
@@ -857,9 +807,7 @@ Instead of using the default sorting, a callback may be passed as user defined c
 
 ```php
 Pipeline::with(["Charlie", "Echo", "Bravo", "Delta", "Foxtrot", "Alpha"])
-    ->sort(function($a, $b): int {
-        return strlen($a) <=> strlen($b) ?: $a <=> $b;
-    })
+    ->sort(fn($a, $b): int => strlen($a) <=> strlen($b) ?: $a <=> $b)
     ->toArray(); // ["Echo", "Alpha", "Bravo", "Delta", "Charlie", "Foxtrot"]
 ```
 
@@ -881,9 +829,7 @@ A callback may be passed as user defined comparison function.
 
 ```php
 Pipeline::with(["Charlie" => "three", "Bravo" => "two", "Delta" => "four", "Alpha" => "one"])
-    ->sortKeys(function($a, $b): int {
-        return strlen($a) <=> strlen($b) ?: $a <=> $b;
-    })
+    ->sortKeys(fn($a, $b): int => strlen($a) <=> strlen($b) ?: $a <=> $b)
     ->toArray(); 
     
 // ["Alpha" => "one", "Bravo" => "two", "Delta" => "four", "Charlie" => "three"]
@@ -912,12 +858,12 @@ Pipeline::with($values)
     ->toArray();
 ```
 
-As type you may specific any PHP type, a pseudo types like `iterable` or `callable`, as class name or a resource type.
-For resources use the resource type, plus "resource", eg `"stream resource"`. 
+You may specify any PHP type, pseudo type like `iterable` or `callable`, class name or resource type.
+For resources use the resource type, plus "resource", eg `"stream resource"`.
 
 As second argument, a `Throwable` object may be passed, this is either an `Exception` or `Error`.
 
-The error message may contain up to three sprintf place holders. The first `%s` is replaced with the type of the value.
+The error message may contain up to three sprintf placeholders. The first `%s` is replaced with the type of the value.
 The second is used for the description of the key. The third is typically not needed, but when specified is
 replaced with the given type(s).
 
@@ -927,7 +873,7 @@ Pipeline::with($values)
     ->toArray();
 ```
 
-A question mark can be added to a class to accept null, eg `"?string"` is similar to using `["string", "null"]`.
+A question mark can be added to a class to accept null, e.g. `"?string"` is similar to using `["string", "null"]`.
 
 ### typeCast
 
@@ -987,18 +933,14 @@ Find the first element that matches a condition. Returns `null` if no element is
 
 ```php
 Pipeline::with(["one", "two", "three"])
-    ->find(function(string $value): bool {
-        return substr($value, 0, 1) === 't';
-    }); // "two"
+    ->find(fn(string $value) => substr($value, 0, 1) === 't'); // "two"
 ```
 
 It's possible to use the key in this callable.
 
 ```php
 Pipeline::with(["one" => "uno", "two" => "dos", "three" => "tres"])
-    ->find(function(string $value, string $key): bool {
-        return substr($key, 0, 1) === 't';
-    }); // "dos"
+    ->find(fn(string $value, string $key) => substr($key, 0, 1) === 't'); // "dos"
 ```
 
 ### findKey
@@ -1008,18 +950,14 @@ is found.
 
 ```php
 Pipeline::with(["I" => "one", "II" => "two", "III" => "three"])
-    ->find(function(string $value): bool {
-        return substr($value, 0, 1) === 't';
-    }); // "II"
+    ->find(fn(string $value): bool => substr($value, 0, 1) === 't');  // "II"
 ```
 
 It's possible to use the key in this callable.
 
 ```php
 Pipeline::with(["one" => "uno", "two" => "dos", "three" => "tres"])
-    ->find(function(string $value, string $key): bool {
-        return substr($key, 0, 1) === 't';
-    }); // "two"
+    ->find(fn(string $value, string $key) => substr($key, 0, 1) === 't'); // "two"
 ```
 
 ### hasAny
@@ -1028,9 +966,7 @@ Check if any element matches the given condition.
 
 ```php
 Pipeline::with(["one", "two", "three"])
-    ->hasAny(function(string $value): bool {
-        return substr($value, 0, 1) === 't';
-    }); // true
+    ->hasAny(fn(string $value) => substr($value, 0, 1) === 't'); // true
 ```
 
 The callback is similar to `find`.
@@ -1041,9 +977,7 @@ Check if all elements match the given condition.
 
 ```php
 Pipeline::with(["one", "two", "three"])
-    ->hasAny(function(string $value): bool {
-        return substr($value, 0, 1) === 't';
-    }); // false
+    ->hasAny(fn(string $value) => substr($value, 0, 1) === 't'); // false
 ```
 
 The callback is similar to `find`.
@@ -1054,9 +988,7 @@ Check the no element matches the given condition. This is the inverse of `hasAny
 
 ```php
 Pipeline::with(["one", "two", "three"])
-    ->hasNone(function(string $value): bool {
-        return substr($value, 0, 1) === 't';
-    }); // false
+    ->hasNone(fn(string $value) => substr($value, 0, 1) === 't'); // false
 ```
 
 The callback is similar to `find`.
@@ -1075,9 +1007,7 @@ It's possible to pass a callable for custom logic for comparison.
 
 ```php
 Pipeline::with([99.7, 24, -7.2, -337, 122.0])
-    ->min(function($a, $b) {
-        return abs($a) <=> abs($b);
-    }); // -7.2
+    ->min(fn($a, $b) => abs($a) <=> abs($b)); // -7.2
 ```
 
 ### max
@@ -1093,9 +1023,7 @@ It's possible to pass a callable for custom logic for comparison.
 
 ```php
 Pipeline::with([99.7, 24, -7.2, -337, 122.0])
-    ->max(function($a, $b) {
-        return abs($a) <=> abs($b);
-    }); // -337
+    ->max(fn($a, $b) => abs($a) <=> abs($b)); // -337
 ```
 
 
@@ -1118,15 +1046,13 @@ Reduce all elements to a single value using a callback.
 
 ```php
 Pipeline::with([2, 3, 4])
-    ->reduce(function(int $product, int $value): int {
-        return $product * $value;
-    }, 1); // 24
+    ->reduce(fn(int $product, int $value) => $product * $value, 1); // 24
 ```
 
 The third argument is the key
 
 ```php
-Pipeline::with(['I' => 'one, 'II' => 'two', 'III' => 'three'])
+Pipeline::with(['I' => 'one', 'II' => 'two', 'III' => 'three'])
     ->reduce(function(string $list, string $value, string $key): string {
         return $list . sprintf("{%s:%s}", $key, $value);
     }, ''); // "{I:one}{II:two}{III:three}"
@@ -1184,7 +1110,7 @@ $pipeline = $blueprint
 ## What are iterators?
 
 Iterators are traversable objects. That means that when you use them in a `foreach` loop, you're not looping through
-the properties of the object. Instead the `current()`, `key()` and `valid()` methods are called each time we go through
+the properties of the object. Instead, the `current()`, `key()` and `valid()` methods are called each time we go through
 the loop.
 
 The `current()` method gives the current value, the `key()` method gives the current key and the `valid()` method
@@ -1272,7 +1198,7 @@ foreach ($cleanData as $cleanValue) {
 }
 ```
 
-Of course we could combine these operators an apply them in a simple loop without the use of iterators. However this
+Of course, we could combine these operators and apply them in a simple loop without the use of iterators. However this
 couples all that logic. If a method returns all values in upper case, a second and unrelated method (in a different
 class) might remove the spaces. For iterators this doesn't matter.
 
@@ -1280,7 +1206,7 @@ class) might remove the spaces. For iterators this doesn't matter.
 
 With iterators, the key doesn't need to be a string or integer, but can be any type and doesn't need to be unique.
 
-It can very convenient to make the key an array or object and keeping the value a scalar. As such you can do link
+It can be convenient to make the key an array or object and keeping the value a scalar. As such you can do link
 operations like case conversion, etc. Another application is to group child objects per parent object.
 
 ### Generators
@@ -1299,7 +1225,7 @@ function iterable_first_word(iterable $values): Generator
 }
 ```
 
-PHP 7.2+ is highly optimized to work with generators increasing performance and saving memory. This makes generators
+PHP 8 is highly optimized to work with generators increasing performance and saving memory. This makes generators
 preferable to custom iterators, which can be slow.
 
 #### Unexpected generator behaviour
@@ -1368,7 +1294,5 @@ foreach ($oneToTen as $number) {
 }
 ```
 
-This has consequences when using
-the `iterable_` functions and `Pipeline` objects. Though this can be overcome using a `PipelineBuilder`. 
-
-_**And now you know :-)**_
+This has consequences when using the `iterable_` functions and `Pipeline` objects. Though this can be overcome
+using a `PipelineBuilder`. 

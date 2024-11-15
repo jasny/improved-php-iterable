@@ -4,23 +4,27 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use ArrayAccess;
+use DateTimeInterface;
+use Generator;
+
 /**
  * Project each element of an iterator to an associated (or numeric) array.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param array    $mapping
- * @return \Generator
+ * @return Generator
  */
-function iterable_project(iterable $iterable, array $mapping): \Generator
+function iterable_project(iterable $iterable, array $mapping): Generator
 {
     foreach ($iterable as $key => $value) {
         $projected = [];
 
-        if (is_array($value) || $value instanceof \ArrayAccess) {
+        if (is_array($value) || $value instanceof ArrayAccess) {
             foreach ($mapping as $to => $from) {
                 $projected[$to] = $value[$from] ?? null;
             }
-        } elseif (is_object($value) && !$value instanceof \DateTimeInterface) {
+        } elseif (is_object($value) && !$value instanceof DateTimeInterface) {
             foreach ($mapping as $to => $from) {
                 $projected[$to] = $value->$from ?? null;
             }

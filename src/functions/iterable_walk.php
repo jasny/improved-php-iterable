@@ -8,7 +8,7 @@ namespace Improved;
  * Traverse over the iterator, not capturing the values.
  * This is particularly useful after `iterable_apply()`.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @return void
  */
 function iterable_walk(iterable $iterable): void

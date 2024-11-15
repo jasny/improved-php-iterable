@@ -7,7 +7,7 @@ namespace Improved;
 /**
  * Get both keys and values of iterable in separate arrays.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @return array[]  ['keys' => array, 'values' => array]
  */
 function iterable_separate(iterable $iterable): array

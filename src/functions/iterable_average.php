@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use const NAN;
+
 /**
  * Return the arithmetic mean.
  * If no elements are present, the result is NAN.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @return float
  */
 function iterable_average(iterable $iterable): float
@@ -21,5 +23,5 @@ function iterable_average(iterable $iterable): float
         $sum += $item;
     }
 
-    return $count == 0 ? \NAN : ($sum / $count);
+    return $count == 0 ? NAN : ($sum / $count);
 }

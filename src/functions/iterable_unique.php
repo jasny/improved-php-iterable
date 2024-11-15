@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use Generator;
+
 /**
  * Filter to get only unique elements.
  *
  * @param iterable      $iterable
  * @param callable|null $serialize  Callable function to serialize the value
- * @return \Generator
+ * @return Generator
  */
-function iterable_unique(iterable $iterable, callable $serialize = null): \Generator
+function iterable_unique(iterable $iterable, callable $serialize = null): Generator
 {
     $fastMap = []; // entries as keys, entry must be a string
     $slowMap = []; // non-string entries

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use ArrayAccess;
+use DateTimeInterface;
+use Generator;
+
 /**
  * Deconstruct an iterable property/item for each element. The result is one element for each item in the iterable
  * property.
@@ -12,9 +16,9 @@ namespace Improved;
  * @param int|string      $column
  * @param int|string|null $mapKey        The name of a new property to hold the array index of the element
  * @param bool            $preserveKeys  Preserve the keys of the iterable (will result in duplicate keys)
- * @return \Generator
+ * @return Generator
  */
-function iterable_unwind(iterable $iterable, $column, $mapKey = null, bool $preserveKeys = false): \Generator
+function iterable_unwind(iterable $iterable, $column, $mapKey = null, bool $preserveKeys = false): Generator
 {
     $counter = 0;
 
@@ -51,10 +55,10 @@ function iterable_unwind(iterable $iterable, $column, $mapKey = null, bool $pres
         if (is_array($element)) {
             $value = $element[$column] ?? null;
             $set = $setArray;
-        } elseif ($element instanceof \ArrayAccess) {
+        } elseif ($element instanceof ArrayAccess) {
             $value = $element[$column] ?? null;
             $set = $setArrayAccess;
-        } elseif (is_object($element) && !$element instanceof \DateTimeInterface) {
+        } elseif (is_object($element) && !$element instanceof DateTimeInterface) {
             $value = $element->$column ?? null;
             $set = $setObject;
         } else {

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use RangeException;
+
 /**
  * Get the first element of an iterable.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param bool     $required  Throw RangeException instead of returning null for empty iterable
  * @return mixed
  */
@@ -18,7 +20,7 @@ function iterable_first(iterable $iterable, bool $required = false)
     }
 
     if ($required) {
-        throw new \RangeException("Unable to get first element; iterable is empty");
+        throw new RangeException("Unable to get first element; iterable is empty");
     }
 
     return null;

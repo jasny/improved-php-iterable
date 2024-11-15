@@ -7,7 +7,7 @@ namespace Improved;
 /**
  * Concatenate all elements into a single string.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param string   $glue
  * @return string
  */

@@ -10,15 +10,10 @@ namespace Improved\IteratorPipeline\PipelineBuilder;
  */
 class Stub
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
     /**
      * Class constructor.
-     *
-     * @param string $name
      */
     public function __construct(string $name)
     {
@@ -27,10 +22,8 @@ class Stub
 
     /**
      * Get the name of the stub.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -39,10 +32,12 @@ class Stub
     /**
      * Invoke stub
      *
-     * @param iterable $iterable
-     * @return iterable
+     * @template TKey
+     * @template TValue
+     * @param iterable<TKey, TValue> $iterable
+     * @return iterable<TKey, TValue>
      */
-    public function __invoke(iterable $iterable)
+    public function __invoke(iterable $iterable): iterable
     {
         return $iterable;
     }

@@ -7,7 +7,7 @@ namespace Improved;
 /**
  * Check if any element matches the condition.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param callable $matcher
  * @return bool
  */

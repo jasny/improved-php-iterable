@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Improved;
 
+use Generator;
+
 /**
  * Get elements after a match is found.
  *
- * @param iterable $iterable
+ * @param iterable<mixed> $iterable
  * @param callable $matcher
  * @param bool     $including
- * @return \Generator
+ * @return Generator
  */
-function iterable_after(iterable $iterable, callable $matcher, bool $including = false): \Generator
+function iterable_after(iterable $iterable, callable $matcher, bool $including = false): Generator
 {
     $found = false;
 

@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace Improved\IteratorPipeline;
 
 use Improved as i;
+use Iterator;
+use IteratorAggregate;
+use UnexpectedValueException;
 
 /**
  * Functional-style operations, such as map-reduce transformations on arrays and iterators.
  * A pipeline uses Generators, meaning it can be used only once.
- */
-class Pipeline implements \IteratorAggregate
+ *
+ * @phpstan-consistent-constructor
+ * @implements IteratorAggregate<mixed, mixed>
+*/
+class Pipeline implements IteratorAggregate
 {
     use Traits\MappingTrait;
     use Traits\FilteringTrait;
@@ -20,14 +26,14 @@ class Pipeline implements \IteratorAggregate
     use Traits\AggregationTrait;
 
     /**
-     * @var iterable
+     * @var iterable<mixed, mixed>
      */
-    protected $iterable;
+    protected iterable $iterable;
 
     /**
      * Pipeline constructor.
      *
-     * @param iterable $iterable
+     * @param iterable<mixed, mixed> $iterable
      */
     public function __construct(iterable $iterable)
     {
@@ -41,12 +47,12 @@ class Pipeline implements \IteratorAggregate
      * @param mixed    ...$args
      * @return self
      */
-    public function then(callable $callback, ...$args): self
+    public function then(callable $callback, mixed ...$args): self
     {
         $this->iterable = i\type_check(
             $callback($this->iterable, ...$args),
             'iterable',
-            new \UnexpectedValueException("Expected step to return an array or Traversable, %s returned")
+            new UnexpectedValueException("Expected step to return an array or Traversable, %s returned")
         );
 
         return $this->iterable instanceof Pipeline ? $this->iterable : $this;
@@ -56,9 +62,9 @@ class Pipeline implements \IteratorAggregate
     /**
      * Get iterator.
      *
-     * @return \Iterator
+     * @return Iterator<mixed, mixed>
      */
-    public function getIterator(): \Iterator
+    public function getIterator(): Iterator
     {
         return i\iterable_to_iterator($this->iterable);
     }
@@ -66,7 +72,7 @@ class Pipeline implements \IteratorAggregate
     /**
      * Get iterable as array.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function toArray(): array
     {
@@ -76,8 +82,6 @@ class Pipeline implements \IteratorAggregate
     /**
      * Traverse over the iterator, not capturing the values.
      * This is particularly useful after `apply()`.
-     *
-     * @return void
      */
     public function walk(): void
     {
@@ -88,10 +92,10 @@ class Pipeline implements \IteratorAggregate
     /**
      * Factory method
      *
-     * @param iterable $iterable
+     * @param iterable<mixed, mixed> $iterable
      * @return static
      */
-    final public static function with(iterable $iterable): self
+    final public static function with(iterable $iterable): static
     {
         return $iterable instanceof static ? $iterable : new static($iterable);
     }

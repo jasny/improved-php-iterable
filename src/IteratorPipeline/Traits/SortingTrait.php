@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Improved\IteratorPipeline\Traits;
 
-use Improved as i;
+use Improved\IteratorPipeline\Pipeline;
 
 /**
  * Methods that change the order of the elements.
@@ -13,12 +13,8 @@ trait SortingTrait
 {
     /**
      * Define the next step via a callback that returns an array or Traversable object.
-     *
-     * @param callable $callback
-     * @param mixed    ...$args
-     * @return static
      */
-    abstract public function then(callable $callback, ...$args);
+    abstract public function then(callable $callback, mixed ...$args): static;
 
 
     /**
@@ -26,9 +22,9 @@ trait SortingTrait
      *
      * @param callable|int $compare       SORT_* flags as binary set or callback comparator function
      * @param bool         $preserveKeys
-     * @return static
+     * @return static&Pipeline
      */
-    public function sort($compare, bool $preserveKeys = true)
+    public function sort(callable|int $compare, bool $preserveKeys = true): static
     {
         return $this->then("Improved\iterable_sort", $compare, $preserveKeys);
     }
@@ -37,19 +33,17 @@ trait SortingTrait
      * Sort all elements of an iterator based on the key.
      *
      * @param callable|int $compare   SORT_* flags as binary set or callback comparator function
-     * @return static
+     * @return static&Pipeline
      */
-    public function sortKeys($compare)
+    public function sortKeys(callable|int $compare): static
     {
         return $this->then("Improved\iterable_sort_keys", $compare);
     }
 
     /**
      * Reverse order of elements of an iterable.
-     *
-     * @return static
      */
-    public function reverse()
+    public function reverse(): static
     {
         return $this->then("Improved\iterable_reverse");
     }
