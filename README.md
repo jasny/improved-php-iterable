@@ -2,9 +2,9 @@
 
 # iterable
 
-![PHP](https://github.com/improved-php-library/iterable/workflows/PHP/badge.svg)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/improved-php-library/iterable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/improved-php-library/iterable/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/improved-php-library/iterable/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/improved-php-library/iterable/?branch=master)
+![PHP](https://github.com/jasny/improved-php-iterable/workflows/PHP/badge.svg)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/improved-php-iterable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/improved-php-iterable/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/jasny/improved-php-iterable/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/improved-php-iterable/?branch=master)
 [![Packagist Stable Version](https://img.shields.io/packagist/v/improved/iterable.svg)](https://packagist.org/packages/improved/iterable)
 [![Packagist License](https://img.shields.io/packagist/l/improved/iterable.svg)](https://packagist.org/packages/improved/iterable)
 
